@@ -8,6 +8,7 @@
  * @package  stubbles\date
  */
 namespace stubbles\date;
+use stubbles\lang;
 use stubbles\lang\exception\IllegalArgumentException;
 /**
  * Class for date/time handling.
@@ -66,14 +67,14 @@ class Date
                     $this->dateTime = new \DateTime($dateTime, $timeZone->getHandle());
                 }
             } catch (\Exception $e) {
-                throw new IllegalArgumentException('Given datetime string ' . $dateTime . ' is not a valid date string.');
+                throw new IllegalArgumentException('Given datetime string ' . $dateTime . ' is not a valid date string.', 'dateTime', $dateTime, $e);
             }
         } else {
             $this->dateTime = $dateTime;
         }
 
         if (!($this->dateTime instanceof \DateTime)) {
-            throw new IllegalArgumentException('Datetime must be either unix timestamp, well-formed timestamp or instance of DateTime, but was ' . gettype($dateTime) . ' ' . $dateTime);
+            throw new IllegalArgumentException('Datetime must be either unix timestamp, well-formed timestamp or instance of DateTime, but was ' . lang\getType($dateTime) . ' ' . $dateTime);
         }
     }
 
@@ -104,7 +105,7 @@ class Date
         }
 
         if (!($value instanceof Date)) {
-            throw new IllegalArgumentException($name . ' must be a timestamp, a string containing time info or an instance of \DateTime or stubbles\date\Date, but was ' . gettype($value));
+            throw new IllegalArgumentException($name . ' must be a timestamp, a string containing time info or an instance of \DateTime or stubbles\date\Date, but was ' . lang\getType($value));
         }
 
         return $value;
