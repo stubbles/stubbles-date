@@ -48,9 +48,9 @@ class Date
      *   <li>If no timezone has been given as second parameter, the system's
      *       default timezone is used.</li>
      *
-     * @param   int|string|\DateTime  $dateTime  initial date
-     * @param   TimeZone              $timeZone  initial timezone
-     * @throws  IllegalArgumentException
+     * @param   int|string|\DateTime    $dateTime  initial date
+     * @param   \stubbles\date\TimeZone  $timeZone  initial timezone
+     * @throws  \stubbles\lang\exception\IllegalArgumentException
      */
     public function __construct($dateTime = null, TimeZone $timeZone = null)
     {
@@ -81,8 +81,8 @@ class Date
     /**
      * returns current date/time
      *
-     * @param   TimeZone  $timeZone  initial timezone
-     * @return  Date
+     * @param   \stubbles\date\TimeZone  $timeZone  initial timezone
+     * @return  \stubbles\date\Date
      */
     public static function now(TimeZone $timeZone = null)
     {
@@ -94,8 +94,8 @@ class Date
      *
      * @param   int|string|\DateTime|Date  $value
      * @param   string                     $name
-     * @return  Date
-     * @throws  IllegalArgumentException
+     * @return  \stubbles\date\Date
+     * @throws  \stubbles\lang\exception\IllegalArgumentException
      * @since   3.4.4
      */
     public static function castFrom($value, $name = 'Date')
@@ -125,7 +125,7 @@ class Date
     /**
      * returns way to change the date to another
      *
-     * @return  DateModifier
+     * @return  \stubbles\date\DateModifier
      * @XmlIgnore
      */
     public function change()
@@ -235,7 +235,7 @@ class Date
     /**
      * checks whether this date is before a given date
      *
-     * @param   int|string|\DateTime|Date  $date
+     * @param   int|string|\DateTime|\stubbles\date\Date  $date
      * @return  bool
      */
     public function isBefore($date)
@@ -246,7 +246,7 @@ class Date
     /**
      * checks whether this date is after a given date
      *
-     * @param   int|string|\DateTime|Date  $date
+     * @param   int|string|\DateTime|\stubbles\date\Date  $date
      * @return  bool
      */
     public function isAfter($date)
@@ -257,7 +257,7 @@ class Date
     /**
      * returns time zone of this date
      *
-     * @return  TimeZone
+     * @return  \stubbles\date\TimeZone
      * @XmlIgnore
      */
     public function getTimeZone()
@@ -279,8 +279,8 @@ class Date
     /**
      * returns formatted date/time string
      *
-     * @param   string    $format    format, see http://php.net/date
-     * @param   TimeZone  $timeZone  target time zone of formatted string
+     * @param   string                   $format    format, see http://php.net/date
+     * @param   \stubbles\date\TimeZone  $timeZone  target time zone of formatted string
      * @return  string
      */
     public function format($format, TimeZone $timeZone = null)

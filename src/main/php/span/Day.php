@@ -19,14 +19,14 @@ class Day extends AbstractDatespan implements Datespan
     /**
      * original date
      *
-     * @type  Date
+     * @type  \stubbles\date\Date
      */
     private $date;
 
     /**
      * constructor
      *
-     * @param  int|string|\DateTime|Date  $day  day that the span covers
+     * @param  int|string|\DateTime|\stubbles\date\Date  $day  day that the span covers
      */
     public function __construct($day = null)
     {
@@ -37,7 +37,7 @@ class Day extends AbstractDatespan implements Datespan
     /**
      * create instance for tomorrow
      *
-     * @return  Day
+     * @return  \stubbles\date\span\Day
      * @since   3.5.1
      */
     public static function tomorrow()
@@ -48,7 +48,7 @@ class Day extends AbstractDatespan implements Datespan
     /**
      * create instance for yesterday
      *
-     * @return  Day
+     * @return  \stubbles\date\span\Day
      * @since   3.5.1
      */
     public static function yesterday()
@@ -71,7 +71,7 @@ class Day extends AbstractDatespan implements Datespan
     /**
      * returns list of days
      *
-     * @return  Day[]
+     * @return  \stubbles\date\span\Day[]
      */
     public function getDays()
     {

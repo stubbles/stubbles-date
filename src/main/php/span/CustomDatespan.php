@@ -18,7 +18,7 @@ class CustomDatespan extends AbstractDatespan
     /**
      * returns list of days within this datespan
      *
-     * @return  Day[]
+     * @return  \stubbles\date\span\Day[]
      */
     public function getDays()
     {

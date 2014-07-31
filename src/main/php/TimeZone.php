@@ -8,6 +8,7 @@
  * @package  stubbles\date
  */
 namespace stubbles\date;
+use stubbles\lang;
 use stubbles\lang\exception\IllegalArgumentException;
 /**
  * Class for time zone handling.
@@ -33,7 +34,7 @@ class TimeZone
      * or null.
      *
      * @param   string|\DateTimeZone  $timeZone  initial timezone handle
-     * @throws  IllegalArgumentException
+     * @throws  \stubbles\lang\exception\IllegalArgumentException
      */
     public function __construct($timeZone = null)
     {
@@ -73,7 +74,7 @@ class TimeZone
     /**
      * returns offset of the time zone
      *
-     * @param   int|string|\DateTime|Date  $date  defaults to current date
+     * @param   int|string|\DateTime|\stubbles\date\Date  $date  defaults to current date
      * @return  string
      */
     public function getOffset($date = null)
@@ -91,7 +92,7 @@ class TimeZone
      * mode, a date object must be given which is used to determine whether DST
      * or non-DST offset should be returned.
      *
-     * @param   int|string|\DateTime|Date  $date  defaults to current date
+     * @param   int|string|\DateTime|\stubbles\date\Date  $date  defaults to current date
      * @return  int
      */
     public function getOffsetInSeconds($date = null)
@@ -119,8 +120,8 @@ class TimeZone
      *
      * A new date instance will be returned while the given date is not changed.
      *
-     * @param   int|string|\DateTime|Date  $date
-     * @return  Date
+     * @param   int|string|\DateTime|\stubbles\date\Date  $date
+     * @return  \stubbles\date\Date
      */
     public function translate($date)
     {
@@ -151,6 +152,6 @@ class TimeZone
      */
     public function __toString()
     {
-        return \stubbles\lang\__toString($this, array('timeZone' => $this->timeZone->getName()));
+        return lang\__toString($this, array('timeZone' => $this->timeZone->getName()));
     }
 }

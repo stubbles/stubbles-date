@@ -63,7 +63,7 @@ class Year extends CustomDatespan
     /**
      * returns list of months for this year
      *
-     * @return  Month[]
+     * @return  \stubbles\date\span\Month[]
      */
     public function getMonths()
     {

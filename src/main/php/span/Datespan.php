@@ -19,14 +19,14 @@ interface Datespan
     /**
      * returns the start date
      *
-     * @return  Date
+     * @return  \stubbles\date\Date
      */
     public function getStart();
 
     /**
      * checks whether datespan starts before a given date
      *
-     * @param   int|string|\DateTime|Date  $date
+     * @param   int|string|\DateTime|\stubbles\date\Date  $date
      * @return  bool
      * @since   3.5.0
      */
@@ -35,7 +35,7 @@ interface Datespan
     /**
      * checks whether datespan starts after a given date
      *
-     * @param   int|string|\DateTime|Date  $date
+     * @param   int|string|\DateTime|\stubbles\date\Date  $date
      * @return  bool
      * @since   3.5.0
      */
@@ -44,14 +44,14 @@ interface Datespan
     /**
      * returns the end date
      *
-     * @return  Date
+     * @return  \stubbles\date\Date
      */
     public function getEnd();
 
     /**
      * checks whether datespan ends before a given date
      *
-     * @param   int|string|\DateTime|Date  $date
+     * @param   int|string|\DateTime|\stubbles\date\Date  $date
      * @return  bool
      * @since   3.5.0
      */
@@ -60,7 +60,7 @@ interface Datespan
     /**
      * checks whether datespan ends after a given date
      *
-     * @param   int|string|\DateTime|Date  $date
+     * @param   int|string|\DateTime|\stubbles\date\Date  $date
      * @return  bool
      * @since   3.5.0
      */
@@ -79,8 +79,8 @@ interface Datespan
     /**
      * returns formatted date/time string for end date
      *
-     * @param   string    $format    format, see http://php.net/date
-     * @param   TimeZone  $timeZone  target time zone of formatted string
+     * @param   string                   $format    format, see http://php.net/date
+     * @param   \stubbles\date\TimeZone  $timeZone  target time zone of formatted string
      * @return  string
      * @since   3.5.0
      */
@@ -96,7 +96,7 @@ interface Datespan
     /**
      * returns list of days
      *
-     * @return  Day[]
+     * @return  \stubbles\date\span\Day[]
      */
     public function getDays();
 
@@ -110,7 +110,7 @@ interface Datespan
     /**
      * checks whether the span contains the given date
      *
-     * @param   int|string|\DateTime|Date  $date
+     * @param   int|string|\DateTime|\stubbles\date\Date  $date
      * @return  bool
      */
     public function containsDate($date);

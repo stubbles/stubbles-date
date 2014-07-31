@@ -69,8 +69,8 @@ class Month extends CustomDatespan
      * create instance from given string, i.e. Month::fromString('2014-05')
      *
      * @param   string  $input
-     * @return  Month
-     * @throws  IllegalArgumentException
+     * @return  \stubbles\date\span\Month
+     * @throws  \stubbles\lang\exception\IllegalArgumentException
      * @since   3.5.2
      */
     public static function fromString($input)
@@ -87,7 +87,7 @@ class Month extends CustomDatespan
     /**
      * creates instance for last month regardless of today's date
      *
-     * @return  Month
+     * @return  \stubbles\date\span\Month
      * @since   3.5.1
      */
     public static function last()

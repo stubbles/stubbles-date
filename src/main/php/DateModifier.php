@@ -19,7 +19,7 @@ class DateModifier
     /**
      * original date to base modifications on
      *
-     * @type  Date
+     * @type  \stubbles\date\Date
      */
     protected $originalDate;
 
@@ -38,7 +38,7 @@ class DateModifier
      *
      * @api
      * @param   string  $target  relative format accepted by strtotime()
-     * @return  Date
+     * @return  \stubbles\date\Date
      */
     public function to($target)
     {
@@ -52,8 +52,8 @@ class DateModifier
      *
      * @api
      * @param   string  $time  time representation in format HH:MM:SS
-     * @return  Date
-     * @throws  IllegalArgumentException
+     * @return  \stubbles\date\Date
+     * @throws  \stubbles\lang\exception\IllegalArgumentException
      */
     public function timeTo($time)
     {
@@ -71,7 +71,7 @@ class DateModifier
      *
      * @api
      * @param   int  $hour
-     * @return  Date
+     * @return  \stubbles\date\Date
      */
     public function hourTo($hour)
     {
@@ -83,7 +83,7 @@ class DateModifier
      *
      * @api
      * @param   int  $hours
-     * @return  Date
+     * @return  \stubbles\date\Date
      */
     public function byHours($hours)
     {
@@ -95,7 +95,7 @@ class DateModifier
      *
      * @api
      * @param   int  $minute
-     * @return  Date
+     * @return  \stubbles\date\Date
      */
     public function minuteTo($minute)
     {
@@ -107,7 +107,7 @@ class DateModifier
      *
      * @api
      * @param   int  $minutes
-     * @return  Date
+     * @return  \stubbles\date\Date
      */
     public function byMinutes($minutes)
     {
@@ -119,7 +119,7 @@ class DateModifier
      *
      * @api
      * @param   int  $second
-     * @return  Date
+     * @return  \stubbles\date\Date
      */
     public function secondTo($second)
     {
@@ -131,7 +131,7 @@ class DateModifier
      *
      * @api
      * @param   int  $seconds
-     * @return  Date
+     * @return  \stubbles\date\Date
      */
     public function bySeconds($seconds)
     {
@@ -145,8 +145,8 @@ class DateModifier
      * @param   int  $hour
      * @param   int  $minute
      * @param   int  $second
-     * @return  Date
-     * @throws  IllegalArgumentException
+     * @return  \stubbles\date\Date
+     * @throws  \stubbles\lang\exception\IllegalArgumentException
      */
     protected function createDateWithNewTime($hour, $minute, $second)
     {
@@ -163,8 +163,8 @@ class DateModifier
      *
      * @api
      * @param   string  $date  date representation in format YYYY-MM-DD
-     * @return  Date
-     * @throws  IllegalArgumentException
+     * @return  \stubbles\date\Date
+     * @throws  \stubbles\lang\exception\IllegalArgumentException
      */
     public function dateTo($date)
     {
@@ -182,7 +182,7 @@ class DateModifier
      *
      * @api
      * @param   string  $year
-     * @return  Date
+     * @return  \stubbles\date\Date
      */
     public function yearTo($year)
     {
@@ -194,7 +194,7 @@ class DateModifier
      *
      * @api
      * @param   int  $years
-     * @return  Date
+     * @return  \stubbles\date\Date
      */
     public function byYears($years)
     {
@@ -206,7 +206,7 @@ class DateModifier
      *
      * @api
      * @param   string  $month
-     * @return  Date
+     * @return  \stubbles\date\Date
      */
     public function monthTo($month)
     {
@@ -218,7 +218,7 @@ class DateModifier
      *
      * @api
      * @param   int  $months
-     * @return  Date
+     * @return  \stubbles\date\Date
      */
     public function byMonths($months)
     {
@@ -230,7 +230,7 @@ class DateModifier
      *
      * @api
      * @param   string  $day
-     * @return  Date
+     * @return  \stubbles\date\Date
      */
     public function dayTo($day)
     {
@@ -242,7 +242,7 @@ class DateModifier
      *
      * @api
      * @param   int  $days
-     * @return  Date
+     * @return  \stubbles\date\Date
      */
     public function byDays($days)
     {
@@ -255,8 +255,8 @@ class DateModifier
      * @param   int   $year
      * @param   int   $month
      * @param   int   $day
-     * @return  Date
-     * @throws  IllegalArgumentException
+     * @return  \stubbles\date\Date
+     * @throws  \stubbles\lang\exception\IllegalArgumentException
      */
     protected function createNewDateWithExistingTime($year, $month, $day)
     {

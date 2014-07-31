@@ -19,7 +19,7 @@ class Week extends CustomDatespan
     /**
      * constructor
      *
-     * @param  int|string|\DateTime|Date  $date  first day of the week
+     * @param  int|string|\DateTime|\stubbles\date\Date  $date  first day of the week
      */
     public function __construct($date)
     {
