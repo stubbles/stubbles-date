@@ -128,7 +128,7 @@ class TimeZoneTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException  stubbles\lang\exception\IllegalArgumentException
+     * @expectedException  InvalidArgumentException
      */
     public function invalidTimeZoneValueThrowsIllegalArgumentExceptionOnConstruction()
     {
@@ -137,7 +137,7 @@ class TimeZoneTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException  stubbles\lang\exception\IllegalArgumentException
+     * @expectedException  InvalidArgumentException
      */
     public function nonExistingTimeZoneValueThrowsIllegalArgumentExceptionOnConstruction()
     {
@@ -149,8 +149,9 @@ class TimeZoneTest extends \PHPUnit_Framework_TestCase
      */
     public function toStringConversionCreatesReadableRepresentation()
     {
-        $this->assertEquals("stubbles\date\TimeZone {\n    timeZone(string): Europe/Berlin\n}\n",
-                            (string) $this->timeZone
+        $this->assertEquals(
+                'Europe/Berlin',
+                (string) $this->timeZone
         );
     }
 }

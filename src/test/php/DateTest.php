@@ -184,7 +184,7 @@ class DateTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException  stubbles\lang\exception\IllegalArgumentException
+     * @expectedException  InvalidArgumentException
      * @since  3.5.0
      */
     public function isBeforeWithInvalidDate()
@@ -194,7 +194,7 @@ class DateTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException  stubbles\lang\exception\IllegalArgumentException
+     * @expectedException  InvalidArgumentException
      * @since  3.5.0
      */
     public function isAfterWithInvalidDate()
@@ -480,7 +480,7 @@ class DateTest extends \PHPUnit_Framework_TestCase
      * failing constructoon throws a illegal argument exception
      *
      * @test
-     * @expectedException  stubbles\lang\exception\IllegalArgumentException
+     * @expectedException  InvalidArgumentException
      */
     public function failingConstructionThrowsIllegalArgumentException()
     {
@@ -491,7 +491,7 @@ class DateTest extends \PHPUnit_Framework_TestCase
      * failing constructoon throws a illegal argument exception
      *
      * @test
-     * @expectedException  stubbles\lang\exception\IllegalArgumentException
+     * @expectedException  InvalidArgumentException
      */
     public function invalidDateStringhrowsIllegalArgumentException()
     {
@@ -640,7 +640,7 @@ class DateTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException  stubbles\lang\exception\IllegalArgumentException
+     * @expectedException  InvalidArgumentException
      * @since  3.4.4
      */
     public function castFromOtherValueThrowsIllegalArgumentException()

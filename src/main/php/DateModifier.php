@@ -8,7 +8,6 @@
  * @package stubbles\date
  */
 namespace stubbles\date;
-use stubbles\lang\exception\IllegalArgumentException;
 /**
  * Class for date/time modifications.
  *
@@ -53,13 +52,13 @@ class DateModifier
      * @api
      * @param   string  $time  time representation in format HH:MM:SS
      * @return  \stubbles\date\Date
-     * @throws  \stubbles\lang\exception\IllegalArgumentException
+     * @throws  \InvalidArgumentException
      */
     public function timeTo($time)
     {
         $times = explode(':', $time);
         if (count($times) != 3) {
-            throw new IllegalArgumentException('Given time ' . $time . ' does not follow required format HH:MM:SS');
+            throw new \InvalidArgumentException('Given time ' . $time . ' does not follow required format HH:MM:SS');
         }
 
         list($hour, $minute, $second) = $times;
@@ -146,13 +145,13 @@ class DateModifier
      * @param   int  $minute
      * @param   int  $second
      * @return  \stubbles\date\Date
-     * @throws  \stubbles\lang\exception\IllegalArgumentException
+     * @throws  \InvalidArgumentException
      */
     protected function createDateWithNewTime($hour, $minute, $second)
     {
         $modifiedHandle = clone $this->originalDate->getHandle();
         if (false === @$modifiedHandle->setTime($hour, $minute, $second)) {
-            throw new IllegalArgumentException('Given values for hour, minute and/or second not suitable for changing the time.');
+            throw new \InvalidArgumentException('Given values for hour, minute and/or second not suitable for changing the time.');
         }
 
         return new Date($modifiedHandle);
@@ -164,13 +163,13 @@ class DateModifier
      * @api
      * @param   string  $date  date representation in format YYYY-MM-DD
      * @return  \stubbles\date\Date
-     * @throws  \stubbles\lang\exception\IllegalArgumentException
+     * @throws  \InvalidArgumentException
      */
     public function dateTo($date)
     {
         $dates = explode('-', $date);
         if (count($dates) != 3) {
-            throw new IllegalArgumentException('Given date ' . $date . ' does not follow required format YYYY-MM-DD');
+            throw new \InvalidArgumentException('Given date ' . $date . ' does not follow required format YYYY-MM-DD');
         }
 
         list($year, $month, $day) = $dates;
@@ -256,13 +255,13 @@ class DateModifier
      * @param   int   $month
      * @param   int   $day
      * @return  \stubbles\date\Date
-     * @throws  \stubbles\lang\exception\IllegalArgumentException
+     * @throws  \InvalidArgumentException
      */
     protected function createNewDateWithExistingTime($year, $month, $day)
     {
         $modifiedHandle = clone $this->originalDate->getHandle();
         if (false === @$modifiedHandle->setDate($year, $month, $day)) {
-            throw new IllegalArgumentException('Given values for year, month and/or day not suitable for changing the date.');
+            throw new \InvalidArgumentException('Given values for year, month and/or day not suitable for changing the date.');
         }
 
         return new Date($modifiedHandle);

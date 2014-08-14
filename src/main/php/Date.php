@@ -8,8 +8,6 @@
  * @package  stubbles\date
  */
 namespace stubbles\date;
-use stubbles\lang;
-use stubbles\lang\exception\IllegalArgumentException;
 /**
  * Class for date/time handling.
  *
@@ -50,7 +48,7 @@ class Date
      *
      * @param   int|string|\DateTime    $dateTime  initial date
      * @param   \stubbles\date\TimeZone  $timeZone  initial timezone
-     * @throws  \stubbles\lang\exception\IllegalArgumentException
+     * @throws  \InvalidArgumentException
      */
     public function __construct($dateTime = null, TimeZone $timeZone = null)
     {
@@ -67,14 +65,14 @@ class Date
                     $this->dateTime = new \DateTime($dateTime, $timeZone->getHandle());
                 }
             } catch (\Exception $e) {
-                throw new IllegalArgumentException('Given datetime string ' . $dateTime . ' is not a valid date string.', 'dateTime', $dateTime, $e);
+                throw new \InvalidArgumentException('Given datetime string ' . $dateTime . ' is not a valid date string.', $e->getCode(), $e);
             }
         } else {
             $this->dateTime = $dateTime;
         }
 
         if (!($this->dateTime instanceof \DateTime)) {
-            throw new IllegalArgumentException('Datetime must be either unix timestamp, well-formed timestamp or instance of DateTime, but was ' . lang\getType($dateTime) . ' ' . $dateTime);
+            throw new \InvalidArgumentException('Datetime must be either unix timestamp, well-formed timestamp or instance of DateTime, but was ' . gettype($dateTime) . ' ' . $dateTime);
         }
     }
 
@@ -95,7 +93,7 @@ class Date
      * @param   int|string|\DateTime|Date  $value
      * @param   string                     $name
      * @return  \stubbles\date\Date
-     * @throws  \stubbles\lang\exception\IllegalArgumentException
+     * @throws  \InvalidArgumentException
      * @since   3.4.4
      */
     public static function castFrom($value, $name = 'Date')
@@ -105,7 +103,7 @@ class Date
         }
 
         if (!($value instanceof Date)) {
-            throw new IllegalArgumentException($name . ' must be a timestamp, a string containing time info or an instance of \DateTime or stubbles\date\Date, but was ' . lang\getType($value));
+            throw new \InvalidArgumentException($name . ' must be a timestamp, a string containing time info or an instance of \DateTime or stubbles\date\Date, but was ' . gettype($value));
         }
 
         return $value;

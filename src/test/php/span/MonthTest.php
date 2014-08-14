@@ -243,7 +243,7 @@ class MonthTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException  stubbles\lang\exception\IllegalArgumentException
+     * @expectedException  InvalidArgumentException
      * @since  3.5.3
      */
     public function createFromInvalidStringThrowsIllegalArgumentException()

@@ -8,8 +8,6 @@
  * @package  stubbles\date
  */
 namespace stubbles\date;
-use stubbles\lang;
-use stubbles\lang\exception\IllegalArgumentException;
 /**
  * Class for time zone handling.
  *
@@ -34,7 +32,7 @@ class TimeZone
      * or null.
      *
      * @param   string|\DateTimeZone  $timeZone  initial timezone handle
-     * @throws  \stubbles\lang\exception\IllegalArgumentException
+     * @throws  \InvalidArgumentException
      */
     public function __construct($timeZone = null)
     {
@@ -47,7 +45,7 @@ class TimeZone
         }
 
         if (!($this->timeZone instanceof \DateTimeZone)) {
-            throw new IllegalArgumentException('Invalid time zone identifier ' . $timeZone);
+            throw new \InvalidArgumentException('Invalid time zone identifier ' . $timeZone);
         }
     }
 
@@ -152,6 +150,6 @@ class TimeZone
      */
     public function __toString()
     {
-        return lang\__toString($this, array('timeZone' => $this->timeZone->getName()));
+        return $this->timeZone->getName();
     }
 }

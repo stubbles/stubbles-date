@@ -5,11 +5,11 @@
     "license": "BSD-3-Clause",
     "description": "Simplified handling of dates and datespans.",
     "require": {
-        "php": ">=5.4.0",
-        "stubbles/core": "~4.0"
+        "php": ">=5.4.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.1"
+        "phpunit/phpunit": "~4.1",
+        "stubbles/core": "~5.0"
     },
     "autoload": {
         "psr-4": {
@@ -18,7 +18,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "4.0.x-dev"
+            "dev-master": "5.0.x-dev"
         }
     },
     "minimum-stability": "dev",

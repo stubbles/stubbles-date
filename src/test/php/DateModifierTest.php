@@ -69,7 +69,7 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException  stubbles\lang\exception\IllegalArgumentException
+     * @expectedException  InvalidArgumentException
      */
     public function changeTimeWithInvalidArgumentThrowsIllegalArgumentException()
     {
@@ -79,7 +79,7 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException  stubbles\lang\exception\IllegalArgumentException
+     * @expectedException  InvalidArgumentException
      */
     public function changeTimeWithInvalidValuesThrowsIllegalArgumentException()
     {
@@ -243,7 +243,7 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException  stubbles\lang\exception\IllegalArgumentException
+     * @expectedException  InvalidArgumentException
      */
     public function changeDateWithInvalidArgumentThrowsIllegalArgumentException()
     {
@@ -253,7 +253,7 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException  stubbles\lang\exception\IllegalArgumentException
+     * @expectedException  InvalidArgumentException
      */
     public function changeDateWithInvalidValuesThrowsIllegalArgumentException()
     {

@@ -8,7 +8,6 @@
  * @package  stubbles
  */
 namespace stubbles\date\span;
-use stubbles\date\Date;
 /**
  * Interface for the datespan classes.
  *

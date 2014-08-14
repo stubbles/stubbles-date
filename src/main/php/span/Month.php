@@ -8,7 +8,6 @@
  * @package  stubbles\date
  */
 namespace stubbles\date\span;
-use stubbles\lang\exception\IllegalArgumentException;
 use stubbles\date\Date;
 /**
  * Datespan that represents a month.
@@ -70,14 +69,14 @@ class Month extends CustomDatespan
      *
      * @param   string  $input
      * @return  \stubbles\date\span\Month
-     * @throws  \stubbles\lang\exception\IllegalArgumentException
+     * @throws  \InvalidArgumentException
      * @since   3.5.2
      */
     public static function fromString($input)
     {
         $data = explode('-', $input);
         if (!isset($data[0]) || !isset($data[1])) {
-            throw new IllegalArgumentException('Can not parse month from string "' . $input . '", format should be "YYYY-MM"');
+            throw new \InvalidArgumentException('Can not parse month from string "' . $input . '", format should be "YYYY-MM"');
         }
 
         list($year, $month) = $data;
