@@ -100,6 +100,58 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @since  5.1.0
+     * @group  issue_2
+     */
+    public function changeTimeToStartOfDayReturnsNewInstance()
+    {
+        $date = new Date('2011-03-31 01:00:00');
+        $this->assertNotSame($date,
+                             $date->change()->timeToStartOfDay()
+        );
+    }
+
+    /**
+     * @test
+     * @since  5.1.0
+     * @group  issue_2
+     */
+    public function changeTimeToStartOfDaySetsTime()
+    {
+        $date = new Date('2011-03-31 01:00:00');
+        $this->assertDateEquals('2011-03-31T00:00:00+00:00',
+                                $date->change()->timeToStartOfDay()
+        );
+    }
+
+    /**
+     * @test
+     * @since  5.1.0
+     * @group  issue_2
+     */
+    public function changeTimeToEndOfDayReturnsNewInstance()
+    {
+        $date = new Date('2011-03-31 01:00:00');
+        $this->assertNotSame($date,
+                             $date->change()->timeToEndOfDay()
+        );
+    }
+
+    /**
+     * @test
+     * @since  5.1.0
+     * @group  issue_2
+     */
+    public function changeTimeToEndOfDaySetsTime()
+    {
+        $date = new Date('2011-03-31 01:00:00');
+        $this->assertDateEquals('2011-03-31T23:59:59+00:00',
+                                $date->change()->timeToEndOfDay()
+        );
+    }
+
+    /**
+     * @test
      */
     public function changeTimeChangesTimeOnlyButKeepsDate()
     {

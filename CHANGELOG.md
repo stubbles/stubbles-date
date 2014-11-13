@@ -1,3 +1,9 @@
+5.1.0 (2014-11-13)
+------------------
+
+  * implemented #2: helper methods to change date to start or end of day
+
+
 5.0.0 (2014-08-14)
 ------------------
 

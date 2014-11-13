@@ -66,6 +66,30 @@ class DateModifier
     }
 
     /**
+     * returns a new date instance with same date but time at 00:00:00
+     *
+     * @api
+     * @return  \stubbles\date\Date
+     * @since   5.1.0
+     */
+    public function timeToStartOfDay()
+    {
+        return $this->timeTo('00:00:00');
+    }
+
+    /**
+     * returns a new date instance with same date but time at 23:59:59
+     *
+     * @api
+     * @return  \stubbles\date\Date
+     * @since   5.1.0
+     */
+    public function timeToEndOfDay()
+    {
+        return $this->timeTo('23:59:59');
+    }
+
+    /**
      * returns a new date instance with same date, minute and second but changed hour
      *
      * @api
@@ -74,7 +98,11 @@ class DateModifier
      */
     public function hourTo($hour)
     {
-        return $this->createDateWithNewTime($hour, $this->originalDate->getMinutes(), $this->originalDate->getSeconds());
+        return $this->createDateWithNewTime(
+                $hour,
+                $this->originalDate->getMinutes(),
+                $this->originalDate->getSeconds()
+        );
     }
 
     /**
@@ -98,7 +126,11 @@ class DateModifier
      */
     public function minuteTo($minute)
     {
-        return $this->createDateWithNewTime($this->originalDate->getHours(), $minute, $this->originalDate->getSeconds());
+        return $this->createDateWithNewTime(
+                $this->originalDate->getHours(),
+                $minute,
+                $this->originalDate->getSeconds()
+        );
     }
 
     /**
@@ -122,7 +154,11 @@ class DateModifier
      */
     public function secondTo($second)
     {
-        return $this->createDateWithNewTime($this->originalDate->getHours(), $this->originalDate->getMinutes(), $second);
+        return $this->createDateWithNewTime(
+                $this->originalDate->getHours(),
+                $this->originalDate->getMinutes(),
+                $second
+        );
     }
 
     /**
@@ -185,7 +221,11 @@ class DateModifier
      */
     public function yearTo($year)
     {
-        return $this->createNewDateWithExistingTime($year, $this->originalDate->getMonth(), $this->originalDate->getDay());
+        return $this->createNewDateWithExistingTime(
+                $year,
+                $this->originalDate->getMonth(),
+                $this->originalDate->getDay()
+        );
     }
 
     /**
@@ -209,7 +249,11 @@ class DateModifier
      */
     public function monthTo($month)
     {
-        return $this->createNewDateWithExistingTime($this->originalDate->getYear(), $month, $this->originalDate->getDay());
+        return $this->createNewDateWithExistingTime(
+                $this->originalDate->getYear(),
+                $month,
+                $this->originalDate->getDay()
+        );
     }
 
     /**
@@ -233,7 +277,11 @@ class DateModifier
      */
     public function dayTo($day)
     {
-        return $this->createNewDateWithExistingTime($this->originalDate->getYear(), $this->originalDate->getMonth(), $day);
+        return $this->createNewDateWithExistingTime(
+                $this->originalDate->getYear(),
+                $this->originalDate->getMonth(),
+                $day
+        );
     }
 
     /**
