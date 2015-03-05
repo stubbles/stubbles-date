@@ -22,15 +22,7 @@ class CustomDatespan extends AbstractDatespan
      */
     public function days()
     {
-        $days         = [];
-        $start        = $this->start();
-        $endTimestamp = $this->end()->format('U');
-        while ($start->format('U') <= $endTimestamp) {
-            $days[] =  new Day(clone $start);
-            $start   = $start->change()->to('+1 day');
-        }
-
-        return $days;
+        return new DayIterator($this);
     }
 
     /**

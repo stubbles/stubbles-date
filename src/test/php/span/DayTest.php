@@ -58,7 +58,7 @@ class DayTest extends \PHPUnit_Framework_TestCase
         $day       = new Day('2007-05-14');
         $dateSpans = $day->days();
         $this->assertEquals(1, count($dateSpans));
-        $this->assertSame($dateSpans[0], $day);
+        $this->assertSame($dateSpans['2007-05-14'], $day);
     }
 
     /**

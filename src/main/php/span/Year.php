@@ -78,15 +78,7 @@ class Year extends CustomDatespan
      */
     public function months()
     {
-        $month        = array();
-        $start        = $this->getStart();
-        $endTimestamp = $this->getEnd()->format('U');
-        while ($start->format('U') <= $endTimestamp) {
-            $month[] = new Month($start->getYear(), $start->getMonth());
-            $start   = $start->change()->to('+1 month');
-        }
-
-        return $month;
+        return new MonthIterator($this);
     }
 
     /**

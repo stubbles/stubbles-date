@@ -89,14 +89,15 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function getDaysReturnsListOfAllDays()
+    public function daysReturnsListOfAllDays()
     {
         $customDatespan = new CustomDatespan('2007-05-14', '2007-05-27');
-        $days           = $customDatespan->days();
-        $this->assertEquals(14, count($days));
-        $expectedDay = 14;
-        foreach ($days as $day) {
-            $this->assertInstanceOf('stubbles\date\span\Day', $day);
+        $expectedDay    = 14;
+        foreach ($customDatespan->days() as $dayString => $day) {
+            $this->assertEquals(
+                    '2007-05-' . str_pad($expectedDay, 2, '0', STR_PAD_LEFT),
+                    $dayString
+            );
             $this->assertEquals($expectedDay, $day->asInt());
             $expectedDay++;
         }

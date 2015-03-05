@@ -69,57 +69,48 @@ class YearTest extends \PHPUnit_Framework_TestCase
      */
     public function dayYear()
     {
-        return [[2007, 365],
-                [2008, 366]
+        return [[new Year(2007), 365],
+                [new Year(2008), 366]
         ];
     }
 
     /**
-     * @param  int  $year      year to get days for
-     * @param  int  $dayCount  amount of days in this year
+     * @param  \stubbles\date\span\Year  $year      year to get days for
+     * @param  int                       $dayCount  amount of days in this year
      * @test
      * @dataProvider  dayYear
      */
-    public function getDaysReturnsAllDaysInYear($year, $dayCount)
+    public function daysReturnsAllDaysInYear(Year $year, $dayCount)
     {
-        $year = new Year($year);
-        $days = $year->days();
-        $this->assertEquals($dayCount, count($days));
-        foreach ($days as $day) {
-            /* @var $day Day */
-            $this->assertInstanceOf('stubbles\date\span\Day', $day);
+        $days = 0;
+        foreach ($year->days() as $dayString => $day) {
+            $this->assertEquals($dayString, $day->asString());
+            $days++;
         }
+
+        $this->assertEquals($dayCount, $days);
     }
 
     /**
      * @test
      */
-    public function getMonthsReturnsAllMonth()
+    public function monthsReturnsAllMonth()
     {
         $year   = new Year(2007);
-        $months = $year->months();
-        $this->assertEquals(12, count($months));
-        $expectedMonth = 1;
-        foreach ($months as $month) {
-            $this->assertInstanceOf('stubbles\date\span\Month', $month);
-            $this->assertEquals('2007-' . $this->prefixInt($expectedMonth), $month->asString());
+        $expectedMonth = 0;
+        foreach ($year->months() as $monthString => $month) {
             $expectedMonth++;
-        }
-    }
-
-    /**
-     * prefixes ints smaller than 10 with a zero
-     *
-     * @param   int     $int
-     * @return  string
-     */
-    private function prefixInt($int)
-    {
-        if (10 <= $int) {
-            return $int;
+            $this->assertEquals(
+                    $monthString,
+                    $month->asString()
+            );
+            $this->assertEquals(
+                    '2007-' . str_pad($expectedMonth, 2, '0', STR_PAD_LEFT),
+                    $monthString
+            );
         }
 
-        return 0 . $int;
+        $this->assertEquals(12, $expectedMonth);
     }
 
     /**

@@ -29,18 +29,22 @@ class WeekTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function getDaysReturnsAllSevenDays()
+    public function daysReturnsAllSevenDays()
     {
         $week = new Week('2007-05-14');
-        $days = $week->days();
-        $this->assertEquals(7, count($days));
+        $days = 0;
         $expectedDay = 14;
-        foreach ($days as $day) {
-            /* @var $day Day */
-            $this->assertInstanceOf('stubbles\date\span\Day', $day);
+        foreach ($week->days() as $dayString => $day) {
+            $this->assertEquals(
+                    '2007-05-' . str_pad($expectedDay, 2, '0', STR_PAD_LEFT),
+                    $dayString
+            );
             $this->assertEquals($expectedDay, $day->asInt());
             $expectedDay++;
+            $days++;
         }
+
+        $this->assertEquals(7, $days);
     }
 
     /**

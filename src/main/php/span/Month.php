@@ -47,20 +47,32 @@ class Month extends CustomDatespan
      */
     public function __construct($year = null, $month = null)
     {
-        if (null === $year) {
+        $start = null;
+        if ($year instanceof Date) {
+            $start = $year;
+            $year  = $start->year();
+        } elseif (null === $year) {
             $year = (int) date('Y');
         }
 
         if (null === $month) {
-            $month = (int) date('m');
+            if (null !== $start) {
+                $month = $start->month();
+            } else {
+                $month = (int) date('m');
+            }
         }
 
-        $start              = new Date($year . '-' . $month . '-1 00:00:00');
+        if (null === $start) {
+            $start = new Date($year . '-' . $month . '-01 00:00:00');
+        }
+
         $this->amountOfDays = $start->format('t');
         $this->year         = $year;
         $this->month        = $month;
-        parent::__construct($start,
-                            new Date($year . '-' . $month . '-' . $this->amountOfDays . ' 23:59:59')
+        parent::__construct(
+                $start,
+                new Date($year . '-' . $month . '-' . $this->amountOfDays . ' 23:59:59')
         );
     }
 
@@ -93,6 +105,28 @@ class Month extends CustomDatespan
     {
         $timestamp = strtotime('first day of previous month');
         return new self(date('Y', $timestamp), date('m', $timestamp));
+    }
+
+    /**
+     * returns next month
+     *
+     * @return  \stubbles\date\span\Month
+     * @since   5.2.0
+     */
+    public function next()
+    {
+        return new self($this->start()->change()->byMonths(1));
+    }
+
+    /**
+     * returns the month before
+     *
+     * @return  \stubbles\date\span\Month
+     * @since   5.2.0
+     */
+    public function before()
+    {
+        return new self($this->start()->change()->byMonths(-1));
     }
 
     /**

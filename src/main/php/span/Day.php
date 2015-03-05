@@ -57,6 +57,28 @@ class Day extends AbstractDatespan implements Datespan
     }
 
     /**
+     * returns next day
+     *
+     * @return  \stubbles\date\span\Day
+     * @since   5.2.0
+     */
+    public function next()
+    {
+        return new self($this->start()->change()->byDays(1));
+    }
+
+    /**
+     * returns the day before
+     *
+     * @return  \stubbles\date\span\Day
+     * @since   5.2.0
+     */
+    public function before()
+    {
+        return new self($this->start()->change()->byDays(-1));
+    }
+
+    /**
      * returns amount of days on this day
      *
      * Well, the amount of days on a day is obviously always one.
@@ -88,7 +110,7 @@ class Day extends AbstractDatespan implements Datespan
      */
     public function days()
     {
-        return [$this];
+        return [$this->asString() => $this];
     }
 
     /**

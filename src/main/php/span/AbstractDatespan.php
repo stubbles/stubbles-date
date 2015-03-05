@@ -19,13 +19,13 @@ abstract class AbstractDatespan implements Datespan
     /**
      * start date of the span
      *
-     * @type  Date
+     * @type  \stubbles\date\Date
      */
     private $start;
     /**
      * end date of the span
      *
-     * @type  Date
+     * @type  \stubbles\date\Date
      */
     private $end;
 

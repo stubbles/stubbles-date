@@ -41,7 +41,7 @@ class DateModifier
      */
     public function to($target)
     {
-        $modifiedHandle = clone $this->originalDate->getHandle();
+        $modifiedHandle = clone $this->originalDate->handle();
         $modifiedHandle->modify($target);
         return new Date($modifiedHandle);
     }
@@ -100,8 +100,8 @@ class DateModifier
     {
         return $this->createDateWithNewTime(
                 $hour,
-                $this->originalDate->getMinutes(),
-                $this->originalDate->getSeconds()
+                $this->originalDate->minutes(),
+                $this->originalDate->seconds()
         );
     }
 
@@ -114,7 +114,7 @@ class DateModifier
      */
     public function byHours($hours)
     {
-        return $this->hourTo($this->originalDate->getHours() + $hours);
+        return $this->hourTo($this->originalDate->hours() + $hours);
     }
 
     /**
@@ -127,9 +127,9 @@ class DateModifier
     public function minuteTo($minute)
     {
         return $this->createDateWithNewTime(
-                $this->originalDate->getHours(),
+                $this->originalDate->hours(),
                 $minute,
-                $this->originalDate->getSeconds()
+                $this->originalDate->seconds()
         );
     }
 
@@ -142,7 +142,7 @@ class DateModifier
      */
     public function byMinutes($minutes)
     {
-        return $this->minuteTo($this->originalDate->getMinutes() + $minutes);
+        return $this->minuteTo($this->originalDate->minutes() + $minutes);
     }
 
     /**
@@ -155,8 +155,8 @@ class DateModifier
     public function secondTo($second)
     {
         return $this->createDateWithNewTime(
-                $this->originalDate->getHours(),
-                $this->originalDate->getMinutes(),
+                $this->originalDate->hours(),
+                $this->originalDate->minutes(),
                 $second
         );
     }
@@ -170,7 +170,7 @@ class DateModifier
      */
     public function bySeconds($seconds)
     {
-        return $this->secondTo($this->originalDate->getSeconds() + $seconds);
+        return $this->secondTo($this->originalDate->seconds() + $seconds);
     }
 
     /**
@@ -185,7 +185,7 @@ class DateModifier
      */
     protected function createDateWithNewTime($hour, $minute, $second)
     {
-        $modifiedHandle = clone $this->originalDate->getHandle();
+        $modifiedHandle = clone $this->originalDate->handle();
         if (false === @$modifiedHandle->setTime($hour, $minute, $second)) {
             throw new \InvalidArgumentException('Given values for hour, minute and/or second not suitable for changing the time.');
         }
@@ -223,8 +223,8 @@ class DateModifier
     {
         return $this->createNewDateWithExistingTime(
                 $year,
-                $this->originalDate->getMonth(),
-                $this->originalDate->getDay()
+                $this->originalDate->month(),
+                $this->originalDate->day()
         );
     }
 
@@ -237,7 +237,7 @@ class DateModifier
      */
     public function byYears($years)
     {
-        return $this->yearTo($this->originalDate->getYear() + $years);
+        return $this->yearTo($this->originalDate->year() + $years);
     }
 
     /**
@@ -250,9 +250,9 @@ class DateModifier
     public function monthTo($month)
     {
         return $this->createNewDateWithExistingTime(
-                $this->originalDate->getYear(),
+                $this->originalDate->year(),
                 $month,
-                $this->originalDate->getDay()
+                $this->originalDate->day()
         );
     }
 
@@ -265,7 +265,7 @@ class DateModifier
      */
     public function byMonths($months)
     {
-        return $this->monthTo($this->originalDate->getMonth() + $months);
+        return $this->monthTo($this->originalDate->month() + $months);
     }
 
     /**
@@ -278,8 +278,8 @@ class DateModifier
     public function dayTo($day)
     {
         return $this->createNewDateWithExistingTime(
-                $this->originalDate->getYear(),
-                $this->originalDate->getMonth(),
+                $this->originalDate->year(),
+                $this->originalDate->month(),
                 $day
         );
     }
@@ -293,7 +293,7 @@ class DateModifier
      */
     public function byDays($days)
     {
-        return $this->dayTo($this->originalDate->getDay() + $days);
+        return $this->dayTo($this->originalDate->day() + $days);
     }
 
     /**
@@ -307,7 +307,7 @@ class DateModifier
      */
     protected function createNewDateWithExistingTime($year, $month, $day)
     {
-        $modifiedHandle = clone $this->originalDate->getHandle();
+        $modifiedHandle = clone $this->originalDate->handle();
         if (false === @$modifiedHandle->setDate($year, $month, $day)) {
             throw new \InvalidArgumentException('Given values for year, month and/or day not suitable for changing the date.');
         }

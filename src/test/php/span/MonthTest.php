@@ -87,45 +87,45 @@ class MonthTest extends \PHPUnit_Framework_TestCase
      */
     public function dayMonth()
     {
-        return [[2007, 4, 30],
-                [2007, 3, 31],
-                [2007, 2, 28],
-                [2008, 2, 29]
+        return [[new Month(2007, 4), 30],
+                [new Month(2007, 3), 31],
+                [new Month(2007, 2), 28],
+                [new Month(2008, 2), 29]
         ];
     }
 
     /**
-     * @param  int  $year      year to get days for
-     * @param  int  $month     month to get days for
-     * @param  int  $dayCount  amount of days in this month
+     * @param  \stubbles\date\span\Month  $month     month to get days for
+     * @param  int                        $dayCount  amount of days in this month
      * @test
      * @dataProvider  dayMonth
      */
-    public function amountOfDaysIsAlwaysCorrect($year, $month, $dayCount)
+    public function amountOfDaysIsAlwaysCorrect(Month $month, $dayCount)
     {
-        $month = new Month($year, $month);
         $this->assertEquals($dayCount, $month->amountOfDays());
     }
 
     /**
-     * @param  int  $year      year to get days for
-     * @param  int  $month     month to get days for
-     * @param  int  $dayCount  amount of days in this month
+     * @param  \stubbles\date\span\Month  $month     month to get days for
+     * @param  int                        $dayCount  amount of days in this month
      * @test
      * @dataProvider  dayMonth
      */
-    public function getDaysReturnsAllDaysInMonth($year, $month, $dayCount)
+    public function daysReturnsAllDaysInMonth(Month $month, $dayCount)
     {
-        $month = new Month($year, $month);
-        $days  = $month->days();
-        $this->assertEquals($dayCount, count($days));
+        $days        = 0;
         $expectedDay = 1;
-        foreach ($days as $day) {
-            /* @var $day Day */
-            $this->assertInstanceOf('stubbles\date\span\Day', $day);
+        foreach ($month->days() as $dayString => $day) {
+            $this->assertEquals(
+                    $month->asString() . '-' . str_pad($expectedDay, 2, '0', STR_PAD_LEFT),
+                    $dayString
+            );
             $this->assertEquals($expectedDay, $day->asInt());
             $expectedDay++;
+            $days++;
         }
+
+        $this->assertEquals($dayCount, $days);
     }
 
     /**
