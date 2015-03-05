@@ -22,7 +22,7 @@ class CustomDatespan extends AbstractDatespan
      */
     public function days()
     {
-        return new DayIterator($this);
+        return new Days($this);
     }
 
     /**

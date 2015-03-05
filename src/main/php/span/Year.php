@@ -78,7 +78,7 @@ class Year extends CustomDatespan
      */
     public function months()
     {
-        return new MonthIterator($this);
+        return new Months($this);
     }
 
     /**

@@ -9,34 +9,34 @@
  */
 namespace stubbles\date\span;
 /**
- * Allows iteration over months of a datespan.
+ * Allows iteration over days of a datespan.
  *
  * @since  5.2.0
  */
-class MonthIterator implements \Iterator
+class Days implements \Iterator
 {
     /**
      * start date of the iteration
      *
-     * @type  int
+     * @type  \stubbles\date\span\Datespan
      */
-    private $year;
+    private $datespan;
     /**
      * start date of the span
      *
-     * @type  \stubbles\date\span\Month
+     * @type  \stubbles\date\span\Day
      */
-    private $currentMonth;
+    private $current;
 
     /**
      * constructor
      *
-     * @param  \stubbles\date\span\Year  $year
+     * @param  \stubbles\date\span\Datespan  $datespan
      */
-    public function __construct(Year $year)
+    public function __construct(Datespan $datespan)
     {
-        $this->year         = $year->asInt();
-        $this->currentMonth = new Month($this->year, 1);
+        $this->datespan = $datespan;
+        $this->current  = new Day($this->datespan->start());
     }
 
     /**
@@ -46,7 +46,7 @@ class MonthIterator implements \Iterator
      */
     public function current()
     {
-        return $this->currentMonth;
+        return $this->current;
     }
 
     /**
@@ -56,7 +56,7 @@ class MonthIterator implements \Iterator
      */
     public function key()
     {
-        return $this->currentMonth->asString();
+        return $this->current->asString();
     }
 
     /**
@@ -64,7 +64,7 @@ class MonthIterator implements \Iterator
      */
     public function next()
     {
-        $this->currentMonth = $this->currentMonth->next();
+        $this->current = $this->current->next();
     }
 
     /**
@@ -72,7 +72,7 @@ class MonthIterator implements \Iterator
      */
     public function rewind()
     {
-        $this->currentMonth = new Month($this->year, 1);
+        $this->current = new Day($this->datespan->start());
     }
 
     /**
@@ -82,6 +82,6 @@ class MonthIterator implements \Iterator
      */
     public function valid()
     {
-        return $this->currentMonth->year() == $this->year;
+        return $this->current->startsBefore($this->datespan->end());
     }
 }
