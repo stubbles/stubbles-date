@@ -250,4 +250,24 @@ class MonthTest extends \PHPUnit_Framework_TestCase
     {
          Month::fromString('invalid');
     }
+
+    /**
+     * @test
+     * @since  5.2.0
+     */
+    public function nextMonthRaisesYearForDecember()
+    {
+        $month = new Month(2014, 12);
+        $this->assertEquals('2015-01', $month->next());
+    }
+
+    /**
+     * @test
+     * @since  5.2.0
+     */
+    public function beforeMonthLowersYearForJanuary()
+    {
+        $month = new Month(2014, 01);
+        $this->assertEquals('2013-12', $month->before());
+    }
 }

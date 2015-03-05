@@ -113,7 +113,18 @@ class Year extends CustomDatespan
     }
 
     /**
-     * returns a string representation of the date object
+     * returns int representation of the year
+     *
+     * @return  int
+     * @since   5.2.0
+     */
+    public function asInt()
+    {
+        return $this->year;
+    }
+
+    /**
+     * returns a string representation of the year
      *
      * @return  string
      */

@@ -203,4 +203,24 @@ class DayTest extends \PHPUnit_Framework_TestCase
                 Day::yesterday()->asString()
         );
     }
+
+    /**
+     * @test
+     * @since  5.2.0
+     */
+    public function nextDayRaisesYearForDecember31st()
+    {
+        $day = new Day('2014-12-31');
+        $this->assertEquals('2015-01-01', $day->next());
+    }
+
+    /**
+     * @test
+     * @since  5.2.0
+     */
+    public function beforeDayLowersYearForJanuary1st()
+    {
+        $day = new Day('2014-01-01');
+        $this->assertEquals('2013-12-31', $day->before());
+    }
 }

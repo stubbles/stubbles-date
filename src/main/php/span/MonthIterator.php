@@ -18,15 +18,15 @@ class MonthIterator implements \Iterator
     /**
      * start date of the iteration
      *
-     * @type  \stubbles\date\span\Year
+     * @type  int
      */
     private $year;
     /**
      * start date of the span
      *
-     * @type  \stubbles\date\span\Day
+     * @type  \stubbles\date\span\Month
      */
-    private $current;
+    private $currentMonth;
 
     /**
      * constructor
@@ -35,8 +35,8 @@ class MonthIterator implements \Iterator
      */
     public function __construct(Year $year)
     {
-        $this->year    = $year;
-        $this->current = new Month($year, 1);
+        $this->year         = $year->asInt();
+        $this->currentMonth = new Month($this->year, 1);
     }
 
     /**
@@ -46,7 +46,7 @@ class MonthIterator implements \Iterator
      */
     public function current()
     {
-        return $this->current;
+        return $this->currentMonth;
     }
 
     /**
@@ -56,7 +56,7 @@ class MonthIterator implements \Iterator
      */
     public function key()
     {
-        return $this->current->asString();
+        return $this->currentMonth->asString();
     }
 
     /**
@@ -64,7 +64,7 @@ class MonthIterator implements \Iterator
      */
     public function next()
     {
-        $this->current = $this->current->next();
+        $this->currentMonth = $this->currentMonth->next();
     }
 
     /**
@@ -72,7 +72,7 @@ class MonthIterator implements \Iterator
      */
     public function rewind()
     {
-        $this->current = new Month($this->year, 1);
+        $this->currentMonth = new Month($this->year, 1);
     }
 
     /**
@@ -82,6 +82,6 @@ class MonthIterator implements \Iterator
      */
     public function valid()
     {
-        return $this->current->startsBefore($this->year->end());
+        return $this->currentMonth->year() == $this->year;
     }
 }

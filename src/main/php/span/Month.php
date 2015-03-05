@@ -130,6 +130,16 @@ class Month extends CustomDatespan
     }
 
     /**
+     * returns year month belongs to
+     *
+     * @return  int
+     */
+    public function year()
+    {
+        return $this->year;
+    }
+
+    /**
      * returns amount of days in this month
      *
      * @return  int
