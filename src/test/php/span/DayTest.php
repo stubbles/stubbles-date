@@ -23,8 +23,9 @@ class DayTest extends \PHPUnit_Framework_TestCase
     public function startDateSetToMidNight()
     {
         $day = new Day('2007-04-04');
-        $this->assertEquals('2007-04-04 00:00:00' . $day->getStart()->getOffset(),
-                            $day->getStart()->asString()
+        $this->assertEquals(
+                '2007-04-04 00:00:00' . $day->start()->offset(),
+                $day->start()->asString()
         );
     }
 
@@ -34,8 +35,9 @@ class DayTest extends \PHPUnit_Framework_TestCase
     public function endDateSetToOneSecondBeforeMidNight()
     {
         $day = new Day('2007-04-04');
-        $this->assertEquals('2007-04-04 23:59:59' . $day->getEnd()->getOffset(),
-                            $day->getEnd()->asString()
+        $this->assertEquals(
+                '2007-04-04 23:59:59' . $day->end()->offset(),
+                $day->end()->asString()
         );
     }
 
@@ -45,7 +47,7 @@ class DayTest extends \PHPUnit_Framework_TestCase
     public function amountOfDaysIsAlwaysOne()
     {
         $day = new Day('2007-04-04');
-        $this->assertEquals(1, $day->getAmountOfDays());
+        $this->assertEquals(1, $day->amountOfDays());
     }
 
     /**
@@ -54,7 +56,7 @@ class DayTest extends \PHPUnit_Framework_TestCase
     public function getDaysReturnsListWithSelf()
     {
         $day       = new Day('2007-05-14');
-        $dateSpans = $day->getDays();
+        $dateSpans = $day->days();
         $this->assertEquals(1, count($dateSpans));
         $this->assertSame($dateSpans[0], $day);
     }

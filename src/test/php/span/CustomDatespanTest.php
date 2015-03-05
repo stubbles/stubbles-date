@@ -23,10 +23,11 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
     public function startDateCreatedFromStringInput()
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
-        $startDate      = $customDatespan->getStart();
+        $startDate      = $customDatespan->start();
         $this->assertInstanceOf('stubbles\date\Date', $startDate);
-        $this->assertEquals('2006-04-04 00:00:00' . $startDate->getOffset(),
-                            $startDate->asString()
+        $this->assertEquals(
+                '2006-04-04 00:00:00' . $startDate->offset(),
+                $startDate->asString()
         );
     }
 
@@ -36,10 +37,11 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
     public function endDateCreatedFromStringInput()
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
-        $endDate        = $customDatespan->getEnd();
+        $endDate        = $customDatespan->end();
         $this->assertInstanceOf('stubbles\date\Date', $endDate);
-        $this->assertEquals('2006-04-20 23:59:59' . $endDate->getOffset(),
-                            $endDate->asString()
+        $this->assertEquals(
+                '2006-04-20 23:59:59' . $endDate->offset(),
+                $endDate->asString()
         );
     }
 
@@ -48,10 +50,14 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
      */
     public function startDateIsSetToMidnight()
     {
-        $customDatespan = new CustomDatespan(new Date('2006-04-04'), new Date('2006-04-20'));
-        $startDate      = $customDatespan->getStart();
-        $this->assertEquals('2006-04-04 00:00:00' . $startDate->getOffset(),
-                            $startDate->asString()
+        $customDatespan = new CustomDatespan(
+                new Date('2006-04-04'),
+                new Date('2006-04-20')
+        );
+        $startDate      = $customDatespan->start();
+        $this->assertEquals(
+                '2006-04-04 00:00:00' . $startDate->offset(),
+                $startDate->asString()
         );
     }
 
@@ -60,10 +66,14 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
      */
     public function endDateIsSetToMidnight()
     {
-        $customDatespan = new CustomDatespan(new Date('2006-04-04'), new Date('2006-04-20'));
-        $endDate        = $customDatespan->getEnd();
-        $this->assertEquals('2006-04-20 23:59:59' . $endDate->getOffset(),
-                            $endDate->asString()
+        $customDatespan = new CustomDatespan(
+                new Date('2006-04-04'),
+                new Date('2006-04-20')
+        );
+        $endDate        = $customDatespan->end();
+        $this->assertEquals(
+                '2006-04-20 23:59:59' . $endDate->offset(),
+                $endDate->asString()
         );
     }
 
@@ -73,7 +83,7 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
     public function returnsAmountOfDaysInDatespan()
     {
         $customDatespan = new CustomDatespan('2007-05-14', '2007-05-27');
-        $this->assertEquals(14, $customDatespan->getAmountOfDays());
+        $this->assertEquals(14, $customDatespan->amountOfDays());
     }
 
     /**
@@ -82,7 +92,7 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
     public function getDaysReturnsListOfAllDays()
     {
         $customDatespan = new CustomDatespan('2007-05-14', '2007-05-27');
-        $days           = $customDatespan->getDays();
+        $days           = $customDatespan->days();
         $this->assertEquals(14, count($days));
         $expectedDay = 14;
         foreach ($days as $day) {
@@ -156,8 +166,8 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
         $customDatespan = new CustomDatespan('2007-05-14', '2007-05-27');
         $serialized     = serialize($customDatespan);
         $unserialized   = unserialize($serialized);
-        $this->assertTrue($customDatespan->getStart()->equals($unserialized->getStart()));
-        $this->assertTrue($customDatespan->getEnd()->equals($unserialized->getEnd()));
+        $this->assertTrue($customDatespan->start()->equals($unserialized->start()));
+        $this->assertTrue($customDatespan->end()->equals($unserialized->end()));
     }
 
     /**

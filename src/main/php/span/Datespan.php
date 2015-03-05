@@ -20,6 +20,14 @@ interface Datespan
      *
      * @return  \stubbles\date\Date
      */
+    public function start();
+
+    /**
+     * returns the start date
+     *
+     * @return  \stubbles\date\Date
+     * @deprecated  since 5.2.0, use start() instead, will be removed with 6.0.0
+     */
     public function getStart();
 
     /**
@@ -44,6 +52,14 @@ interface Datespan
      * returns the end date
      *
      * @return  \stubbles\date\Date
+     */
+    public function end();
+
+    /**
+     * returns the end date
+     *
+     * @return  \stubbles\date\Date
+     * @deprecated  since 5.2.0, use end() instead, will be removed with 6.0.0
      */
     public function getEnd();
 
@@ -90,12 +106,27 @@ interface Datespan
      *
      * @return  int
      */
+    public function amountOfDays();
+
+    /**
+     * returns amount of days in this datespan
+     *
+     * @return  int
+     * @deprecated  since 5.2.0, use amountOfDays() instead, will be removed with 6.0.0
+     */
     public function getAmountOfDays();
 
     /**
      * returns list of days
      *
      * @return  \stubbles\date\span\Day[]
+     */
+    public function days();
+    /**
+     * returns list of days
+     *
+     * @return  \stubbles\date\span\Day[]
+     * @deprecated  since 5.2.0, use days() instead, will be removed with 6.0.0
      */
     public function getDays();
 

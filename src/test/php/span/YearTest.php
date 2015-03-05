@@ -50,7 +50,7 @@ class YearTest extends \PHPUnit_Framework_TestCase
     public function amountOfDaysIs366ForLeapYears()
     {
         $year = new Year(2008);
-        $this->assertEquals(366, $year->getAmountOfDays());
+        $this->assertEquals(366, $year->amountOfDays());
     }
 
     /**
@@ -59,7 +59,7 @@ class YearTest extends \PHPUnit_Framework_TestCase
     public function amountOfDaysIs365ForNonLeapYears()
     {
         $year = new Year(2007);
-        $this->assertEquals(365, $year->getAmountOfDays());
+        $this->assertEquals(365, $year->amountOfDays());
     }
 
     /**
@@ -67,23 +67,23 @@ class YearTest extends \PHPUnit_Framework_TestCase
      *
      * @return  array
      */
-    public function getDayYear()
+    public function dayYear()
     {
-        return array(array(2007, 365),
-                     array(2008, 366)
-        );
+        return [[2007, 365],
+                [2008, 366]
+        ];
     }
 
     /**
      * @param  int  $year      year to get days for
      * @param  int  $dayCount  amount of days in this year
      * @test
-     * @dataProvider  getDayYear
+     * @dataProvider  dayYear
      */
     public function getDaysReturnsAllDaysInYear($year, $dayCount)
     {
         $year = new Year($year);
-        $days = $year->getDays();
+        $days = $year->days();
         $this->assertEquals($dayCount, count($days));
         foreach ($days as $day) {
             /* @var $day Day */
@@ -97,7 +97,7 @@ class YearTest extends \PHPUnit_Framework_TestCase
     public function getMonthsReturnsAllMonth()
     {
         $year   = new Year(2007);
-        $months = $year->getMonths();
+        $months = $year->months();
         $this->assertEquals(12, count($months));
         $expectedMonth = 1;
         foreach ($months as $month) {
@@ -165,7 +165,7 @@ class YearTest extends \PHPUnit_Framework_TestCase
     {
         $year = new Year(2007);
         for ($month = 1; $month <= 12; $month++) {
-            $days = $this->createMonth($month)->getAmountOfDays();
+            $days = $this->createMonth($month)->amountOfDays();
             for ($day = 1; $day <= $days; $day++) {
                 $this->assertTrue($year->containsDate(new Date('2007-' . $month . '-' . $day)));
             }

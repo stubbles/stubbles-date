@@ -20,9 +20,9 @@ class CustomDatespan extends AbstractDatespan
      *
      * @return  \stubbles\date\span\Day[]
      */
-    public function getDays()
+    public function days()
     {
-        $days         = array();
+        $days         = [];
         $start        = $this->getStart();
         $endTimestamp = $this->getEnd()->format('U');
         while ($start->format('U') <= $endTimestamp) {
@@ -31,6 +31,17 @@ class CustomDatespan extends AbstractDatespan
         }
 
         return $days;
+    }
+
+    /**
+     * returns list of days within this datespan
+     *
+     * @return  \stubbles\date\span\Day[]
+     * @deprecated  since 5.2.0, use days() instead, will be removed with 6.0.0
+     */
+    public function getDays()
+    {
+        return $this->days();
     }
 
     /**

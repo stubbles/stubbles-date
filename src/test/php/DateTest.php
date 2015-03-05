@@ -8,6 +8,7 @@
  * @package  stubbles\date
  */
 namespace stubbles\date;
+use stubbles\lang\reflect;
 /**
  * Helper class for the test.
  */
@@ -16,7 +17,7 @@ class DateHandleDeliverer extends Date
     /**
      * returns handle
      *
-     * @return  DateTime
+     * @return  \DateTime
      */
     public static function deliverHandle(Date $date)
     {
@@ -35,19 +36,19 @@ class DateTest extends \PHPUnit_Framework_TestCase
      *
      * @type  string
      */
-    protected $originTimeZone;
+    private $originTimeZone;
     /**
      * current date/time as timestamp
      *
      * @type  int
      */
-    protected $timestamp;
+    private $timestamp;
     /**
      * instance to test
      *
-     * @type  Date
+     * @type  \stubbles\date\Date
      */
-    protected $date;
+    private $date;
 
     /**
      * set up test environment
@@ -76,9 +77,10 @@ class DateTest extends \PHPUnit_Framework_TestCase
      */
     protected function assertDateEquals($expected, Date $date)
     {
-        $this->assertEquals(date_format(date_create($expected), 'U'),
-                            date_format($date->getHandle(), 'U'),
-                            'Expected ' . $expected . ' but got ' . $date->format('c')
+        $this->assertEquals(
+                date_format(date_create($expected), 'U'),
+                date_format($date->getHandle(), 'U'),
+                'Expected ' . $expected . ' but got ' . $date->format('c')
         );
     }
 
@@ -89,7 +91,9 @@ class DateTest extends \PHPUnit_Framework_TestCase
      */
     public function constructorParseWithoutTz()
     {
-        $this->assertTrue(new Date('2007-01-01 01:00:00 Europe/Berlin') instanceof Date);
+        $this->assertTrue(
+                new Date('2007-01-01 01:00:00 Europe/Berlin') instanceof Date
+        );
     }
 
     /**
@@ -99,7 +103,10 @@ class DateTest extends \PHPUnit_Framework_TestCase
      */
     public function constructorUnixtimestampWithoutTz()
     {
-        $this->assertDateEquals('2007-08-23T12:35:47+00:00', new Date(1187872547));
+        $this->assertDateEquals(
+                '2007-08-23T12:35:47+00:00',
+                new Date(1187872547)
+        );
     }
 
     /**
@@ -109,27 +116,45 @@ class DateTest extends \PHPUnit_Framework_TestCase
      */
     public function constructorUnixtimestampWithTz()
     {
-        $this->assertDateEquals('2007-08-23T12:35:47+00:00', new Date(1187872547, new TimeZone('Europe/Berlin')));
+        $this->assertDateEquals(
+                '2007-08-23T12:35:47+00:00',
+                new Date(1187872547, new TimeZone('Europe/Berlin'))
+        );
+    }
+
+    public function constructorTimezones()
+    {
+        return [
+            [
+                '2007-01-01T00:00:00+00:00',
+                'Europe/Berlin',
+                '2007-01-01 01:00:00 Europe/Berlin',
+                null
+            ],
+            [
+                '2007-01-01T00:00:00+00:00',
+                'Europe/Berlin',
+                '2007-01-01 01:00:00 Europe/Berlin',
+                new TimeZone('Europe/Athens')
+            ],
+            [
+                '2006-12-31T23:00:00+00:00',
+                'Europe/Athens',
+                '2007-01-01 01:00:00',
+                new TimeZone('Europe/Athens')
+            ]
+        ];
     }
 
     /**
-     * time zone info should be parsed correct
-     *
      * @test
+     * @dataProvider  constructorTimezones
      */
-    public function constructorParseTz()
+    public function constructorParseTz($expectedTimestamp, $expectedTimeZone, $constructorTimestamp, $constructorTimeZone)
     {
-        $date = new Date('2007-01-01 01:00:00 Europe/Berlin');
-        $this->assertEquals('Europe/Berlin', $date->getTimeZone()->getName());
-        $this->assertDateEquals('2007-01-01T00:00:00+00:00', $date);
-
-        $date = new Date('2007-01-01 01:00:00 Europe/Berlin', new TimeZone('Europe/Athens'));
-        $this->assertEquals('Europe/Berlin', $date->getTimeZone()->getName());
-        $this->assertDateEquals('2007-01-01T00:00:00+00:00', $date);
-
-        $date= new Date('2007-01-01 01:00:00', new TimeZone('Europe/Athens'));
-        $this->assertEquals('Europe/Athens', $date->getTimeZone()->getName());
-        $this->assertDateEquals('2006-12-31T23:00:00+00:00', $date);
+        $date = new Date($constructorTimestamp, $constructorTimeZone);
+        $this->assertEquals($expectedTimeZone, $date->timeZone()->name());
+        $this->assertDateEquals($expectedTimestamp, $date);
     }
 
     /**
@@ -141,8 +166,8 @@ class DateTest extends \PHPUnit_Framework_TestCase
     public function noDiscreteTimeZone()
     {
         $date = new Date('2007-11-04 14:32:00+1000');
-        $this->assertEquals('+1000', $date->getOffset());
-        $this->assertEquals(36000, $date->getOffsetInSeconds());
+        $this->assertEquals('+1000', $date->offset());
+        $this->assertEquals(36000, $date->offsetInSeconds());
     }
 
     /**
@@ -153,10 +178,10 @@ class DateTest extends \PHPUnit_Framework_TestCase
     public function constructorParseNoTz()
     {
         $date= new Date('2007-01-01 01:00:00', new TimeZone('Europe/Athens'));
-        $this->assertEquals('Europe/Athens', $date->getTimeZone()->getName());
+        $this->assertEquals('Europe/Athens', $date->timeZone()->name());
 
         $date= new Date('2007-01-01 01:00:00');
-        $this->assertEquals('GMT', $date->getTimeZone()->getName());
+        $this->assertEquals('GMT', $date->timeZone()->name());
     }
 
     /**
@@ -209,7 +234,10 @@ class DateTest extends \PHPUnit_Framework_TestCase
      */
     public function preUnixEpoch()
     {
-        $this->assertDateEquals('1969-12-31T00:00:00+00:00', new Date('31.12.1969 00:00 GMT'));
+        $this->assertDateEquals(
+                '1969-12-31T00:00:00+00:00',
+                new Date('31.12.1969 00:00 GMT')
+        );
     }
 
     /**
@@ -229,7 +257,10 @@ class DateTest extends \PHPUnit_Framework_TestCase
     public function pre1582()
     {
         //$this->assertDateEquals('1499-12-21T00:00:00+00:00', new Date('01.01.1500 00:00 GMT'));
-        $this->assertDateEquals('1500-01-01T00:00:00+00:00', new Date('01.01.1500 00:00 GMT'));
+        $this->assertDateEquals(
+                '1500-01-01T00:00:00+00:00',
+                new Date('01.01.1500 00:00 GMT')
+        );
     }
 
     /**
@@ -253,8 +284,14 @@ class DateTest extends \PHPUnit_Framework_TestCase
     {
         //$this->assertDateEquals('1753-01-01T00:00:00+00:00', new Date('01.01.1753 00:00 GMT'));
         //$this->assertDateEquals('1751-12-21T00:00:00+00:00', new Date('01.01.1752 00:00 GMT'));
-        $this->assertDateEquals('1753-01-01T00:00:00+00:00', new Date('01.01.1753 00:00 GMT'));
-        $this->assertDateEquals('1752-01-01T00:00:00+00:00', new Date('01.01.1752 00:00 GMT'));
+        $this->assertDateEquals(
+                '1753-01-01T00:00:00+00:00',
+                new Date('01.01.1753 00:00 GMT')
+        );
+        $this->assertDateEquals(
+                '1752-01-01T00:00:00+00:00',
+                new Date('01.01.1752 00:00 GMT')
+        );
     }
 
     /**
@@ -265,13 +302,13 @@ class DateTest extends \PHPUnit_Framework_TestCase
     public function anteAndPostMeridiem()
     {
         $date = new Date('May 28 1980 1:00AM');
-        $this->assertEquals(1, $date->getHours(), '1:00AM != 1h');
+        $this->assertEquals(1, $date->hours(), '1:00AM != 1h');
         $date = new Date('May 28 1980 12:00AM');
-        $this->assertEquals(0, $date->getHours(), '12:00AM != 0h');
+        $this->assertEquals(0, $date->hours(), '12:00AM != 0h');
         $date = new Date('May 28 1980 1:00PM');
-        $this->assertEquals(13, $date->getHours(), '1:00PM != 13h');
+        $this->assertEquals(13, $date->hours(), '1:00PM != 13h');
         $date = new Date('May 28 1980 12:00PM');
-        $this->assertEquals(12, $date->getHours(), '12:00PM != 12h');
+        $this->assertEquals(12, $date->hours(), '12:00PM != 12h');
     }
 
     /**
@@ -282,13 +319,13 @@ class DateTest extends \PHPUnit_Framework_TestCase
     public function anteAndPostMeridiemInMidage()
     {
         $date = new Date('May 28 1580 1:00AM');
-        $this->assertEquals(1, $date->getHours(), '1:00AM != 1h');
+        $this->assertEquals(1, $date->hours(), '1:00AM != 1h');
         $date = new Date('May 28 1580 12:00AM');
-        $this->assertEquals(0, $date->getHours(), '12:00AM != 0h');
+        $this->assertEquals(0, $date->hours(), '12:00AM != 0h');
         $date = new Date('May 28 1580 1:00PM');
-        $this->assertEquals(13, $date->getHours(), '1:00PM != 13h');
+        $this->assertEquals(13, $date->hours(), '1:00PM != 13h');
         $date = new Date('May 28 1580 12:00PM');
-        $this->assertEquals(12, $date->getHours(), '12:00PM != 12h');
+        $this->assertEquals(12, $date->hours(), '12:00PM != 12h');
     }
 
     /**
@@ -324,11 +361,11 @@ class DateTest extends \PHPUnit_Framework_TestCase
     {
         date_default_timezone_set('Europe/Athens');
         $date = new Date('2007-11-20 21:45:33 Europe/Berlin');
-        $this->assertEquals('Europe/Berlin', $date->getTimeZone()->getName());
-        $this->assertEquals('+0100', $date->getOffset());
+        $this->assertEquals('Europe/Berlin', $date->timeZone()->name());
+        $this->assertEquals('+0100', $date->offset());
 
         $copy = unserialize(serialize($date));
-        $this->assertEquals('+0100', $copy->getOffset());
+        $this->assertEquals('+0100', $copy->offset());
     }
 
     /**
@@ -339,8 +376,8 @@ class DateTest extends \PHPUnit_Framework_TestCase
     public function handlingOfTimezone()
     {
         $date = new Date('2007-07-18T09:42:08 Europe/Athens');
-        $this->assertEquals('Europe/Athens', $date->getTimeZone()->getName());
-        $this->assertEquals(3 * 3600, $date->getTimeZone()->getOffsetInSeconds($date));
+        $this->assertEquals('Europe/Athens', $date->timeZone()->name());
+        $this->assertEquals(3 * 3600, $date->timeZone()->offsetInSeconds($date));
     }
 
     /**
@@ -366,7 +403,7 @@ class DateTest extends \PHPUnit_Framework_TestCase
     public function timestampWithTZ()
     {
         $date = new Date(328336200, new TimeZone('Australia/Sydney'));
-        $this->assertEquals('Australia/Sydney', $date->getTimeZone()->getName());
+        $this->assertEquals('Australia/Sydney', $date->timeZone()->name());
     }
 
     /**
@@ -390,7 +427,7 @@ class DateTest extends \PHPUnit_Framework_TestCase
     {
         $date = Date::now();
         $this->assertInstanceOf('stubbles\date\Date', $date);
-        $this->assertLessThanOrEqual(time(), $date->getTimestamp());
+        $this->assertLessThanOrEqual(time(), $date->timestamp());
     }
 
     /**
@@ -404,8 +441,9 @@ class DateTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped('Test only works until 5.5.9, see http://evertpot.com/php-5-5-10-timezone-changes/');
         }
 
-        $this->assertEquals('UTC',
-                            Date::now()->getTimeZone()->getName()
+        $this->assertEquals(
+                'UTC',
+                Date::now()->timeZone()->name()
         );
     }
 
@@ -417,8 +455,9 @@ class DateTest extends \PHPUnit_Framework_TestCase
      */
     public function nowConstructsCurrentDateInGmtTimeZone()
     {
-        $this->assertEquals('GMT',
-                            Date::now()->getTimeZone()->getName()
+        $this->assertEquals(
+                'GMT',
+                Date::now()->timeZone()->name()
         );
     }
 
@@ -429,8 +468,9 @@ class DateTest extends \PHPUnit_Framework_TestCase
      */
     public function nowConstructsCurrentDateWithTimeZone()
     {
-        $this->assertEquals('Europe/London',
-                            Date::now(new TimeZone('Europe/London'))->getTimeZone()->getName()
+        $this->assertEquals(
+                'Europe/London',
+                Date::now(new TimeZone('Europe/London'))->timeZone()->name()
         );
     }
 
@@ -443,12 +483,12 @@ class DateTest extends \PHPUnit_Framework_TestCase
     {
         // 2007-08-23T12:35:47+00:00
         $date = new Date(1187872547);
-        $this->assertEquals(47, $date->getSeconds());
-        $this->assertEquals(35, $date->getMinutes());
-        $this->assertEquals(12, $date->getHours());
-        $this->assertEquals(23, $date->getDay());
-        $this->assertEquals(8, $date->getMonth());
-        $this->assertEquals(2007, $date->getYear());
+        $this->assertEquals(47, $date->seconds());
+        $this->assertEquals(35, $date->minutes());
+        $this->assertEquals(12, $date->hours());
+        $this->assertEquals(23, $date->day());
+        $this->assertEquals(8, $date->month());
+        $this->assertEquals(2007, $date->year());
     }
 
     /**
@@ -473,7 +513,10 @@ class DateTest extends \PHPUnit_Framework_TestCase
     {
         $date       = new Date('31.12.1969 00:00 GMT');
         $clonedDate = clone $date;
-        $this->assertNotSame(DateHandleDeliverer::deliverHandle($date), DateHandleDeliverer::deliverHandle($clonedDate));
+        $this->assertNotSame(
+                DateHandleDeliverer::deliverHandle($date),
+                DateHandleDeliverer::deliverHandle($clonedDate)
+        );
     }
 
     /**
@@ -506,8 +549,9 @@ class DateTest extends \PHPUnit_Framework_TestCase
     public function toStringConvertsDateTimePropertyIntoReadableDateRepresentation()
     {
         $date = new Date('31.12.1969 00:00 GMT');
-        $this->assertEquals('1969-12-31 00:00:00+0000',
-                            (string) $date
+        $this->assertEquals(
+                '1969-12-31 00:00:00+0000',
+                (string) $date
         );
     }
 
@@ -517,8 +561,9 @@ class DateTest extends \PHPUnit_Framework_TestCase
     public function asStringReturnsStringValue()
     {
         $date = new Date('2012-01-21 21:00:00');
-        $this->assertEquals('2012-01-21 21:00:00' . $date->getOffset(),
-                            $date->asString()
+        $this->assertEquals(
+                '2012-01-21 21:00:00' . $date->getOffset(),
+                $date->asString()
         );
     }
 
@@ -537,17 +582,8 @@ class DateTest extends \PHPUnit_Framework_TestCase
      */
     public function classIsAnnotatedWithXmlTag()
     {
-        $this->assertTrue($this->getDateReflectionClass()->hasAnnotation('XmlTag'));
-    }
-
-    /**
-     * @test
-     */
-    public function getHandleIsAnnotatedWithXmlIgnore()
-    {
-        $this->assertTrue($this->getDateReflectionClass()
-                               ->getMethod('getHandle')
-                               ->hasAnnotation('XmlIgnore')
+        $this->assertTrue(
+                reflect\annotationsOf('stubbles\date\Date')->contain('XmlTag')
         );
     }
 
@@ -558,19 +594,19 @@ class DateTest extends \PHPUnit_Framework_TestCase
      */
     public function getXmlIgnoredMethods()
     {
-        return array(array('getHandle'),
-                     array('change'),
-                     array('getTimestamp'),
-                     array('getSeconds'),
-                     array('getMinutes'),
-                     array('getHours'),
-                     array('getDay'),
-                     array('getMonth'),
-                     array('getYear'),
-                     array('getOffset'),
-                     array('getOffsetInSeconds'),
-                     array('getTimeZone')
-        );
+        return [['handle'],
+                ['change'],
+                ['timestamp'],
+                ['seconds'],
+                ['minutes'],
+                ['hours'],
+                ['day'],
+                ['month'],
+                ['year'],
+                ['offset'],
+                ['offsetInSeconds'],
+                ['timeZone']
+        ];
     }
     /**
      * @test
@@ -578,9 +614,9 @@ class DateTest extends \PHPUnit_Framework_TestCase
      */
     public function methodIsAnnotatedWithXmlIgnore($method)
     {
-        $this->assertTrue($this->getDateReflectionClass()
-                               ->getMethod($method)
-                               ->hasAnnotation('XmlIgnore')
+        $this->assertTrue(
+                reflect\annotationsOf('stubbles\date\Date', $method)
+                        ->contain('XmlIgnore')
         );
     }
 
@@ -589,9 +625,9 @@ class DateTest extends \PHPUnit_Framework_TestCase
      */
     public function asStringIsAnnotatedWithXmlAttribute()
     {
-        $this->assertTrue($this->getDateReflectionClass()
-                               ->getMethod('asString')
-                               ->hasAnnotation('XmlAttribute')
+        $this->assertTrue(
+                reflect\annotationsOf('stubbles\date\Date', 'asString')
+                        ->contain('XmlAttribute')
         );
     }
 

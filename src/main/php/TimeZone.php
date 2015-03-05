@@ -54,9 +54,20 @@ class TimeZone
      *
      * @return  \DateTimeZone
      */
-    public function getHandle()
+    public function handle()
     {
         return clone $this->timeZone;
+    }
+
+    /**
+     * returns internal time zone handle
+     *
+     * @return  \DateTimeZone
+     * @deprecated  since 5.2.0, use handle() instead, will be removed with 6.0.0
+     */
+    public function getHandle()
+    {
+        return $this->handle();
     }
 
     /**
@@ -64,9 +75,20 @@ class TimeZone
      *
      * @return  string
      */
-    public function getName()
+    public function name()
     {
         return $this->timeZone->getName();
+    }
+
+    /**
+     * returns name of time zone
+     *
+     * @return  string
+     * @deprecated  since 5.2.0, use name() instead, will be removed with 6.0.0
+     */
+    public function getName()
+    {
+        return $this->name();
     }
 
     /**
@@ -75,12 +97,24 @@ class TimeZone
      * @param   int|string|\DateTime|\stubbles\date\Date  $date  defaults to current date
      * @return  string
      */
-    public function getOffset($date = null)
+    public function offset($date = null)
     {
         $offset  = $this->getOffsetInSeconds($date);
         $hours   = intval(abs($offset) / 3600);
         $minutes = (abs($offset)- ($hours * 3600)) / 60;
         return sprintf('%s%02d%02d', ($offset < 0 ? '-' : '+'), $hours, $minutes);
+    }
+
+    /**
+     * returns offset of the time zone
+     *
+     * @param   int|string|\DateTime|\stubbles\date\Date  $date  defaults to current date
+     * @return  string
+     * @deprecated  since 5.2.0, use offset() instead, will be removed with 6.0.0
+     */
+    public function getOffset($date = null)
+    {
+        return $this->offset($date);
     }
 
     /**
@@ -93,13 +127,29 @@ class TimeZone
      * @param   int|string|\DateTime|\stubbles\date\Date  $date  defaults to current date
      * @return  int
      */
-    public function getOffsetInSeconds($date = null)
+    public function offsetInSeconds($date = null)
     {
         if (null === $date) {
             return $this->timeZone->getOffset(new \DateTime('now'));
         }
 
         return $this->timeZone->getOffset(Date::castFrom($date)->getHandle());
+    }
+
+    /**
+     * returns offset to given date in seconds
+     *
+     * Because a timezone may have different offsets when its in DST or non-DST
+     * mode, a date object must be given which is used to determine whether DST
+     * or non-DST offset should be returned.
+     *
+     * @param   int|string|\DateTime|\stubbles\date\Date  $date  defaults to current date
+     * @return  int
+     * @deprecated  since 5.2.0, use offsetInSeconds() instead, will be removed with 6.0.0
+     */
+    public function getOffsetInSeconds($date = null)
+    {
+        return $this->offsetInSeconds($date);
     }
 
     /**

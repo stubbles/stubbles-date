@@ -22,7 +22,7 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
      *
      * @type  string
      */
-    protected $originTimeZone;
+    private $originTimeZone;
 
     /**
      * set up test environment
@@ -49,9 +49,10 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
      */
     protected function assertDateEquals($expected, Date $date)
     {
-        $this->assertEquals(date_format(date_create($expected), 'U'),
-                            date_format($date->getHandle(), 'U'),
-                            'Expected ' . $expected . ' but got ' . $date->format('c')
+        $this->assertEquals(
+                date_format(date_create($expected), 'U'),
+                date_format($date->getHandle(), 'U'),
+                'Expected ' . $expected . ' but got ' . $date->format('c')
         );
     }
 
@@ -93,8 +94,9 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     public function changeTimeReturnsNewInstance()
     {
         $date = new Date('2011-03-31 01:00:00');
-        $this->assertNotSame($date,
-                             $date->change()->timeTo('14:13:12')
+        $this->assertNotSame(
+                $date,
+                $date->change()->timeTo('14:13:12')
         );
     }
 
@@ -106,8 +108,9 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     public function changeTimeToStartOfDayReturnsNewInstance()
     {
         $date = new Date('2011-03-31 01:00:00');
-        $this->assertNotSame($date,
-                             $date->change()->timeToStartOfDay()
+        $this->assertNotSame(
+                $date,
+                $date->change()->timeToStartOfDay()
         );
     }
 
@@ -119,8 +122,9 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     public function changeTimeToStartOfDaySetsTime()
     {
         $date = new Date('2011-03-31 01:00:00');
-        $this->assertDateEquals('2011-03-31T00:00:00+00:00',
-                                $date->change()->timeToStartOfDay()
+        $this->assertDateEquals(
+                '2011-03-31T00:00:00+00:00',
+                $date->change()->timeToStartOfDay()
         );
     }
 
@@ -132,8 +136,9 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     public function changeTimeToEndOfDayReturnsNewInstance()
     {
         $date = new Date('2011-03-31 01:00:00');
-        $this->assertNotSame($date,
-                             $date->change()->timeToEndOfDay()
+        $this->assertNotSame(
+                $date,
+                $date->change()->timeToEndOfDay()
         );
     }
 
@@ -145,8 +150,9 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     public function changeTimeToEndOfDaySetsTime()
     {
         $date = new Date('2011-03-31 01:00:00');
-        $this->assertDateEquals('2011-03-31T23:59:59+00:00',
-                                $date->change()->timeToEndOfDay()
+        $this->assertDateEquals(
+                '2011-03-31T23:59:59+00:00',
+                $date->change()->timeToEndOfDay()
         );
     }
 
@@ -156,8 +162,9 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     public function changeTimeChangesTimeOnlyButKeepsDate()
     {
         $date = new Date('2011-03-31 01:00:00');
-        $this->assertDateEquals('2011-03-31T14:13:12+00:00',
-                                $date->change()->timeTo('14:13:12')
+        $this->assertDateEquals(
+                '2011-03-31T14:13:12+00:00',
+                $date->change()->timeTo('14:13:12')
         );
     }
 
@@ -167,8 +174,9 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     public function changeHourToOnlyChangesHour()
     {
         $date = new Date('2011-03-31 01:00:00');
-        $this->assertDateEquals('2011-03-31T14:00:00+00:00',
-                                $date->change()->hourTo(14)
+        $this->assertDateEquals(
+                '2011-03-31T14:00:00+00:00',
+                $date->change()->hourTo(14)
         );
     }
 
@@ -178,8 +186,9 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     public function changeByHoursAddsGivenAmountOfHours()
     {
         $date = new Date('2011-03-31 01:01:01');
-        $this->assertDateEquals('2011-03-31T15:01:01+00:00',
-                                $date->change()->byHours(14)
+        $this->assertDateEquals(
+                '2011-03-31T15:01:01+00:00',
+                $date->change()->byHours(14)
         );
     }
 
@@ -189,8 +198,9 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     public function changeByHoursChangesDateWhenGivenValueExceedsStandardHours()
     {
         $date = new Date('2011-03-31 01:01:01');
-        $this->assertDateEquals('2011-04-01T01:01:01+00:00',
-                                $date->change()->byHours(24)
+        $this->assertDateEquals(
+                '2011-04-01T01:01:01+00:00',
+                $date->change()->byHours(24)
         );
     }
 
@@ -200,8 +210,9 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     public function changeByHoursSubtractsNegativeAmountOfHours()
     {
         $date = new Date('2011-03-31 01:01:01');
-        $this->assertDateEquals('2011-03-30T01:01:01+00:00',
-                                $date->change()->byHours(-24)
+        $this->assertDateEquals(
+                '2011-03-30T01:01:01+00:00',
+                $date->change()->byHours(-24)
         );
     }
 
@@ -211,8 +222,9 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     public function changeMinuteToOnlyChangesMinutes()
     {
         $date = new Date('2011-03-31 01:00:00');
-        $this->assertDateEquals('2011-03-31T01:13:00+00:00',
-                                $date->change()->minuteTo(13)
+        $this->assertDateEquals(
+                '2011-03-31T01:13:00+00:00',
+                $date->change()->minuteTo(13)
         );
     }
 
@@ -222,8 +234,9 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     public function changeByMinutesAddsGivenAmountOfMinutes()
     {
         $date = new Date('2011-03-31 01:01:01');
-        $this->assertDateEquals('2011-03-31T01:15:01+00:00',
-                                $date->change()->byMinutes(14)
+        $this->assertDateEquals(
+                '2011-03-31T01:15:01+00:00',
+                $date->change()->byMinutes(14)
         );
     }
 
@@ -233,8 +246,9 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     public function changeByMinutesChangesHoursWhenGivenValueExceedsStandardMinutes()
     {
         $date = new Date('2011-03-31 01:01:01');
-        $this->assertDateEquals('2011-03-31T02:01:01+00:00',
-                                $date->change()->byMinutes(60)
+        $this->assertDateEquals(
+                '2011-03-31T02:01:01+00:00',
+                $date->change()->byMinutes(60)
         );
     }
 
@@ -244,8 +258,9 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     public function changeByMinutesSubtractsNegativeAmountOfMinutes()
     {
         $date = new Date('2011-03-31 01:01:01');
-        $this->assertDateEquals('2011-03-31T00:37:01+00:00',
-                                $date->change()->byMinutes(-24)
+        $this->assertDateEquals(
+                '2011-03-31T00:37:01+00:00',
+                $date->change()->byMinutes(-24)
         );
     }
 
@@ -255,8 +270,9 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     public function changeSecondToOnlyChangesSeconds()
     {
         $date = new Date('2011-03-31 01:00:00');
-        $this->assertDateEquals('2011-03-31T01:00:12+00:00',
-                                $date->change()->secondTo(12)
+        $this->assertDateEquals(
+                '2011-03-31T01:00:12+00:00',
+                $date->change()->secondTo(12)
         );
     }
 
@@ -266,8 +282,9 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     public function changeBySecondsAddsGivenAmountOfSeconds()
     {
         $date = new Date('2011-03-31 01:01:01');
-        $this->assertDateEquals('2011-03-31T01:01:15+00:00',
-                                $date->change()->bySeconds(14)
+        $this->assertDateEquals(
+                '2011-03-31T01:01:15+00:00',
+                $date->change()->bySeconds(14)
         );
     }
 
@@ -277,8 +294,9 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     public function changeBySecondsChangesMinutesWhenGivenValueExceedsStandardSeconds()
     {
         $date = new Date('2011-03-31 01:01:01');
-        $this->assertDateEquals('2011-03-31T01:02:01+00:00',
-                                $date->change()->bySeconds(60)
+        $this->assertDateEquals(
+                '2011-03-31T01:02:01+00:00',
+                $date->change()->bySeconds(60)
         );
     }
 
@@ -288,8 +306,9 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     public function changeBySecondsSubtractsNegativeAmountOfSeconds()
     {
         $date = new Date('2011-03-31 01:01:01');
-        $this->assertDateEquals('2011-03-31T01:00:37+00:00',
-                                $date->change()->bySeconds(-24)
+        $this->assertDateEquals(
+                '2011-03-31T01:00:37+00:00',
+                $date->change()->bySeconds(-24)
         );
     }
 
@@ -319,8 +338,9 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     public function changeDateToReturnsNewInstance()
     {
         $date = new Date('2011-03-31 01:00:00');
-        $this->assertNotSame($date,
-                             $date->change()->dateTo('2012-7-15')
+        $this->assertNotSame(
+                $date,
+                $date->change()->dateTo('2012-7-15')
         );
     }
 
@@ -330,8 +350,9 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     public function changeDateToChangesDateOnlyButKeepsTime()
     {
         $date = new Date('2011-03-31 01:00:00');
-        $this->assertDateEquals('2012-07-15T01:00:00+00:00',
-                                $date->change()->dateTo('2012-7-15')
+        $this->assertDateEquals(
+                '2012-07-15T01:00:00+00:00',
+                $date->change()->dateTo('2012-7-15')
         );
     }
 
@@ -341,8 +362,9 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     public function changeYearToOnlyChangesYear()
     {
         $date = new Date('2011-03-31 01:00:00');
-        $this->assertDateEquals('2012-03-31T01:00:00+00:00',
-                                $date->change()->yearTo(2012)
+        $this->assertDateEquals(
+                '2012-03-31T01:00:00+00:00',
+                $date->change()->yearTo(2012)
         );
     }
 
@@ -352,8 +374,9 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     public function changeByYearsAddsGivenAmountOfYears()
     {
         $date = new Date('2011-03-31 01:01:01');
-        $this->assertDateEquals('2025-03-31T01:01:01+00:00',
-                                $date->change()->byYears(14)
+        $this->assertDateEquals(
+                '2025-03-31T01:01:01+00:00',
+                $date->change()->byYears(14)
         );
     }
 
@@ -363,8 +386,9 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     public function changeByYearsSubtractsNegativeAmountOfYears()
     {
         $date = new Date('2011-03-31 01:01:01');
-        $this->assertDateEquals('2000-03-31T01:01:01+00:00',
-                                $date->change()->byYears(-11)
+        $this->assertDateEquals(
+                '2000-03-31T01:01:01+00:00',
+                $date->change()->byYears(-11)
         );
     }
 
@@ -374,8 +398,9 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     public function changeMonthToOnlyChangesMonth()
     {
         $date = new Date('2011-03-31 01:00:00');
-        $this->assertDateEquals('2011-07-31T01:00:00+00:00',
-                                $date->change()->monthTo(7)
+        $this->assertDateEquals(
+                '2011-07-31T01:00:00+00:00',
+                $date->change()->monthTo(7)
         );
     }
 
@@ -385,8 +410,9 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     public function changeByMonthsAddsGivenAmountOfMonths()
     {
         $date = new Date('2011-03-31 01:01:01');
-        $this->assertDateEquals('2011-07-31T01:01:01+00:00',
-                                $date->change()->byMonths(4)
+        $this->assertDateEquals(
+                '2011-07-31T01:01:01+00:00',
+                $date->change()->byMonths(4)
         );
     }
 
@@ -396,8 +422,9 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     public function changeByMonthsChangesYearWhenGivenValueExceedsStandardMonths()
     {
         $date = new Date('2011-03-31 01:01:01');
-        $this->assertDateEquals('2012-03-31T01:01:01+00:00',
-                                $date->change()->byMonths(12)
+        $this->assertDateEquals(
+                '2012-03-31T01:01:01+00:00',
+                $date->change()->byMonths(12)
         );
     }
 
@@ -407,8 +434,9 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     public function changeByMonthsSubtractsNegativeAmountOfMonths()
     {
         $date = new Date('2011-03-31 01:01:01');
-        $this->assertDateEquals('2010-05-31T01:01:01+00:00',
-                                $date->change()->byMonths(-10)
+        $this->assertDateEquals(
+                '2010-05-31T01:01:01+00:00',
+                $date->change()->byMonths(-10)
         );
     }
 
@@ -418,8 +446,9 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     public function changeDayToOnlyChangesDay()
     {
         $date = new Date('2011-03-31 01:00:00');
-        $this->assertDateEquals('2011-03-15T01:00:00+00:00',
-                                $date->change()->dayTo(15)
+        $this->assertDateEquals(
+                '2011-03-15T01:00:00+00:00',
+                $date->change()->dayTo(15)
         );
     }
 
@@ -429,8 +458,9 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     public function changeByDaysAddsGivenAmountOfDays()
     {
         $date = new Date('2011-03-31 01:01:01');
-        $this->assertDateEquals('2011-04-04T01:01:01+00:00',
-                                $date->change()->byDays(4)
+        $this->assertDateEquals(
+                '2011-04-04T01:01:01+00:00',
+                $date->change()->byDays(4)
         );
     }
 
@@ -440,8 +470,9 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     public function changeByDaysChangesMonthWhenGivenValueExceedsStandardDays()
     {
         $date = new Date('2011-03-31 01:01:01');
-        $this->assertDateEquals('2011-05-10T01:01:01+00:00',
-                                $date->change()->byDays(40)
+        $this->assertDateEquals(
+                '2011-05-10T01:01:01+00:00',
+                $date->change()->byDays(40)
         );
     }
 
@@ -451,8 +482,9 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     public function changeByDaysSubtractsNegativeAmountOfDays()
     {
         $date = new Date('2011-03-31 01:01:01');
-        $this->assertDateEquals('2011-03-26T01:01:01+00:00',
-                                $date->change()->byDays(-5)
+        $this->assertDateEquals(
+                '2011-03-26T01:01:01+00:00',
+                $date->change()->byDays(-5)
         );
     }
 }

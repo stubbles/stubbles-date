@@ -115,9 +115,21 @@ class Date
      * @return  \DateTime
      * @XmlIgnore
      */
-    public function getHandle()
+    public function handle()
     {
         return clone $this->dateTime;
+    }
+
+    /**
+     * returns internal date/time handle
+     *
+     * @return  \DateTime
+     * @XmlIgnore
+     * @deprecated  since 5.2.0, use handle() instead, will be removed with 6.0.0
+     */
+    public function getHandle()
+    {
+        return $this->handle();
     }
 
     /**
@@ -137,9 +149,21 @@ class Date
      * @return  int
      * @XmlIgnore
      */
-    public function getTimestamp()
+    public function timestamp()
     {
         return (int) $this->dateTime->format('U');
+    }
+
+    /**
+     * returns timestamp for this date/time
+     *
+     * @return  int
+     * @XmlIgnore
+     * @deprecated  since 5.2.0, use timestamp() instead, will be removed with 6.0.0
+     */
+    public function getTimestamp()
+    {
+        return $this->timestamp();
     }
 
     /**
@@ -148,9 +172,21 @@ class Date
      * @return  int
      * @XmlIgnore
      */
-    public function getSeconds()
+    public function seconds()
     {
         return (int) $this->dateTime->format('s');
+    }
+
+    /**
+     * returns seconds of current date/time
+     *
+     * @return  int
+     * @XmlIgnore
+     * @deprecated  since 5.2.0, use seconds() instead, will be removed with 6.0.0
+     */
+    public function getSeconds()
+    {
+        return $this->seconds();
     }
 
     /**
@@ -159,9 +195,21 @@ class Date
      * @return  int
      * @XmlIgnore
      */
-    public function getMinutes()
+    public function minutes()
     {
         return (int) $this->dateTime->format('i');
+    }
+
+    /**
+     * returns minutes of current date/time
+     *
+     * @return  int
+     * @XmlIgnore
+     * @deprecated  since 5.2.0, use minutes() instead, will be removed with 6.0.0
+     */
+    public function getMinutes()
+    {
+        return $this->minutes();
     }
 
     /**
@@ -170,9 +218,21 @@ class Date
      * @return  int
      * @XmlIgnore
      */
-    public function getHours()
+    public function hours()
     {
         return (int) $this->dateTime->format('G');
+    }
+
+    /**
+     * returns hours of current date/time
+     *
+     * @return  int
+     * @XmlIgnore
+     * @deprecated  since 5.2.0, use hours() instead, will be removed with 6.0.0
+     */
+    public function getHours()
+    {
+        return $this->hours();
     }
 
     /**
@@ -181,9 +241,21 @@ class Date
      * @return  int
      * @XmlIgnore
      */
-    public function getDay()
+    public function day()
     {
         return (int) $this->dateTime->format('d');
+    }
+
+    /**
+     * returns day of current date/time
+     *
+     * @return  int
+     * @XmlIgnore
+     * @deprecated  since 5.2.0, use day() instead, will be removed with 6.0.0
+     */
+    public function getDay()
+    {
+        return $this->day();
     }
 
     /**
@@ -192,9 +264,21 @@ class Date
      * @return  int
      * @XmlIgnore
      */
-    public function getMonth()
+    public function month()
     {
         return (int) $this->dateTime->format('m');
+    }
+
+    /**
+     * returns month of current date/time
+     *
+     * @return  int
+     * @XmlIgnore
+     * @deprecated  since 5.2.0, use month() instead, will be removed with 6.0.0
+     */
+    public function getMonth()
+    {
+        return $this->month();
     }
 
     /**
@@ -203,9 +287,21 @@ class Date
      * @return  int
      * @XmlIgnore
      */
-    public function getYear()
+    public function year()
     {
         return (int) $this->dateTime->format('Y');
+    }
+
+    /**
+     * returns year of current date/time
+     *
+     * @return  int
+     * @XmlIgnore
+     * @deprecated  since 5.2.0, use year() instead, will be removed with 6.0.0
+     */
+    public function getYear()
+    {
+        return $this->year();
     }
 
     /**
@@ -214,9 +310,21 @@ class Date
      * @return  string
      * @XmlIgnore
      */
-    public function getOffset()
+    public function offset()
     {
         return $this->dateTime->format('O');
+    }
+
+    /**
+     * returns offset to UTC in "+MMSS" notation
+     *
+     * @return  string
+     * @XmlIgnore
+     * @deprecated  since 5.2.0, use offset() instead, will be removed with 6.0.0
+     */
+    public function getOffset()
+    {
+        return $this->offset();
     }
 
     /**
@@ -225,9 +333,21 @@ class Date
      * @return  int
      * @XmlIgnore
      */
-    public function getOffsetInSeconds()
+    public function offsetInSeconds()
     {
         return (int) $this->dateTime->format('Z');
+    }
+
+    /**
+     * returns offset to UTC in seconds
+     *
+     * @return  int
+     * @XmlIgnore
+     * @deprecated  since 5.2.0, use offsetInSeconds() instead, will be removed with 6.0.0
+     */
+    public function getOffsetInSeconds()
+    {
+        return $this->offsetInSeconds();
     }
 
     /**
@@ -238,7 +358,7 @@ class Date
      */
     public function isBefore($date)
     {
-        return $this->getTimestamp() < self::castFrom($date, 'date')->getTimestamp();
+        return $this->timestamp() < self::castFrom($date, 'date')->timestamp();
     }
 
     /**
@@ -249,7 +369,7 @@ class Date
      */
     public function isAfter($date)
     {
-        return $this->getTimestamp() > self::castFrom($date, 'date')->getTimestamp();
+        return $this->timestamp() > self::castFrom($date, 'date')->timestamp();
     }
 
     /**
@@ -258,9 +378,21 @@ class Date
      * @return  \stubbles\date\TimeZone
      * @XmlIgnore
      */
-    public function getTimeZone()
+    public function timeZone()
     {
         return new TimeZone($this->dateTime->getTimezone());
+    }
+
+    /**
+     * returns time zone of this date
+     *
+     * @return  \stubbles\date\TimeZone
+     * @XmlIgnore
+     * @deprecated  since 5.2.0, use timeZone() instead, will be removed with 6.0.0
+     */
+    public function getTimeZone()
+    {
+        return $this->timeZone();
     }
 
     /**
@@ -299,7 +431,7 @@ class Date
     public function equals($compare)
     {
         if ($compare instanceof self) {
-            return ($this->getTimestamp() === $compare->getTimestamp());
+            return ($this->timestamp() === $compare->timestamp());
         }
 
         return false;

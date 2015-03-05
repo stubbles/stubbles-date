@@ -20,7 +20,7 @@ class DateModifier
      *
      * @type  \stubbles\date\Date
      */
-    protected $originalDate;
+    private $originalDate;
 
     /**
      * constructor

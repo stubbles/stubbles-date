@@ -23,7 +23,7 @@ class WeekTest extends \PHPUnit_Framework_TestCase
     public function amountOfDaysIsAlwaysSeven()
     {
         $week = new Week('2007-05-14');
-        $this->assertEquals(7, $week->getAmountOfDays());
+        $this->assertEquals(7, $week->amountOfDays());
     }
 
     /**
@@ -32,7 +32,7 @@ class WeekTest extends \PHPUnit_Framework_TestCase
     public function getDaysReturnsAllSevenDays()
     {
         $week = new Week('2007-05-14');
-        $days = $week->getDays();
+        $days = $week->days();
         $this->assertEquals(7, count($days));
         $expectedDay = 14;
         foreach ($days as $day) {

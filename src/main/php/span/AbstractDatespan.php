@@ -46,9 +46,20 @@ abstract class AbstractDatespan implements Datespan
      *
      * @return  \stubbles\date\Date
      */
-    public function getStart()
+    public function start()
     {
         return $this->start;
+    }
+
+    /**
+     * returns the start date
+     *
+     * @return  \stubbles\date\Date
+     * @deprecated  since 5.2.0, use start() instead, will be removed with 6.0.0
+     */
+    public function getStart()
+    {
+        return $this->start();
     }
 
     /**
@@ -80,9 +91,20 @@ abstract class AbstractDatespan implements Datespan
      *
      * @return  \stubbles\date\Date
      */
-    public function getEnd()
+    public function end()
     {
         return $this->end;
+    }
+
+    /**
+     * returns the end date
+     *
+     * @return  \stubbles\date\Date
+     * @deprecated  since 5.2.0, use end() instead, will be removed with 6.0.0
+     */
+    public function getEnd()
+    {
+        return $this->end();
     }
 
     /**
@@ -140,9 +162,20 @@ abstract class AbstractDatespan implements Datespan
      *
      * @return  int
      */
+    public function amountOfDays()
+    {
+        return $this->end->handle()->diff($this->start->handle())->days + 1;
+    }
+
+    /**
+     * returns amount of days in this datespan
+     *
+     * @return  int
+     * @deprecated  since 5.2.0, use amountOfDays() instead, will be removed with 6.0.0
+     */
     public function getAmountOfDays()
     {
-        return $this->end->getHandle()->diff($this->start->getHandle())->days + 1;
+        return $this->amountOfDays();
     }
 
     /**
@@ -153,7 +186,7 @@ abstract class AbstractDatespan implements Datespan
     public function isInFuture()
     {
         $today = mktime(23, 59, 59, date('m'), date('d'), date('Y'));
-        if ($this->start->format('U') > $today) {
+        if ($this->start->timestamp() > $today) {
             return true;
         }
 

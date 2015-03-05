@@ -85,13 +85,13 @@ class MonthTest extends \PHPUnit_Framework_TestCase
      *
      * @return  array
      */
-    public function getDayMonth()
+    public function dayMonth()
     {
-        return array(array(2007, 4, 30),
-                     array(2007, 3, 31),
-                     array(2007, 2, 28),
-                     array(2008, 2, 29)
-        );
+        return [[2007, 4, 30],
+                [2007, 3, 31],
+                [2007, 2, 28],
+                [2008, 2, 29]
+        ];
     }
 
     /**
@@ -99,12 +99,12 @@ class MonthTest extends \PHPUnit_Framework_TestCase
      * @param  int  $month     month to get days for
      * @param  int  $dayCount  amount of days in this month
      * @test
-     * @dataProvider  getDayMonth
+     * @dataProvider  dayMonth
      */
     public function amountOfDaysIsAlwaysCorrect($year, $month, $dayCount)
     {
         $month = new Month($year, $month);
-        $this->assertEquals($dayCount, $month->getAmountOfDays());
+        $this->assertEquals($dayCount, $month->amountOfDays());
     }
 
     /**
@@ -112,12 +112,12 @@ class MonthTest extends \PHPUnit_Framework_TestCase
      * @param  int  $month     month to get days for
      * @param  int  $dayCount  amount of days in this month
      * @test
-     * @dataProvider  getDayMonth
+     * @dataProvider  dayMonth
      */
     public function getDaysReturnsAllDaysInMonth($year, $month, $dayCount)
     {
         $month = new Month($year, $month);
-        $days  = $month->getDays();
+        $days  = $month->days();
         $this->assertEquals($dayCount, count($days));
         $expectedDay = 1;
         foreach ($days as $day) {
