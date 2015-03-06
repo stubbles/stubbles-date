@@ -65,7 +65,7 @@ class Date
                     $this->dateTime = new \DateTime($dateTime, $timeZone->getHandle());
                 }
             } catch (\Exception $e) {
-                throw new \InvalidArgumentException('Given datetime string ' . $dateTime . ' is not a valid date string.', $e->getCode(), $e);
+                throw new \InvalidArgumentException('Given datetime string ' . $dateTime . ' is not a valid date string: ' . $e->getMessage(), $e->getCode(), $e);
             }
         } else {
             $this->dateTime = $dateTime;
