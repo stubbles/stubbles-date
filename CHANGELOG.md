@@ -2,6 +2,7 @@
 ------------------
 
   * deprecated all get*() methods and replaced them with *(), all get*() will be removed with 6.0.0
+  * added `stubbles\date\span\parse()` which parses a string to a datespan instance
 
 
 5.1.0 (2014-11-13)

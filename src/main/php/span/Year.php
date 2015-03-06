@@ -28,19 +28,22 @@ class Year extends CustomDatespan
      *
      * If no value for the year is supplied the current year will be used.
      *
-     * @param  int  $year   year of the span
+     * @param   int  $year   year of the span
+     * @throws  \InvalidArgumentException
      */
     public function __construct($year = null)
     {
         if (null === $year) {
             $year = date('Y');
+        } elseif (strlen((int) $year) != strlen($year)) {
+            throw new \InvalidArgumentException('Given year ' . $year . ' can not be treated as year, should be something that can be casted to int without data loss');
         }
 
         $start = new \DateTime();
-        $start->setDate($year, 1, 1);
+        $start->setDate((int) $year, 1, 1);
         $start->setTime(0, 0, 0);
         $end = new \DateTime();
-        $end->setDate($year, 12, $start->format('t'));
+        $end->setDate((int) $year, 12, $start->format('t'));
         $end->setTime(23, 59, 59);
         parent::__construct(new Date($start), new Date($end));
         $this->year = (int) $year;

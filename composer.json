@@ -14,7 +14,8 @@
     "autoload": {
         "psr-4": {
             "stubbles\\date\\": "src/main/php"
-        }
+        },
+        "files": ["src/main/php/functions.php"]
     },
     "extra": {
         "branch-alias": {
