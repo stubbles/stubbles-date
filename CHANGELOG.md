@@ -1,4 +1,4 @@
-5.2.0 (2015-??-??)
+5.2.0 (2015-03-06)
 ------------------
 
   * deprecated all get*() methods and replaced them with *(), all get*() will be removed with 6.0.0
