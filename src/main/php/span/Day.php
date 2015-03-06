@@ -131,7 +131,7 @@ class Day extends AbstractDatespan implements Datespan
      */
     public function isToday()
     {
-        return $this->date->format('Y-m-d') === Date::now($this->date->getTimeZone())->format('Y-m-d');
+        return $this->date->format('Y-m-d') === Date::now($this->date->timezone())->format('Y-m-d');
     }
 
     /**

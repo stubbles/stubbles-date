@@ -133,7 +133,7 @@ class TimeZone
             return $this->timeZone->getOffset(new \DateTime('now'));
         }
 
-        return $this->timeZone->getOffset(Date::castFrom($date)->getHandle());
+        return $this->timeZone->getOffset(Date::castFrom($date)->handle());
     }
 
     /**
@@ -173,7 +173,7 @@ class TimeZone
      */
     public function translate($date)
     {
-        $handle = Date::castFrom($date)->getHandle();
+        $handle = Date::castFrom($date)->handle();
         $handle->setTimezone($this->timeZone);
         return new Date($handle);
     }
@@ -187,7 +187,7 @@ class TimeZone
     public function equals($compare)
     {
         if ($compare instanceof self) {
-            return ($this->getName() === $compare->getName());
+            return ($this->name() === $compare->name());
         }
 
         return false;
