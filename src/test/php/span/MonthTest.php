@@ -246,7 +246,7 @@ class MonthTest extends \PHPUnit_Framework_TestCase
      * @expectedException  InvalidArgumentException
      * @since  3.5.3
      */
-    public function createFromInvalidStringThrowsIllegalArgumentException()
+    public function createFromInvalidStringThrowsInvalidArgumentException()
     {
          Month::fromString('invalid');
     }
