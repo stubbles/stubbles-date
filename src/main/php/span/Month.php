@@ -179,4 +179,15 @@ class Month extends CustomDatespan
     {
         return $this->year . '-' . ((10 > $this->month && strlen($this->month) === 1) ? ('0' . $this->month) : ($this->month));
     }
+
+    /**
+     * returns a short type description of the datespan
+     *
+     * @return  string
+     * @since   5.3.0
+     */
+    public function type()
+    {
+        return 'month';
+    }
 }

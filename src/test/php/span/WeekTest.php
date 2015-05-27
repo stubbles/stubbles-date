@@ -166,4 +166,13 @@ class WeekTest extends \PHPUnit_Framework_TestCase
     {
          Week::fromString('2014-W63');
     }
+
+    /**
+     * @test
+     * @since  5.3.0
+     */
+    public function typeIsWeek()
+    {
+        $this->assertEquals('week', Week::fromString('2014-W05')->type());
+    }
 }

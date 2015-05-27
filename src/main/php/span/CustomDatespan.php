@@ -45,4 +45,15 @@ class CustomDatespan extends AbstractDatespan
     {
         return $this->formatStart('d.m.Y') . ' - ' . $this->formatEnd('d.m.Y');
     }
+
+    /**
+     * returns a short type description of the datespan
+     *
+     * @return  string
+     * @since   5.3.0
+     */
+    public function type()
+    {
+        return 'custom';
+    }
 }

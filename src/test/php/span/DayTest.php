@@ -223,4 +223,14 @@ class DayTest extends \PHPUnit_Framework_TestCase
         $day = new Day('2014-01-01');
         $this->assertEquals('2013-12-31', $day->before());
     }
+
+    /**
+     * @test
+     * @since  5.3.0
+     */
+    public function typeIsWeek()
+    {
+        $day = new Day('2014-01-01');
+        $this->assertEquals('day', $day->type());
+    }
 }

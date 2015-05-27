@@ -270,4 +270,13 @@ class MonthTest extends \PHPUnit_Framework_TestCase
         $month = new Month(2014, 01);
         $this->assertEquals('2013-12', $month->before());
     }
+
+    /**
+     * @test
+     * @since  5.3.0
+     */
+    public function typeIsWeek()
+    {
+        $this->assertEquals('month', Month::fromString('2014-05')->type());
+    }
 }

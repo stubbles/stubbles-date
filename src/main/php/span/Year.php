@@ -135,4 +135,15 @@ class Year extends CustomDatespan
     {
         return (string) $this->year;
     }
+
+    /**
+     * returns a short type description of the datespan
+     *
+     * @return  string
+     * @since   5.3.0
+     */
+    public function type()
+    {
+        return 'year';
+    }
 }

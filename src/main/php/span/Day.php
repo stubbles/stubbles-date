@@ -167,4 +167,15 @@ class Day extends AbstractDatespan implements Datespan
     {
         return $this->date->format($format);
     }
+
+    /**
+     * returns a short type description of the datespan
+     *
+     * @return  string
+     * @since   5.3.0
+     */
+    public function type()
+    {
+        return 'day';
+    }
 }

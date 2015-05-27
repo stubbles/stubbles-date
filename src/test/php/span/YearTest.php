@@ -227,4 +227,14 @@ class YearTest extends \PHPUnit_Framework_TestCase
         $year = new Year(2007);
         $this->assertFalse($year->isCurrentYear());
     }
+
+    /**
+     * @test
+     * @since  5.3.0
+     */
+    public function typeIsYear()
+    {
+        $year = new Year(2007);
+        $this->assertEquals('year', $year->type());
+    }
 }

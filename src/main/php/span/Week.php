@@ -86,4 +86,15 @@ class Week extends CustomDatespan
     {
         return $this->formatStart('Y-\WW');
     }
+
+    /**
+     * returns a short type description of the datespan
+     *
+     * @return  string
+     * @since   5.3.0
+     */
+    public function type()
+    {
+        return 'week';
+    }
 }

@@ -151,4 +151,12 @@ interface Datespan
      * @return  string
      */
     public function asString();
+
+    /**
+     * returns a short type description of the datespan
+     *
+     * @return  string
+     * @since   5.3.0
+     */
+    public function type();
 }

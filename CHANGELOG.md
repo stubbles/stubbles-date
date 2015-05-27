@@ -10,6 +10,7 @@
 
   * added `stubbles\date\span\Week::number()`
   * added `stubbles\date\span\Week::fromString()`
+  * added `stubbles\date\span\Datespan::type()`
 
 
 
