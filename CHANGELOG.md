@@ -1,3 +1,18 @@
+5.3.0 (2015-05-27)
+------------------
+
+### BC breaks
+
+  * changed string representation of `stubbles\date\span\Week`, is now in format "2015-W05" instead of "05" only
+
+
+### Other changes
+
+  * added `stubbles\date\span\Week::number()`
+  * added `stubbles\date\span\Week::fromString()`
+
+
+
 5.2.0 (2015-03-06)
 ------------------
 

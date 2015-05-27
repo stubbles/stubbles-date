@@ -19,12 +19,41 @@ class Week extends CustomDatespan
     /**
      * constructor
      *
-     * @param  int|string|\DateTime|\stubbles\date\Date  $date  first day of the week
+     * @param  int|string|\DateTime|\stubbles\date\Date  $startOfWeek  first day of the week
      */
-    public function __construct($date)
+    public function __construct($startOfWeek)
     {
-        $date = Date::castFrom($date);
+        $date = Date::castFrom($startOfWeek);
         parent::__construct($date, $date->change()->to('+ 6 days'));
+    }
+
+    /**
+     * create instance from given string, i.e. Week::fromString('2014-W05')
+     *
+     * @param   string  $input
+     * @return  \stubbles\date\span\Week
+     * @throws  \InvalidArgumentException
+     * @since   5.3.0
+     */
+    public static function fromString($input)
+    {
+        $data = explode('-', $input);
+        if (!isset($data[0]) || !isset($data[1])) {
+            throw new \InvalidArgumentException('Can not parse week from string "' . $input . '", format should be "YYYY-Www"');
+        }
+
+        $self = new self(strtotime($input));
+        return $self;
+    }
+
+    /**
+     * returns number of the week
+     *
+     * @return  int
+     */
+    public function number()
+    {
+        return $this->formatStart('W');
     }
 
     /**
@@ -55,6 +84,6 @@ class Week extends CustomDatespan
      */
     public function asString()
     {
-        return $this->formatStart('W');
+        return $this->formatStart('Y-\WW');
     }
 }

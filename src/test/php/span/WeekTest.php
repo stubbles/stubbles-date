@@ -113,7 +113,7 @@ class WeekTest extends \PHPUnit_Framework_TestCase
     public function stringRepresentationOfWeekContainsNumberOfWeek()
     {
         $week = new Week('2007-04-02');
-        $this->assertEquals('14', $week->asString());
+        $this->assertEquals('2007-W14', $week->asString());
     }
 
     /**
@@ -122,6 +122,48 @@ class WeekTest extends \PHPUnit_Framework_TestCase
     public function properStringConversion()
     {
         $week = new Week('2007-04-02');
-        $this->assertEquals('14', (string) $week);
+        $this->assertEquals('2007-W14', (string) $week);
+    }
+
+    /**
+     * @test
+     * @since  5.3.0
+     */
+    public function numberReturnsNumberOfWeek()
+    {
+        $week = new Week('2007-04-02');
+        $this->assertEquals(14, $week->number());
+    }
+
+    /**
+     * @test
+     * @since  5.3.0
+     */
+    public function createFromStringParsesStringToCreateInstance()
+    {
+        $this->assertEquals(
+                '2014-W05',
+                Week::fromString('2014-W05')->asString()
+        );
+    }
+
+    /**
+     * @test
+     * @expectedException  InvalidArgumentException
+     * @since  5.3.0
+     */
+    public function createFromInvalidStringThrowsInvalidArgumentException()
+    {
+         Week::fromString('invalid');
+    }
+
+    /**
+     * @test
+     * @expectedException  InvalidArgumentException
+     * @since  5.3.0
+     */
+    public function createFromInvalidWeekNumberThrowsInvalidArgumentException()
+    {
+         Week::fromString('2014-W63');
     }
 }
