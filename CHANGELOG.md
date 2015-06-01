@@ -1,3 +1,9 @@
+5.4.0 (2015-06-01)
+------------------
+
+  * ensure output of `stubbles\date\span\CustomDatespan::asString()` is compatible with what `stubbles\date\span\parse()` can parse
+
+
 5.3.0 (2015-05-27)
 ------------------
 

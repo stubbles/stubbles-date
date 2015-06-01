@@ -9,7 +9,7 @@
     },
     "require-dev": {
         "phpunit/phpunit": "~4.6",
-        "stubbles/core": "~5.5"
+        "stubbles/core": "~6.1"
     },
     "autoload": {
         "psr-4": {
@@ -19,7 +19,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "5.3.x-dev"
+            "dev-master": "5.4.x-dev"
         }
     },
     "minimum-stability": "dev",

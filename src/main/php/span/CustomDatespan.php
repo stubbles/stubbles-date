@@ -43,7 +43,7 @@ class CustomDatespan extends AbstractDatespan
      */
     public function asString()
     {
-        return $this->formatStart('d.m.Y') . ' - ' . $this->formatEnd('d.m.Y');
+        return $this->formatStart('Y-m-d') . ',' . $this->formatEnd('Y-m-d');
     }
 
     /**

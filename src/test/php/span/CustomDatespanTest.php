@@ -177,7 +177,7 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
     public function stringRepresentationOfDayContainsStartAndEndDate()
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
-        $this->assertEquals('04.04.2006 - 20.04.2006', $customDatespan->asString());
+        $this->assertEquals('2006-04-04,2006-04-20', $customDatespan->asString());
     }
 
     /**
@@ -186,7 +186,7 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
     public function properStringConversion()
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
-        $this->assertEquals('04.04.2006 - 20.04.2006', (string) $customDatespan);
+        $this->assertEquals('2006-04-04,2006-04-20', (string) $customDatespan);
     }
 
     /**
