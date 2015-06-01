@@ -1,3 +1,9 @@
+5.5.0 (2015-06-01)
+------------------
+
+  * added `stubbles\date\span\Month::currentOrLastWhenFirstDay()`
+
+
 5.4.0 (2015-06-01)
 ------------------
 

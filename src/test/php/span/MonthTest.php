@@ -279,4 +279,18 @@ class MonthTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals('month', Month::fromString('2014-05')->type());
     }
+
+    /**
+     * @test
+     * @since  5.5.0
+     */
+    public function currentOrLastWhenFirstDay()
+    {
+        $month = Month::currentOrLastWhenFirstDay();
+        if (Date::now()->day() === 1) {
+            $this->assertEquals(Month::last(), $month);
+        } else {
+            $this->assertEquals($month, new Month());
+        }
+    }
 }

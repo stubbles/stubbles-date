@@ -108,6 +108,22 @@ class Month extends CustomDatespan
     }
 
     /**
+     * creates instance for current month except when today is the first day of the month
+     *
+     * @return  \stubbles\date\span\Month
+     * @since   5.5.0
+     */
+    public static function currentOrLastWhenFirstDay()
+    {
+        $self = new self();
+        if ($self->start()->day() === 1) {
+            return $self->before();
+        }
+
+        return $self;
+    }
+
+    /**
      * returns next month
      *
      * @return  \stubbles\date\span\Month
