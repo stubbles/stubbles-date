@@ -1,3 +1,9 @@
+5.5.1 (2015-06-02)
+------------------
+
+  * fixed `stubbles\date\span\Month::currentOrLastWhenFirstDay()` to return current month for days not the first of month
+
+
 5.5.0 (2015-06-01)
 ------------------
 

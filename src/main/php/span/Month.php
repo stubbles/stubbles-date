@@ -116,7 +116,7 @@ class Month extends CustomDatespan
     public static function currentOrLastWhenFirstDay()
     {
         $self = new self();
-        if ($self->start()->day() === 1) {
+        if (date('d', time()) === '01') {
             return $self->before();
         }
 
