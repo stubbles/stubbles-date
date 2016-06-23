@@ -7,6 +7,18 @@
  *
  * @package  stubbles\date
  */
+namespace stubbles\date\assert {
+    /**
+     * returns predicate which tests for equality of dates
+     *
+     * @return  \stubbles\date\assert\DateEquals
+     * @since   6.0.0
+     */
+    function equalsDate($expected)
+    {
+        return new DateEquals($expected);
+    }
+}
 namespace stubbles\date\span {
     /**
      * parses given value to a datespan instance

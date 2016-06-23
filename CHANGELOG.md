@@ -6,6 +6,11 @@
   * dropped support for PHP 5.4 and 5.5
 
 
+### Other changes
+
+  * added `stubbles\date\assert\equalsDate()`
+
+
 5.5.1 (2015-06-02)
 ------------------
 

@@ -126,7 +126,7 @@ class MonthTest extends \PHPUnit_Framework_TestCase
                     $dayString,
                     equals($month->asString() . '-' . str_pad($expectedDay, 2, '0', STR_PAD_LEFT))
             );
-            $this->assertEquals($expectedDay, $day->asInt());
+            assert($day->asInt(), equals($expectedDay));
             $expectedDay++;
             $days++;
         }

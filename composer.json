@@ -12,6 +12,9 @@
         "stubbles/reflect": "^7.0",
         "bovigo/assert": "^1.6"
     },
+    "suggest": {
+        "bovigo/assert": "To use predicates when asserting dates with stubbles\\date\\assert\\equalsDate()"
+    },
     "autoload": {
         "psr-4": {
             "stubbles\\date\\": "src/main/php"

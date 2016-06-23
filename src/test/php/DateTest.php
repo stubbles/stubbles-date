@@ -17,6 +17,7 @@ use function bovigo\assert\predicate\isInstanceOf;
 use function bovigo\assert\predicate\isLessThanOrEqualTo;
 use function bovigo\assert\predicate\isNotSameAs;
 use function bovigo\assert\predicate\isSameAs;
+use function stubbles\date\assert\equalsDate;
 use function stubbles\reflect\annotationsOf;
 /**
  * Helper class for the test.
@@ -79,21 +80,6 @@ class DateTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * helper assertion for the test
-     *
-     * @param  string    $expected  expected date as string
-     * @param  stubbles\lang\types\Date  $date      date to check for equality to expected date
-     */
-    protected function assertDateEquals($expected, Date $date)
-    {
-        assert(
-                date_format($date->getHandle(), 'U'),
-                equals(date_format(date_create($expected), 'U')),
-                'Expected ' . $expected . ' but got ' . $date->format('c')
-        );
-    }
-
-    /**
      * construction should work with time zone as part of a well-formed time string
      *
      * @test
@@ -113,9 +99,9 @@ class DateTest extends \PHPUnit_Framework_TestCase
      */
     public function constructorUnixtimestampWithoutTz()
     {
-        $this->assertDateEquals(
-                '2007-08-23T12:35:47+00:00',
-                new Date(1187872547)
+        assert(
+                new Date(1187872547),
+                equalsDate('2007-08-23T12:35:47+00:00')
         );
     }
 
@@ -126,9 +112,9 @@ class DateTest extends \PHPUnit_Framework_TestCase
      */
     public function constructorUnixtimestampWithTz()
     {
-        $this->assertDateEquals(
-                '2007-08-23T12:35:47+00:00',
-                new Date(1187872547, new TimeZone('Europe/Berlin'))
+        assert(
+                new Date(1187872547, new TimeZone('Europe/Berlin')),
+                equalsDate('2007-08-23T12:35:47+00:00')
         );
     }
 
@@ -164,7 +150,7 @@ class DateTest extends \PHPUnit_Framework_TestCase
     {
         $date = new Date($constructorTimestamp, $constructorTimeZone);
         assert($date->timeZone()->name(), equals($expectedTimeZone));
-        $this->assertDateEquals($expectedTimestamp, $date);
+        assert($date, equalsDate($expectedTimestamp));
     }
 
     /**
@@ -219,22 +205,22 @@ class DateTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException  InvalidArgumentException
      * @since  3.5.0
      */
     public function isBeforeWithInvalidDate()
     {
-        assertTrue($this->date->isBefore(new \stdClass()));
+        expect(function() { $this->date->isBefore(new \stdClass()); })
+                ->throws(\InvalidArgumentException::class);
     }
 
     /**
      * @test
-     * @expectedException  InvalidArgumentException
      * @since  3.5.0
      */
     public function isAfterWithInvalidDate()
     {
-        assertTrue($this->date->isAfter(new \stdClass()));
+        expect(function() { $this->date->isAfter(new \stdClass()); })
+                ->throws(\InvalidArgumentException::class);
     }
 
     /**
@@ -244,9 +230,9 @@ class DateTest extends \PHPUnit_Framework_TestCase
      */
     public function preUnixEpoch()
     {
-        $this->assertDateEquals(
-                '1969-12-31T00:00:00+00:00',
-                new Date('31.12.1969 00:00 GMT')
+        assert(
+                new Date('31.12.1969 00:00 GMT'),
+                equalsDate('1969-12-31T00:00:00+00:00')
         );
     }
 
@@ -266,10 +252,10 @@ class DateTest extends \PHPUnit_Framework_TestCase
      */
     public function pre1582()
     {
-        //$this->assertDateEquals('1499-12-21T00:00:00+00:00', new Date('01.01.1500 00:00 GMT'));
-        $this->assertDateEquals(
-                '1500-01-01T00:00:00+00:00',
-                new Date('01.01.1500 00:00 GMT')
+        //assert(new Date('01.01.1500 00:00 GMT'), equalsDate('1499-12-21T00:00:00+00:00'));
+        assert(
+                new Date('01.01.1500 00:00 GMT'),
+                equalsDate('1500-01-01T00:00:00+00:00')
         );
     }
 
@@ -292,15 +278,15 @@ class DateTest extends \PHPUnit_Framework_TestCase
      */
     public function calendarAct1750()
     {
-        //$this->assertDateEquals('1753-01-01T00:00:00+00:00', new Date('01.01.1753 00:00 GMT'));
-        //$this->assertDateEquals('1751-12-21T00:00:00+00:00', new Date('01.01.1752 00:00 GMT'));
-        $this->assertDateEquals(
-                '1753-01-01T00:00:00+00:00',
-                new Date('01.01.1753 00:00 GMT')
+        //assert(new Date('01.01.1753 00:00 GMT'), equalsDate('1753-01-01T00:00:00+00:00'));
+        //assert(new Date('01.01.1752 00:00 GMT'), equalsDate('1751-12-21T00:00:00+00:00'));
+        assert(
+                new Date('01.01.1753 00:00 GMT'),
+                equalsDate('1753-01-01T00:00:00+00:00')
         );
-        $this->assertDateEquals(
-                '1752-01-01T00:00:00+00:00',
-                new Date('01.01.1752 00:00 GMT')
+        assert(
+                new Date('01.01.1752 00:00 GMT'),
+                equalsDate('1752-01-01T00:00:00+00:00')
         );
     }
 
@@ -360,9 +346,9 @@ class DateTest extends \PHPUnit_Framework_TestCase
      */
     public function pre1970()
     {
-        $this->assertDateEquals('1969-02-01T00:00:00+00:00', new Date('01.02.1969'));
-        $this->assertDateEquals('1969-02-01T00:00:00+00:00', new Date('1969-02-01'));
-        $this->assertDateEquals('1969-02-01T00:00:00+00:00', new Date('1969-02-01 12:00AM'));
+        assert(new Date('01.02.1969'), equalsDate('1969-02-01T00:00:00+00:00'));
+        assert(new Date('1969-02-01'), equalsDate('1969-02-01T00:00:00+00:00'));
+        assert(new Date('1969-02-01 12:00AM'), equalsDate('1969-02-01T00:00:00+00:00'));
     }
 
     /**
@@ -374,7 +360,7 @@ class DateTest extends \PHPUnit_Framework_TestCase
     {
         $original = new Date('2007-07-18T09:42:08 Europe/Athens');
         $copy     = unserialize(serialize($original));
-        $this->assertDateEquals($original->format('c'), $copy);
+        assert($copy, equalsDate($original->format('c')));
     }
 
     /**
