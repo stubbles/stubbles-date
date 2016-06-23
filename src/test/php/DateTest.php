@@ -438,7 +438,7 @@ class DateTest extends \PHPUnit_Framework_TestCase
      */
     public function stringOutputPreserved()
     {
-        $date = unserialize(serialize(new Date('2007-11-10 20:15+0100')));
+        $date = unserialize(serialize(new Date('2007-11-10 20:15 Europe/Berlin')));
         assert($date->format('Y-m-d H:i:sO'), equals('2007-11-10 20:15:00+0100'));
         assert(
                 $date->format('Y-m-d H:i:sO', new TimeZone()),
