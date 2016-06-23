@@ -8,6 +8,11 @@
  * @package  stubbles\date
  */
 namespace stubbles\date;
+use function bovigo\assert\assert;
+use function bovigo\assert\assertTrue;
+use function bovigo\assert\expect;
+use function bovigo\assert\predicate\equals;
+use function bovigo\assert\predicate\isNotSameAs;
 /**
  * Tests for stubbles\date\DateModifier.
  *
@@ -49,9 +54,9 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
      */
     protected function assertDateEquals($expected, Date $date)
     {
-        $this->assertEquals(
-                date_format(date_create($expected), 'U'),
+        assert(
                 date_format($date->getHandle(), 'U'),
+                equals(date_format(date_create($expected), 'U')),
                 'Expected ' . $expected . ' but got ' . $date->format('c')
         );
     }
@@ -63,29 +68,29 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     {
         $date        = Date::now();
         $changedDate = $date->change()->to('+1 day');
-        $this->assertNotSame($date, $changedDate);
-        $this->assertTrue($changedDate->isAfter($date));
-        $this->assertTrue($changedDate->isAfter(new Date('tomorrow')));
+        assert($changedDate, isNotSameAs($date));
+        assertTrue($changedDate->isAfter($date));
+        assertTrue($changedDate->isAfter(new Date('tomorrow')));
     }
 
     /**
      * @test
-     * @expectedException  InvalidArgumentException
      */
     public function changeTimeWithInvalidArgumentThrowsIllegalArgumentException()
     {
         $date = new Date('2011-03-31 01:00:00');
-        $date->change()->timeTo('invalid');
+        expect(function() use($date) { $date->change()->timeTo('invalid'); })
+                ->throws(\InvalidArgumentException::class);
     }
 
     /**
      * @test
-     * @expectedException  InvalidArgumentException
      */
     public function changeTimeWithInvalidValuesThrowsIllegalArgumentException()
     {
         $date = new Date('2011-03-31 01:00:00');
-        $date->change()->timeTo('in:val:id');
+        expect(function() use($date) { $date->change()->timeTo('in:val:id'); })
+                ->throws(\InvalidArgumentException::class);
     }
 
     /**
@@ -94,10 +99,7 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     public function changeTimeReturnsNewInstance()
     {
         $date = new Date('2011-03-31 01:00:00');
-        $this->assertNotSame(
-                $date,
-                $date->change()->timeTo('14:13:12')
-        );
+        assert($date->change()->timeTo('14:13:12'), isNotSameAs($date));
     }
 
     /**
@@ -108,10 +110,7 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     public function changeTimeToStartOfDayReturnsNewInstance()
     {
         $date = new Date('2011-03-31 01:00:00');
-        $this->assertNotSame(
-                $date,
-                $date->change()->timeToStartOfDay()
-        );
+        assert($date->change()->timeToStartOfDay(), isNotSameAs($date));
     }
 
     /**
@@ -136,10 +135,7 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     public function changeTimeToEndOfDayReturnsNewInstance()
     {
         $date = new Date('2011-03-31 01:00:00');
-        $this->assertNotSame(
-                $date,
-                $date->change()->timeToEndOfDay()
-        );
+        assert($date->change()->timeToEndOfDay(), isNotSameAs($date));
     }
 
     /**
@@ -338,10 +334,7 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     public function changeDateToReturnsNewInstance()
     {
         $date = new Date('2011-03-31 01:00:00');
-        $this->assertNotSame(
-                $date,
-                $date->change()->dateTo('2012-7-15')
-        );
+        assert($date->change()->dateTo('2012-7-15'), isNotSameAs($date));
     }
 
     /**

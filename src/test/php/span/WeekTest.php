@@ -9,6 +9,12 @@
  */
 namespace stubbles\date\span;
 use stubbles\date\Date;
+
+use function bovigo\assert\assert;
+use function bovigo\assert\assertFalse;
+use function bovigo\assert\assertTrue;
+use function bovigo\assert\expect;
+use function bovigo\assert\predicate\equals;
 /**
  * Tests for stubbles\date\span\Week.
  *
@@ -23,7 +29,7 @@ class WeekTest extends \PHPUnit_Framework_TestCase
     public function amountOfDaysIsAlwaysSeven()
     {
         $week = new Week('2007-05-14');
-        $this->assertEquals(7, $week->amountOfDays());
+        assert($week->amountOfDays(), equals(7));
     }
 
     /**
@@ -35,16 +41,16 @@ class WeekTest extends \PHPUnit_Framework_TestCase
         $days = 0;
         $expectedDay = 14;
         foreach ($week->days() as $dayString => $day) {
-            $this->assertEquals(
-                    '2007-05-' . str_pad($expectedDay, 2, '0', STR_PAD_LEFT),
-                    $dayString
+            assert(
+                    $dayString,
+                    equals('2007-05-' . str_pad($expectedDay, 2, '0', STR_PAD_LEFT))
             );
-            $this->assertEquals($expectedDay, $day->asInt());
+            assert($day->asInt(), equals($expectedDay));
             $expectedDay++;
             $days++;
         }
 
-        $this->assertEquals(7, $days);
+        assert($days, equals(7));
     }
 
     /**
@@ -53,7 +59,7 @@ class WeekTest extends \PHPUnit_Framework_TestCase
     public function weekWhichStartsAfterTodayIsInFuture()
     {
         $week = new Week('tomorrow');
-        $this->assertTrue($week->isInFuture());
+        assertTrue($week->isInFuture());
     }
 
     /**
@@ -62,7 +68,7 @@ class WeekTest extends \PHPUnit_Framework_TestCase
     public function weekWhichStartsBeforeTodayIsNotInFuture()
     {
         $week = new Week('yesterday');
-        $this->assertFalse($week->isInFuture());
+        assertFalse($week->isInFuture());
     }
 
     /**
@@ -71,7 +77,7 @@ class WeekTest extends \PHPUnit_Framework_TestCase
     public function weekWhichStartsTodayIsNotInFuture()
     {
         $week = new Week('now');
-        $this->assertFalse($week->isInFuture());
+        assertFalse($week->isInFuture());
     }
 
     /**
@@ -80,7 +86,7 @@ class WeekTest extends \PHPUnit_Framework_TestCase
     public function doesNotContainDatesBeforeBeginnOfWeek()
     {
         $week = new Week('2009-01-05');
-        $this->assertFalse($week->containsDate(new Date('2009-01-04')));
+        assertFalse($week->containsDate(new Date('2009-01-04')));
     }
 
     /**
@@ -89,13 +95,13 @@ class WeekTest extends \PHPUnit_Framework_TestCase
     public function containsAllDaysOfThisWeek()
     {
         $week = new Week('2009-01-05');
-        $this->assertTrue($week->containsDate(new Date('2009-01-05')));
-        $this->assertTrue($week->containsDate(new Date('2009-01-06')));
-        $this->assertTrue($week->containsDate(new Date('2009-01-07')));
-        $this->assertTrue($week->containsDate(new Date('2009-01-08')));
-        $this->assertTrue($week->containsDate(new Date('2009-01-09')));
-        $this->assertTrue($week->containsDate(new Date('2009-01-10')));
-        $this->assertTrue($week->containsDate(new Date('2009-01-11')));
+        assertTrue($week->containsDate(new Date('2009-01-05')));
+        assertTrue($week->containsDate(new Date('2009-01-06')));
+        assertTrue($week->containsDate(new Date('2009-01-07')));
+        assertTrue($week->containsDate(new Date('2009-01-08')));
+        assertTrue($week->containsDate(new Date('2009-01-09')));
+        assertTrue($week->containsDate(new Date('2009-01-10')));
+        assertTrue($week->containsDate(new Date('2009-01-11')));
     }
 
     /**
@@ -104,7 +110,7 @@ class WeekTest extends \PHPUnit_Framework_TestCase
     public function doesNotContainDatesAfterEndOfWeek()
     {
         $week = new Week('2009-01-05');
-        $this->assertFalse($week->containsDate(new Date('2009-01-12')));
+        assertFalse($week->containsDate(new Date('2009-01-12')));
     }
 
     /**
@@ -113,7 +119,7 @@ class WeekTest extends \PHPUnit_Framework_TestCase
     public function stringRepresentationOfWeekContainsNumberOfWeek()
     {
         $week = new Week('2007-04-02');
-        $this->assertEquals('2007-W14', $week->asString());
+        assert($week->asString(), equals('2007-W14'));
     }
 
     /**
@@ -122,7 +128,7 @@ class WeekTest extends \PHPUnit_Framework_TestCase
     public function properStringConversion()
     {
         $week = new Week('2007-04-02');
-        $this->assertEquals('2007-W14', (string) $week);
+        assert((string) $week, equals('2007-W14'));
     }
 
     /**
@@ -132,7 +138,7 @@ class WeekTest extends \PHPUnit_Framework_TestCase
     public function numberReturnsNumberOfWeek()
     {
         $week = new Week('2007-04-02');
-        $this->assertEquals(14, $week->number());
+        assert($week->number(), equals(14));
     }
 
     /**
@@ -141,30 +147,30 @@ class WeekTest extends \PHPUnit_Framework_TestCase
      */
     public function createFromStringParsesStringToCreateInstance()
     {
-        $this->assertEquals(
-                '2014-W05',
-                Week::fromString('2014-W05')->asString()
+        assert(
+                Week::fromString('2014-W05')->asString(),
+                equals('2014-W05')
         );
     }
 
     /**
      * @test
-     * @expectedException  InvalidArgumentException
      * @since  5.3.0
      */
     public function createFromInvalidStringThrowsInvalidArgumentException()
     {
-         Week::fromString('invalid');
+         expect(function() { Week::fromString('invalid'); })
+                ->throws(\InvalidArgumentException::class);
     }
 
     /**
      * @test
-     * @expectedException  InvalidArgumentException
      * @since  5.3.0
      */
     public function createFromInvalidWeekNumberThrowsInvalidArgumentException()
     {
-         Week::fromString('2014-W63');
+         expect(function() { Week::fromString('2014-W63'); })
+                ->throws(\InvalidArgumentException::class);
     }
 
     /**
@@ -173,6 +179,6 @@ class WeekTest extends \PHPUnit_Framework_TestCase
      */
     public function typeIsWeek()
     {
-        $this->assertEquals('week', Week::fromString('2014-W05')->type());
+        assert(Week::fromString('2014-W05')->type(), equals('week'));
     }
 }

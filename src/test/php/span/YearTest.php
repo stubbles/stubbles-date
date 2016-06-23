@@ -9,6 +9,12 @@
  */
 namespace stubbles\date\span;
 use stubbles\date\Date;
+
+use function bovigo\assert\assert;
+use function bovigo\assert\assertFalse;
+use function bovigo\assert\assertTrue;
+use function bovigo\assert\expect;
+use function bovigo\assert\predicate\equals;
 /**
  * Tests for stubbles\date\span\Month.
  *
@@ -23,7 +29,7 @@ class YearTest extends \PHPUnit_Framework_TestCase
     public function stringRepresentationContainsYear()
     {
         $year = new Year(2007);
-        $this->assertEquals('2007', $year->asString());
+        assert($year->asString(), equals('2007'));
     }
 
     /**
@@ -32,7 +38,7 @@ class YearTest extends \PHPUnit_Framework_TestCase
     public function properStringConversion()
     {
         $year = new Year(2007);
-        $this->assertEquals('2007', (string) $year);
+        assert((string) $year, equals('2007'));
     }
 
     /**
@@ -41,7 +47,7 @@ class YearTest extends \PHPUnit_Framework_TestCase
     public function usesCurrentYearIfNotGiven()
     {
         $year = new Year();
-        $this->assertEquals(date('Y'), $year->asString());
+        assert($year->asString(), equals(date('Y')));
     }
 
     /**
@@ -50,7 +56,7 @@ class YearTest extends \PHPUnit_Framework_TestCase
     public function amountOfDaysIs366ForLeapYears()
     {
         $year = new Year(2008);
-        $this->assertEquals(366, $year->amountOfDays());
+        assert($year->amountOfDays(), equals(366));
     }
 
     /**
@@ -59,7 +65,7 @@ class YearTest extends \PHPUnit_Framework_TestCase
     public function amountOfDaysIs365ForNonLeapYears()
     {
         $year = new Year(2007);
-        $this->assertEquals(365, $year->amountOfDays());
+        assert($year->amountOfDays(), equals(365));
     }
 
     /**
@@ -84,11 +90,11 @@ class YearTest extends \PHPUnit_Framework_TestCase
     {
         $days = 0;
         foreach ($year->days() as $dayString => $day) {
-            $this->assertEquals($dayString, $day->asString());
+            assert($day->asString(), equals($dayString));
             $days++;
         }
 
-        $this->assertEquals($dayCount, $days);
+        assert($days, equals($dayCount));
     }
 
     /**
@@ -100,17 +106,14 @@ class YearTest extends \PHPUnit_Framework_TestCase
         $expectedMonth = 0;
         foreach ($year->months() as $monthString => $month) {
             $expectedMonth++;
-            $this->assertEquals(
+            assert($month->asString(), equals($monthString));
+            assert(
                     $monthString,
-                    $month->asString()
-            );
-            $this->assertEquals(
-                    '2007-' . str_pad($expectedMonth, 2, '0', STR_PAD_LEFT),
-                    $monthString
+                    equals('2007-' . str_pad($expectedMonth, 2, '0', STR_PAD_LEFT))
             );
         }
 
-        $this->assertEquals(12, $expectedMonth);
+        assert($expectedMonth, equals(12));
     }
 
     /**
@@ -119,7 +122,7 @@ class YearTest extends \PHPUnit_Framework_TestCase
     public function nextYearIsInFuture()
     {
         $year = new Year(date('Y') + 1);
-        $this->assertTrue($year->isInFuture());
+        assertTrue($year->isInFuture());
     }
 
     /**
@@ -128,7 +131,7 @@ class YearTest extends \PHPUnit_Framework_TestCase
     public function lastYearIsNotInFuture()
     {
         $year = new Year(date('Y') - 1);
-        $this->assertFalse($year->isInFuture());
+        assertFalse($year->isInFuture());
     }
 
     /**
@@ -137,7 +140,7 @@ class YearTest extends \PHPUnit_Framework_TestCase
     public function currentYearIsNotInFuture()
     {
         $year = new Year();
-        $this->assertFalse($year->isInFuture());
+        assertFalse($year->isInFuture());
     }
 
     /**
@@ -146,7 +149,7 @@ class YearTest extends \PHPUnit_Framework_TestCase
     public function doesNotContainDateFromPreviousYear()
     {
         $year = new Year(2007);
-        $this->assertFalse($year->containsDate(new Date('2006-12-31')));
+        assertFalse($year->containsDate(new Date('2006-12-31')));
     }
 
     /**
@@ -158,7 +161,7 @@ class YearTest extends \PHPUnit_Framework_TestCase
         for ($month = 1; $month <= 12; $month++) {
             $days = $this->createMonth($month)->amountOfDays();
             for ($day = 1; $day <= $days; $day++) {
-                $this->assertTrue($year->containsDate(new Date('2007-' . $month . '-' . $day)));
+                assertTrue($year->containsDate(new Date('2007-' . $month . '-' . $day)));
             }
         }
     }
@@ -180,7 +183,7 @@ class YearTest extends \PHPUnit_Framework_TestCase
     public function doesNotContainDateFromLaterYear()
     {
         $year = new Year(2007);
-        $this->assertFalse($year->containsDate(new Date('2008-01-01')));
+        assertFalse($year->containsDate(new Date('2008-01-01')));
     }
 
     /**
@@ -189,7 +192,7 @@ class YearTest extends \PHPUnit_Framework_TestCase
     public function isLeapYearReturnsTrueForLeapYears()
     {
         $year = new Year(2008);
-        $this->assertTrue($year->isLeapYear());
+        assertTrue($year->isLeapYear());
     }
 
     /**
@@ -198,7 +201,7 @@ class YearTest extends \PHPUnit_Framework_TestCase
     public function isLeapYearReturnsFalseForNonLeapYears()
     {
         $year = new Year(2007);
-        $this->assertFalse($year->isLeapYear());
+        assertFalse($year->isLeapYear());
     }
 
     /**
@@ -207,7 +210,7 @@ class YearTest extends \PHPUnit_Framework_TestCase
     public function isCurrentYearReturnsTrueForCreationWithoutArguments()
     {
         $year = new Year();
-        $this->assertTrue($year->isCurrentYear());
+        assertTrue($year->isCurrentYear());
     }
 
     /**
@@ -216,7 +219,7 @@ class YearTest extends \PHPUnit_Framework_TestCase
     public function isCurrentYearReturnsTrueWhenCreatedForCurrentYear()
     {
         $year = new Year(date('Y'));
-        $this->assertTrue($year->isCurrentYear());
+        assertTrue($year->isCurrentYear());
     }
 
     /**
@@ -225,7 +228,7 @@ class YearTest extends \PHPUnit_Framework_TestCase
     public function isCurrentYearReturnsFalseForAllOtherYears()
     {
         $year = new Year(2007);
-        $this->assertFalse($year->isCurrentYear());
+        assertFalse($year->isCurrentYear());
     }
 
     /**
@@ -235,6 +238,6 @@ class YearTest extends \PHPUnit_Framework_TestCase
     public function typeIsYear()
     {
         $year = new Year(2007);
-        $this->assertEquals('year', $year->type());
+        assert($year->type(), equals('year'));
     }
 }

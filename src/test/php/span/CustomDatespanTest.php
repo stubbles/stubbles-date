@@ -9,6 +9,12 @@
  */
 namespace stubbles\date\span;
 use stubbles\date\Date;
+
+use function bovigo\assert\assert;
+use function bovigo\assert\assertFalse;
+use function bovigo\assert\assertTrue;
+use function bovigo\assert\predicate\equals;
+use function bovigo\assert\predicate\isInstanceOf;
 /**
  * Tests for stubbles\date\span\CustomDatespan.
  *
@@ -24,10 +30,10 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
         $startDate      = $customDatespan->start();
-        $this->assertInstanceOf('stubbles\date\Date', $startDate);
-        $this->assertEquals(
-                '2006-04-04 00:00:00' . $startDate->offset(),
-                $startDate->asString()
+        assert($startDate, isInstanceOf(Date::class));
+        assert(
+                $startDate->asString(),
+                equals('2006-04-04 00:00:00' . $startDate->offset())
         );
     }
 
@@ -38,10 +44,10 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
         $endDate        = $customDatespan->end();
-        $this->assertInstanceOf('stubbles\date\Date', $endDate);
-        $this->assertEquals(
-                '2006-04-20 23:59:59' . $endDate->offset(),
-                $endDate->asString()
+        assert($endDate, isInstanceOf(Date::class));
+        assert(
+                $endDate->asString(),
+                equals('2006-04-20 23:59:59' . $endDate->offset())
         );
     }
 
@@ -54,10 +60,10 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
                 new Date('2006-04-04'),
                 new Date('2006-04-20')
         );
-        $startDate      = $customDatespan->start();
-        $this->assertEquals(
-                '2006-04-04 00:00:00' . $startDate->offset(),
-                $startDate->asString()
+        $startDate = $customDatespan->start();
+        assert(
+                $startDate->asString(),
+                equals('2006-04-04 00:00:00' . $startDate->offset())
         );
     }
 
@@ -70,10 +76,10 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
                 new Date('2006-04-04'),
                 new Date('2006-04-20')
         );
-        $endDate        = $customDatespan->end();
-        $this->assertEquals(
-                '2006-04-20 23:59:59' . $endDate->offset(),
-                $endDate->asString()
+        $endDate = $customDatespan->end();
+        assert(
+                $endDate->asString(),
+                equals('2006-04-20 23:59:59' . $endDate->offset())
         );
     }
 
@@ -83,7 +89,7 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
     public function returnsAmountOfDaysInDatespan()
     {
         $customDatespan = new CustomDatespan('2007-05-14', '2007-05-27');
-        $this->assertEquals(14, $customDatespan->amountOfDays());
+        assert($customDatespan->amountOfDays(), equals(14));
     }
 
     /**
@@ -94,11 +100,11 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
         $customDatespan = new CustomDatespan('2007-05-14', '2007-05-27');
         $expectedDay    = 14;
         foreach ($customDatespan->days() as $dayString => $day) {
-            $this->assertEquals(
-                    '2007-05-' . str_pad($expectedDay, 2, '0', STR_PAD_LEFT),
-                    $dayString
+            assert(
+                    $dayString,
+                    equals('2007-05-' . str_pad($expectedDay, 2, '0', STR_PAD_LEFT))
             );
-            $this->assertEquals($expectedDay, $day->asInt());
+            assert($day->asInt(), equals($expectedDay));
             $expectedDay++;
         }
     }
@@ -109,7 +115,7 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
     public function isInFutureIfCurrentDateBeforeStartDate()
     {
         $customDatespan = new CustomDatespan('tomorrow', '+3 days');
-        $this->assertTrue($customDatespan->isInFuture());
+        assertTrue($customDatespan->isInFuture());
     }
 
     /**
@@ -118,7 +124,7 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
     public function isNotInFutureIfCurrentDateWithinSpan()
     {
         $customDatespan = new CustomDatespan('yesterday', '+3 days');
-        $this->assertFalse($customDatespan->isInFuture());
+        assertFalse($customDatespan->isInFuture());
     }
 
     /**
@@ -127,7 +133,7 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
     public function isNotInFutureIfCurrentDateAfterEndDate()
     {
         $customDatespan = new CustomDatespan('-3 days', 'yesterday');
-        $this->assertFalse($customDatespan->isInFuture());
+        assertFalse($customDatespan->isInFuture());
     }
 
     /**
@@ -136,7 +142,7 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
     public function doesNotContainDateBeforeStartDate()
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
-        $this->assertFalse($customDatespan->containsDate(new Date('2006-04-03')));
+        assertFalse($customDatespan->containsDate(new Date('2006-04-03')));
     }
 
     /**
@@ -146,7 +152,7 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
         for ($day = 4; $day <= 20; $day++) {
-            $this->assertTrue($customDatespan->containsDate(new Date('2006-04-' . $day)));
+            assertTrue($customDatespan->containsDate(new Date('2006-04-' . $day)));
         }
     }
 
@@ -156,7 +162,7 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
     public function doesNotContainDateAfterEndDate()
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
-        $this->assertFalse($customDatespan->containsDate(new Date('2006-04-21')));
+        assertFalse($customDatespan->containsDate(new Date('2006-04-21')));
     }
 
     /**
@@ -167,8 +173,8 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
         $customDatespan = new CustomDatespan('2007-05-14', '2007-05-27');
         $serialized     = serialize($customDatespan);
         $unserialized   = unserialize($serialized);
-        $this->assertTrue($customDatespan->start()->equals($unserialized->start()));
-        $this->assertTrue($customDatespan->end()->equals($unserialized->end()));
+        assertTrue($customDatespan->start()->equals($unserialized->start()));
+        assertTrue($customDatespan->end()->equals($unserialized->end()));
     }
 
     /**
@@ -177,7 +183,7 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
     public function stringRepresentationOfDayContainsStartAndEndDate()
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
-        $this->assertEquals('2006-04-04,2006-04-20', $customDatespan->asString());
+        assert($customDatespan->asString(), equals('2006-04-04,2006-04-20'));
     }
 
     /**
@@ -186,7 +192,7 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
     public function properStringConversion()
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
-        $this->assertEquals('2006-04-04,2006-04-20', (string) $customDatespan);
+        assert((string) $customDatespan, equals('2006-04-04,2006-04-20'));
     }
 
     /**
@@ -196,7 +202,7 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
     public function startsBeforeChecksStartDate()
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
-        $this->assertTrue($customDatespan->startsBefore('2006-04-05'));
+        assertTrue($customDatespan->startsBefore('2006-04-05'));
     }
 
     /**
@@ -206,7 +212,7 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
     public function startsAfterChecksStartDate()
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
-        $this->assertTrue($customDatespan->startsAfter('2006-04-03'));
+        assertTrue($customDatespan->startsAfter('2006-04-03'));
     }
 
     /**
@@ -216,7 +222,7 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
     public function endsBeforeChecksStartDate()
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
-        $this->assertTrue($customDatespan->endsBefore('2006-04-21'));
+        assertTrue($customDatespan->endsBefore('2006-04-21'));
     }
 
     /**
@@ -226,7 +232,7 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
     public function endsAfterChecksStartDate()
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
-        $this->assertTrue($customDatespan->endsAfter('2006-04-19'));
+        assertTrue($customDatespan->endsAfter('2006-04-19'));
     }
 
     /**
@@ -236,7 +242,7 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
     public function formatStartReturnsFormattedStartDate()
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
-        $this->assertEquals('2006-04-04', $customDatespan->formatStart('Y-m-d'));
+        assert($customDatespan->formatStart('Y-m-d'), equals('2006-04-04'));
     }
 
     /**
@@ -246,6 +252,6 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
     public function formatEndReturnsFormattedStartDate()
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
-        $this->assertEquals('2006-04-20', $customDatespan->formatEnd('Y-m-d'));
+        assert($customDatespan->formatEnd('Y-m-d'), equals('2006-04-20'));
     }
 }
