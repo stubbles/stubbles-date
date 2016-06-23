@@ -88,6 +88,10 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
      */
     public function changeTimeWithInvalidValuesThrowsIllegalArgumentException()
     {
+        if (defined('HHVM_VERSION')) {
+            $this->markTestSkipped('HHVM errors in another way, test can be removed once migrated to PHP 7 and typehints for int added');
+        }
+
         $date = new Date('2011-03-31 01:00:00');
         expect(function() use($date) { $date->change()->timeTo('in:val:id'); })
                 ->throws(\InvalidArgumentException::class);
@@ -310,22 +314,26 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException  InvalidArgumentException
      */
     public function changeDateWithInvalidArgumentThrowsIllegalArgumentException()
     {
         $date = new Date('2011-03-31 01:00:00');
-        $date->change()->dateTo('invalid');
+        expect(function() use($date) { $date->change()->dateTo('invalid'); })
+                ->throws(\InvalidArgumentException::class);
     }
 
     /**
      * @test
-     * @expectedException  InvalidArgumentException
      */
     public function changeDateWithInvalidValuesThrowsIllegalArgumentException()
     {
+        if (defined('HHVM_VERSION')) {
+            $this->markTestSkipped('HHVM errors in another way, test can be removed once migrated to PHP 7 and typehints for int added');
+        }
+
         $date = new Date('2011-03-31 01:00:00');
-        $date->change()->dateTo('in-val-id');
+        expect(function() use($date) { $date->change()->dateTo('in-val-id'); })
+                ->throws(\InvalidArgumentException::class);
     }
 
     /**

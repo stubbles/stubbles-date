@@ -11,6 +11,7 @@ namespace stubbles\date;
 use function bovigo\assert\assert;
 use function bovigo\assert\assertFalse;
 use function bovigo\assert\assertTrue;
+use function bovigo\assert\expect;
 use function bovigo\assert\predicate\equals;
 /**
  * Tests for stubbles\date\TimeZone.
@@ -131,20 +132,21 @@ class TimeZoneTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException  InvalidArgumentException
      */
     public function invalidTimeZoneValueThrowsIllegalArgumentExceptionOnConstruction()
     {
-        $timeZone = new TimeZone(500);
+        expect(function() { new TimeZone(500); })
+                ->throws(\InvalidArgumentException::class);
     }
 
     /**
      * @test
-     * @expectedException  InvalidArgumentException
      */
     public function nonExistingTimeZoneValueThrowsIllegalArgumentExceptionOnConstruction()
     {
-        $timeZone = new TimeZone('Europe/Karlsruhe');
+        expect(function() { new TimeZone('Europe/Karlsruhe'); })->throws(
+                defined('HHVM_VERSION') ? \Exception::class : \InvalidArgumentException::class
+        );
     }
 
     /**
