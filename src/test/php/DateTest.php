@@ -8,7 +8,7 @@
  * @package  stubbles\date
  */
 namespace stubbles\date;
-use stubbles\lang\reflect;
+use stubbles\reflect;
 /**
  * Helper class for the test.
  */
