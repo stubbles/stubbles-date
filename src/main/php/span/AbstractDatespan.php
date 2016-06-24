@@ -52,17 +52,6 @@ abstract class AbstractDatespan implements Datespan
     }
 
     /**
-     * returns the start date
-     *
-     * @return  \stubbles\date\Date
-     * @deprecated  since 5.2.0, use start() instead, will be removed with 6.0.0
-     */
-    public function getStart()
-    {
-        return $this->start();
-    }
-
-    /**
      * checks whether datespan starts before a given date
      *
      * @param   int|string|\DateTime|\stubbles\date\Date  $date
@@ -94,17 +83,6 @@ abstract class AbstractDatespan implements Datespan
     public function end()
     {
         return $this->end;
-    }
-
-    /**
-     * returns the end date
-     *
-     * @return  \stubbles\date\Date
-     * @deprecated  since 5.2.0, use end() instead, will be removed with 6.0.0
-     */
-    public function getEnd()
-    {
-        return $this->end();
     }
 
     /**
@@ -165,17 +143,6 @@ abstract class AbstractDatespan implements Datespan
     public function amountOfDays()
     {
         return $this->end->handle()->diff($this->start->handle())->days + 1;
-    }
-
-    /**
-     * returns amount of days in this datespan
-     *
-     * @return  int
-     * @deprecated  since 5.2.0, use amountOfDays() instead, will be removed with 6.0.0
-     */
-    public function getAmountOfDays()
-    {
-        return $this->amountOfDays();
     }
 
     /**

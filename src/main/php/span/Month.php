@@ -166,17 +166,6 @@ class Month extends CustomDatespan
     }
 
     /**
-     * returns amount of days in this month
-     *
-     * @return  int
-     * @deprecated  since 5.2.0, use amountOfDays() instead, will be removed with 6.0.0
-     */
-    public function getAmountOfDays()
-    {
-        return $this->amountOfDays();
-    }
-
-    /**
      * checks if it represents the current month
      *
      * @return  bool

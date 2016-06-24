@@ -64,17 +64,6 @@ class Year extends CustomDatespan
     }
 
     /**
-     * returns amount of days in this year
-     *
-     * @return  int
-     * @deprecated  since 5.2.0, use amountOfDays() instead, will be removed with 6.0.0
-     */
-    public function getAmountOfDays()
-    {
-       return $this->amountOfDays();
-    }
-
-    /**
      * returns list of months for this year
      *
      * @return  \stubbles\date\span\Month[]
@@ -82,17 +71,6 @@ class Year extends CustomDatespan
     public function months()
     {
         return new Months($this);
-    }
-
-    /**
-     * returns list of months for this year
-     *
-     * @return  \stubbles\date\span\Month[]
-     * @deprecated  since 5.2.0, use months() instead, will be removed with 6.0.0
-     */
-    public function getMonths()
-    {
-        return $this->months();
     }
 
     /**

@@ -187,7 +187,7 @@ class DateTest extends \PHPUnit_Framework_TestCase
      */
     public function dateHandling()
     {
-        assert($this->date->getTimestamp(), equals($this->timestamp));
+        assert($this->date->timestamp(), equals($this->timestamp));
         assert($this->date->format('r'), equals(date('r', $this->timestamp)));
         assertTrue($this->date->isAfter(new Date('yesterday')));
         assertTrue($this->date->isBefore(new Date('tomorrow')));
@@ -548,7 +548,7 @@ class DateTest extends \PHPUnit_Framework_TestCase
     public function asStringReturnsStringValue()
     {
         $date = new Date('2012-01-21 21:00:00');
-        assert($date->asString(), equals('2012-01-21 21:00:00' . $date->getOffset()));
+        assert($date->asString(), equals('2012-01-21 21:00:00' . $date->offset()));
     }
 
     /**

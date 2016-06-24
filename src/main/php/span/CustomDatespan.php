@@ -26,17 +26,6 @@ class CustomDatespan extends AbstractDatespan
     }
 
     /**
-     * returns list of days within this datespan
-     *
-     * @return  \stubbles\date\span\Day[]
-     * @deprecated  since 5.2.0, use days() instead, will be removed with 6.0.0
-     */
-    public function getDays()
-    {
-        return $this->days();
-    }
-
-    /**
      * returns a string representation of the datespan
      *
      * @return  string

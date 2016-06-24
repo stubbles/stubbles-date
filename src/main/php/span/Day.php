@@ -91,19 +91,6 @@ class Day extends AbstractDatespan implements Datespan
     }
 
     /**
-     * returns amount of days on this day
-     *
-     * Well, the amount of days on a day is obviously always one.
-     *
-     * @return  int
-     * @deprecated  since 5.2.0, use amountOfDays() instead, will be removed with 6.0.0
-     */
-    public function getAmountOfDays()
-    {
-        return $this->amountOfDays();
-    }
-
-    /**
      * returns list of days
      *
      * @return  \stubbles\date\span\Day[]
@@ -111,17 +98,6 @@ class Day extends AbstractDatespan implements Datespan
     public function days()
     {
         return [$this->asString() => $this];
-    }
-
-    /**
-     * returns list of days
-     *
-     * @return  \stubbles\date\span\Day[]
-     * @deprecated  since 5.2.0, use days() instead, will be removed with 6.0.0
-     */
-    public function getDays()
-    {
-        return $this->days();
     }
 
     /**

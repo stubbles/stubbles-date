@@ -4,6 +4,7 @@
 ### BC breaks
 
   * dropped support for PHP 5.4 and 5.5
+  * removed all get*() methods, were deprecated since 5.2.0
 
 
 ### Other changes

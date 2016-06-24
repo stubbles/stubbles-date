@@ -67,17 +67,6 @@ class Week extends CustomDatespan
     }
 
     /**
-     * returns amount of days in this datespan
-     *
-     * @return  int
-     * @deprecated  since 5.2.0, use amountOfDays() instead, will be removed with 6.0.0
-     */
-    public function getAmountOfDays()
-    {
-        return $this->amountOfDays();
-    }
-
-    /**
      * returns a string representation for the week
      *
      * @return  string

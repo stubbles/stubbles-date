@@ -121,18 +121,6 @@ class Date
     }
 
     /**
-     * returns internal date/time handle
-     *
-     * @return  \DateTime
-     * @XmlIgnore
-     * @deprecated  since 5.2.0, use handle() instead, will be removed with 6.0.0
-     */
-    public function getHandle()
-    {
-        return $this->handle();
-    }
-
-    /**
      * returns way to change the date to another
      *
      * @return  \stubbles\date\DateModifier
@@ -155,18 +143,6 @@ class Date
     }
 
     /**
-     * returns timestamp for this date/time
-     *
-     * @return  int
-     * @XmlIgnore
-     * @deprecated  since 5.2.0, use timestamp() instead, will be removed with 6.0.0
-     */
-    public function getTimestamp()
-    {
-        return $this->timestamp();
-    }
-
-    /**
      * returns seconds of current date/time
      *
      * @return  int
@@ -175,18 +151,6 @@ class Date
     public function seconds()
     {
         return (int) $this->dateTime->format('s');
-    }
-
-    /**
-     * returns seconds of current date/time
-     *
-     * @return  int
-     * @XmlIgnore
-     * @deprecated  since 5.2.0, use seconds() instead, will be removed with 6.0.0
-     */
-    public function getSeconds()
-    {
-        return $this->seconds();
     }
 
     /**
@@ -201,18 +165,6 @@ class Date
     }
 
     /**
-     * returns minutes of current date/time
-     *
-     * @return  int
-     * @XmlIgnore
-     * @deprecated  since 5.2.0, use minutes() instead, will be removed with 6.0.0
-     */
-    public function getMinutes()
-    {
-        return $this->minutes();
-    }
-
-    /**
      * returns hours of current date/time
      *
      * @return  int
@@ -221,18 +173,6 @@ class Date
     public function hours()
     {
         return (int) $this->dateTime->format('G');
-    }
-
-    /**
-     * returns hours of current date/time
-     *
-     * @return  int
-     * @XmlIgnore
-     * @deprecated  since 5.2.0, use hours() instead, will be removed with 6.0.0
-     */
-    public function getHours()
-    {
-        return $this->hours();
     }
 
     /**
@@ -247,18 +187,6 @@ class Date
     }
 
     /**
-     * returns day of current date/time
-     *
-     * @return  int
-     * @XmlIgnore
-     * @deprecated  since 5.2.0, use day() instead, will be removed with 6.0.0
-     */
-    public function getDay()
-    {
-        return $this->day();
-    }
-
-    /**
      * returns month of current date/time
      *
      * @return  int
@@ -267,18 +195,6 @@ class Date
     public function month()
     {
         return (int) $this->dateTime->format('m');
-    }
-
-    /**
-     * returns month of current date/time
-     *
-     * @return  int
-     * @XmlIgnore
-     * @deprecated  since 5.2.0, use month() instead, will be removed with 6.0.0
-     */
-    public function getMonth()
-    {
-        return $this->month();
     }
 
     /**
@@ -293,18 +209,6 @@ class Date
     }
 
     /**
-     * returns year of current date/time
-     *
-     * @return  int
-     * @XmlIgnore
-     * @deprecated  since 5.2.0, use year() instead, will be removed with 6.0.0
-     */
-    public function getYear()
-    {
-        return $this->year();
-    }
-
-    /**
      * returns offset to UTC in "+MMSS" notation
      *
      * @return  string
@@ -316,18 +220,6 @@ class Date
     }
 
     /**
-     * returns offset to UTC in "+MMSS" notation
-     *
-     * @return  string
-     * @XmlIgnore
-     * @deprecated  since 5.2.0, use offset() instead, will be removed with 6.0.0
-     */
-    public function getOffset()
-    {
-        return $this->offset();
-    }
-
-    /**
      * returns offset to UTC in seconds
      *
      * @return  int
@@ -336,18 +228,6 @@ class Date
     public function offsetInSeconds()
     {
         return (int) $this->dateTime->format('Z');
-    }
-
-    /**
-     * returns offset to UTC in seconds
-     *
-     * @return  int
-     * @XmlIgnore
-     * @deprecated  since 5.2.0, use offsetInSeconds() instead, will be removed with 6.0.0
-     */
-    public function getOffsetInSeconds()
-    {
-        return $this->offsetInSeconds();
     }
 
     /**
@@ -381,18 +261,6 @@ class Date
     public function timeZone()
     {
         return new TimeZone($this->dateTime->getTimezone());
-    }
-
-    /**
-     * returns time zone of this date
-     *
-     * @return  \stubbles\date\TimeZone
-     * @XmlIgnore
-     * @deprecated  since 5.2.0, use timeZone() instead, will be removed with 6.0.0
-     */
-    public function getTimeZone()
-    {
-        return $this->timeZone();
     }
 
     /**
