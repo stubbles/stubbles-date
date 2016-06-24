@@ -42,7 +42,7 @@ class Months implements \Iterator
     /**
      * returns current day within iteration
      *
-     * @return  \stubbles\date\span\Day
+     * @return  \stubbles\date\span\Month
      */
     public function current()
     {
