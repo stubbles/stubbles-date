@@ -93,20 +93,27 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @test
+     * @return  array
      */
-    public function daysReturnsListOfAllDays()
+    public function datespanDays()
     {
-        $customDatespan = new CustomDatespan('2007-05-14', '2007-05-27');
-        $expectedDay    = 14;
-        foreach ($customDatespan->days() as $dayString => $day) {
-            assert(
-                    $dayString,
-                    equals('2007-05-' . str_pad($expectedDay, 2, '0', STR_PAD_LEFT))
-            );
-            assert($day->asInt(), equals($expectedDay));
-            $expectedDay++;
+        $return      = [];
+        $expectedDay = 14;
+        foreach ((new CustomDatespan('2007-05-14', '2007-05-27'))->days() as $dayString => $day) {
+            $return[] = [$dayString, $day, $expectedDay++];
         }
+
+        return $return;
+    }
+
+    /**
+     * @test
+     * @dataProvider  datespanDays
+     */
+    public function daysReturnsListOfAllDays($dayString, $day, $expectedDay)
+    {
+        assert($dayString, equals('2007-05-' . $expectedDay));
+        assert($day->asInt(), equals($expectedDay));
     }
 
     /**
@@ -168,12 +175,22 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function serializeAndUnserializeDoesNotDestroyStartAndEndDate()
+    public function serializeAndUnserializeDoesNotDestroyStartDate()
     {
         $customDatespan = new CustomDatespan('2007-05-14', '2007-05-27');
         $serialized     = serialize($customDatespan);
         $unserialized   = unserialize($serialized);
         assertTrue($customDatespan->start()->equals($unserialized->start()));
+    }
+
+    /**
+     * @test
+     */
+    public function serializeAndUnserializeDoesNotDestroyEndDate()
+    {
+        $customDatespan = new CustomDatespan('2007-05-14', '2007-05-27');
+        $serialized     = serialize($customDatespan);
+        $unserialized   = unserialize($serialized);
         assertTrue($customDatespan->end()->equals($unserialized->end()));
     }
 

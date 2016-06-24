@@ -14,7 +14,10 @@ use function bovigo\assert\assert;
 use function bovigo\assert\assertFalse;
 use function bovigo\assert\assertTrue;
 use function bovigo\assert\expect;
+use function bovigo\assert\predicate\each;
 use function bovigo\assert\predicate\equals;
+use function bovigo\assert\predicate\isInstanceOf;
+use function bovigo\assert\predicate\isOfSize;
 /**
  * Tests for stubbles\date\span\Month.
  *
@@ -69,8 +72,6 @@ class YearTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * data provider for getDaysReturnsAllDaysInYear()
-     *
      * @return  array
      */
     public function dayYear()
@@ -81,39 +82,56 @@ class YearTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param  \stubbles\date\span\Year  $year      year to get days for
-     * @param  int                       $dayCount  amount of days in this year
      * @test
      * @dataProvider  dayYear
      */
-    public function daysReturnsAllDaysInYear(Year $year, $dayCount)
+    public function daysReturnsAmountOfDaysWithinYear(Year $year, $dayCount)
     {
-        $days = 0;
-        foreach ($year->days() as $dayString => $day) {
-            assert($day->asString(), equals($dayString));
-            $days++;
-        }
-
-        assert($days, equals($dayCount));
+        assert($year->days(), isOfSize($dayCount));
     }
 
     /**
      * @test
      */
-    public function monthsReturnsAllMonth()
+    public function daysReturnsAllDaysInYear()
     {
-        $year   = new Year(2007);
-        $expectedMonth = 0;
-        foreach ($year->months() as $monthString => $month) {
-            $expectedMonth++;
-            assert($month->asString(), equals($monthString));
-            assert(
+        assert((new Year(2008))->days(), each(isInstanceOf(Day::class)));
+    }
+
+    /**
+     * @return  array
+     */
+    public function yearMonths()
+    {
+        $return        = [];
+        $expectedMonth = 1;
+        foreach ((new Year(2007))->months() as $monthString => $month) {
+            $return[] = [
                     $monthString,
-                    equals('2007-' . str_pad($expectedMonth, 2, '0', STR_PAD_LEFT))
-            );
+                    $month,
+                    '2007-' . str_pad($expectedMonth++, 2, '0', STR_PAD_LEFT)
+            ];
         }
 
-        assert($expectedMonth, equals(12));
+        return $return;
+    }
+
+    /**
+     * @test
+     * @dataProvider  yearMonths
+     */
+    public function monthsReturnsAllMonth($monthString, Month $month, $expectedMonth)
+    {
+        assert($month->asString(), equals($monthString));
+        assert($monthString, equals($expectedMonth));
+    }
+
+    /**
+     * @test
+     */
+    public function monthReturnsRightAmountOfMonth()
+    {
+        assert((new Year(2007))->months(), isOfSize(12));
     }
 
     /**
@@ -153,28 +171,29 @@ class YearTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @test
+     * @return  array
      */
-    public function doesContainAllDatesForThisYear()
+    public function allDays()
     {
+        $return = [];
         $year = new Year(2007);
         for ($month = 1; $month <= 12; $month++) {
-            $days = $this->createMonth($month)->amountOfDays();
+            $days = (new Month(2007, $month))->amountOfDays();
             for ($day = 1; $day <= $days; $day++) {
-                assertTrue($year->containsDate(new Date('2007-' . $month . '-' . $day)));
+                $return[] = [$year, $month, $day];
             }
         }
+
+        return $return;
     }
 
     /**
-     * helper method to create a month
-     *
-     * @param   int  $month
-     * @return  Month
+     * @test
+     * @dataProvider  allDays
      */
-    private function createMonth($month)
+    public function doesContainAllDatesForThisYear(Year $year, $month, $day)
     {
-        return new Month(2007, $month);
+        assertTrue($year->containsDate(new Date('2007-' . $month . '-' . $day)));
     }
 
     /**

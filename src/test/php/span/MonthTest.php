@@ -15,6 +15,7 @@ use function bovigo\assert\assertFalse;
 use function bovigo\assert\assertTrue;
 use function bovigo\assert\expect;
 use function bovigo\assert\predicate\equals;
+use function bovigo\assert\predicate\isOfSize;
 /**
  * Tests for stubbles\date\span\Month.
  *
@@ -109,29 +110,36 @@ class MonthTest extends \PHPUnit_Framework_TestCase
     public function amountOfDaysIsAlwaysCorrect(Month $month, $dayCount)
     {
         assert($month->amountOfDays(), equals($dayCount));
+        assert($month->days(), isOfSize($dayCount));
     }
 
     /**
-     * @param  \stubbles\date\span\Month  $month     month to get days for
-     * @param  int                        $dayCount  amount of days in this month
-     * @test
-     * @dataProvider  dayMonth
+     * @return  array
      */
-    public function daysReturnsAllDaysInMonth(Month $month, $dayCount)
+    public function monthDays()
     {
-        $days        = 0;
+        $return      = [];
         $expectedDay = 1;
-        foreach ($month->days() as $dayString => $day) {
-            assert(
+        foreach ((new Month(2007, 3))->days() as $dayString => $day) {
+            $return[] = [
                     $dayString,
-                    equals($month->asString() . '-' . str_pad($expectedDay, 2, '0', STR_PAD_LEFT))
-            );
-            assert($day->asInt(), equals($expectedDay));
-            $expectedDay++;
-            $days++;
+                    '2007-03-' . str_pad($expectedDay, 2, '0', STR_PAD_LEFT),
+                    $day,
+                    $expectedDay++
+            ];
         }
 
-        assert($days, equals($dayCount));
+        return $return;
+    }
+
+    /**
+     * @test
+     * @dataProvider  monthDays
+     */
+    public function daysReturnsAllDaysInMonth($dayString, $expectedString, Day $day, $expectedDay)
+    {
+        assert($dayString, equals($expectedString));
+        assert($day->asInt(), equals($expectedDay));
     }
 
     /**

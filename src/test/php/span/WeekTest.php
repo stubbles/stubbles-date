@@ -15,6 +15,7 @@ use function bovigo\assert\assertFalse;
 use function bovigo\assert\assertTrue;
 use function bovigo\assert\expect;
 use function bovigo\assert\predicate\equals;
+use function bovigo\assert\predicate\isOfSize;
 /**
  * Tests for stubbles\date\span\Week.
  *
@@ -30,27 +31,36 @@ class WeekTest extends \PHPUnit_Framework_TestCase
     {
         $week = new Week('2007-05-14');
         assert($week->amountOfDays(), equals(7));
+        assert($week->days(), isOfSize(7));
+    }
+
+    /**
+     * @return  array
+     */
+    public function weekDays()
+    {
+        $return      = [];
+        $expectedDay = 14;
+        foreach ((new Week('2007-05-14'))->days() as $dayString => $day) {
+            $return[] = [
+                    $dayString,
+                    '2007-05-' . $expectedDay,
+                    $day,
+                    $expectedDay++
+            ];
+        }
+
+        return $return;
     }
 
     /**
      * @test
+     * @dataProvider  weekDays
      */
-    public function daysReturnsAllSevenDays()
+    public function daysReturnsAllSevenDays($dayString, $expectedString, Day $day, $expectedDay)
     {
-        $week = new Week('2007-05-14');
-        $days = 0;
-        $expectedDay = 14;
-        foreach ($week->days() as $dayString => $day) {
-            assert(
-                    $dayString,
-                    equals('2007-05-' . str_pad($expectedDay, 2, '0', STR_PAD_LEFT))
-            );
-            assert($day->asInt(), equals($expectedDay));
-            $expectedDay++;
-            $days++;
-        }
-
-        assert($days, equals(7));
+        assert($dayString, equals($expectedString));
+        assert($day->asInt(), equals($expectedDay));
     }
 
     /**
@@ -147,10 +157,7 @@ class WeekTest extends \PHPUnit_Framework_TestCase
      */
     public function createFromStringParsesStringToCreateInstance()
     {
-        assert(
-                Week::fromString('2014-W05')->asString(),
-                equals('2014-W05')
-        );
+        assert(Week::fromString('2014-W05')->asString(), equals('2014-W05'));
     }
 
     /**

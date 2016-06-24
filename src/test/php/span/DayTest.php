@@ -13,7 +13,9 @@ use stubbles\date\Date;
 use function bovigo\assert\assert;
 use function bovigo\assert\assertFalse;
 use function bovigo\assert\assertTrue;
+use function bovigo\assert\predicate\each;
 use function bovigo\assert\predicate\equals;
+use function bovigo\assert\predicate\isNotEmpty;
 use function bovigo\assert\predicate\isOfSize;
 use function bovigo\assert\predicate\isSameAs;
 /**
@@ -64,8 +66,10 @@ class DayTest extends \PHPUnit_Framework_TestCase
     {
         $day       = new Day('2007-05-14');
         $dateSpans = $day->days();
-        assert($dateSpans, isOfSize(1));
-        assert($day, isSameAs($dateSpans['2007-05-14']));
+        assert(
+                $dateSpans,
+                isOfSize(1)->and(each(isSameAs($dateSpans['2007-05-14'])))
+        );
     }
 
     /**
