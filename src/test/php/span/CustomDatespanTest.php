@@ -13,6 +13,7 @@ use stubbles\date\Date;
 use function bovigo\assert\assert;
 use function bovigo\assert\assertFalse;
 use function bovigo\assert\assertTrue;
+use function bovigo\assert\predicate\each;
 use function bovigo\assert\predicate\equals;
 use function bovigo\assert\predicate\isInstanceOf;
 /**
@@ -158,9 +159,13 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
     public function containsAllDatesInSpan()
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
-        for ($day = 4; $day <= 20; $day++) {
-            assertTrue($customDatespan->containsDate(new Date('2006-04-' . $day)));
-        }
+        assert(
+                range(4, 20),
+                each(function($day) use($customDatespan)
+                {
+                    return $customDatespan->containsDate(new Date('2006-04-' . $day));
+                })
+        );
     }
 
     /**

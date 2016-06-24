@@ -14,6 +14,7 @@ use function bovigo\assert\assert;
 use function bovigo\assert\assertFalse;
 use function bovigo\assert\assertTrue;
 use function bovigo\assert\expect;
+use function bovigo\assert\predicate\each;
 use function bovigo\assert\predicate\equals;
 use function bovigo\assert\predicate\isOfSize;
 /**
@@ -184,9 +185,13 @@ class MonthTest extends \PHPUnit_Framework_TestCase
     public function doesContainAllDatesForThisMonth()
     {
         $month = new Month(2007, 4);
-        for ($day = 1; $day < 31; $day++) {
-            assertTrue($month->containsDate(new Date('2007-04-' . $day)));
-        }
+        assert(
+                range(1, 30),
+                each(function($day) use($month)
+                {
+                    return $month->containsDate(new Date('2007-04-' . $day));
+                })
+        );
     }
 
     /**

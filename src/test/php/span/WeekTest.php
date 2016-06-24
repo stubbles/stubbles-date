@@ -14,6 +14,7 @@ use function bovigo\assert\assert;
 use function bovigo\assert\assertFalse;
 use function bovigo\assert\assertTrue;
 use function bovigo\assert\expect;
+use function bovigo\assert\predicate\each;
 use function bovigo\assert\predicate\equals;
 use function bovigo\assert\predicate\isOfSize;
 /**
@@ -105,13 +106,13 @@ class WeekTest extends \PHPUnit_Framework_TestCase
     public function containsAllDaysOfThisWeek()
     {
         $week = new Week('2009-01-05');
-        assertTrue($week->containsDate(new Date('2009-01-05')));
-        assertTrue($week->containsDate(new Date('2009-01-06')));
-        assertTrue($week->containsDate(new Date('2009-01-07')));
-        assertTrue($week->containsDate(new Date('2009-01-08')));
-        assertTrue($week->containsDate(new Date('2009-01-09')));
-        assertTrue($week->containsDate(new Date('2009-01-10')));
-        assertTrue($week->containsDate(new Date('2009-01-11')));
+        assert(
+                range(5, 11),
+                each(function($day) use($week)
+                {
+                    return $week->containsDate(new Date('2009-01-' . $day));
+                })
+        );
     }
 
     /**
