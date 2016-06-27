@@ -195,10 +195,10 @@ Date spans
 ----------
 
 Sometimes it is necessary to not cover a specific date only, but a span between
-two points in time. Most notably these are things like a single day, months, weeks or even a
-year. As it is impractical to always carry the starting and ending point of such
-a span. To aid with this _stubbles/date_  provides the `stubbles\date\span\Datespan` Interface and
-various implementations.
+two points in time. Most notably these are things like a single day, months,
+weeks or even a year. As it is impractical to always carry the starting and
+ending point of such a span, _stubbles/date_  provides the `stubbles\date\span\Datespan`
+interface and various implementations.
 
 
 ### Default methods of each date span
