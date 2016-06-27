@@ -26,6 +26,10 @@ class DateEquals extends Predicate
      * @type  mixed
      */
     private $expected;
+    /**
+     * @type  string
+     */
+    private $lastFailureDiff;
 
     /**
      * constructor
@@ -51,8 +55,20 @@ class DateEquals extends Predicate
             );
         }
 
-        return equals(date_format(date_create($this->expected), 'U'))
-                ->test(date_format($value->handle(), 'U'));
+        // compare unix timestamp, as rfc formatted date contains tinmezones and
+        // strings may differ, even if both point to the exact same point in time
+        $equals = equals(date_format(date_create($this->expected), 'U'));
+        if ($equals->test(date_format($value->handle(), 'U'))) {
+            return true;
+        }
+
+        // get a diff based on a human readable form, as the diff from
+        // comparison above would just contain unix timestamps which nobody can
+        // really differentiate what is wrong about them
+        $getDiff = equals(date_format(date_create($this->expected), 'r'));
+        $getDiff->test(date_format($value->handle(), 'r'));
+        $this->lastFailureDiff = $getDiff->diffForLastFailure();
+        return false;
     }
 
     /**
@@ -62,7 +78,32 @@ class DateEquals extends Predicate
      */
     public function __toString()
     {
-        return 'is equal to date ' . $this->expected;
+        $result = 'is equal to date ' . $this->expected;
+        if ($this->hasDiffForLastFailure()) {
+            return $result . '.' . $this->diffForLastFailure();
+        }
+
+        return $result;
+    }
+
+    /**
+     * checks if a diff is available for the last failure
+     *
+     * @return  bool
+     */
+    public function hasDiffForLastFailure()
+    {
+        return !empty($this->lastFailureDiff);
+    }
+
+    /**
+     * returns diff for last failure
+     *
+     * @return  string
+     */
+    public function diffForLastFailure()
+    {
+        return $this->lastFailureDiff;
     }
 
     /**
