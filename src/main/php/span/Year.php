@@ -38,7 +38,7 @@ class Year extends CustomDatespan
             $year = date('Y');
         } elseif (!ctype_digit($year)) {
             throw new \InvalidArgumentException(
-                    'Given year ' . $year . ' can not be treated as year, should'
+                    'Given year "' . $year . '" can not be treated as year, should'
                     . ' be something that can be casted to int without data loss'
             );
         }

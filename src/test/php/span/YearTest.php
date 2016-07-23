@@ -31,6 +31,20 @@ class YearTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
+     * @since  7.0.0
+     */
+    public function constructWithInvalidValueThrowsInvalidArgumentException()
+    {
+        expect(function() { new Year('nope'); } )
+                ->throws(\InvalidArgumentException::class)
+                ->withMessage(
+                        'Given year "nope" can not be treated as year, should'
+                        . ' be something that can be casted to int without data loss'
+                );
+    }
+
+    /**
+     * @test
      */
     public function stringRepresentationContainsYear()
     {
@@ -127,6 +141,68 @@ class YearTest extends \PHPUnit_Framework_TestCase
     ) {
         assert($month->asString(), equals($monthString));
         assert($monthString, equals($expectedMonth));
+    }
+
+    /**
+     * @test
+     * @since  7.0.0
+     */
+    public function yearMonthIsValidOnStart()
+    {
+        assertTrue((new Year(2007))->months()->valid());
+    }
+
+    /**
+     * @test
+     * @since  7.0.0
+     */
+    public function yearMonthIsInvalidWhenFullyIterated()
+    {
+        $months = (new Year(2007))->months();
+        $months->next();
+        $months->next();
+        $months->next();
+        $months->next();
+        $months->next();
+        $months->next();
+        $months->next();
+        $months->next();
+        $months->next();
+        $months->next();
+        $months->next();
+        $months->next();
+        $months->next();
+        assertFalse($months->valid());
+    }
+
+    /**
+     * @test
+     * @since  7.0.0
+     */
+    public function yearMonthCurrentReturnsFirstMonthOfYearOnStart()
+    {
+        assert((new Year(2007))->months()->current(), equals(new Month(2007, 1)));
+    }
+
+    /**
+     * @test
+     * @since  7.0.0
+     */
+    public function yearMonthKeyIsStringRepresentationOfMonth()
+    {
+        assert((new Year(2007))->months()->key(), equals('2007-01'));
+    }
+
+    /**
+     * @test
+     * @since  7.0.0
+     */
+    public function yearMonthCurrentReturnsFirstMonthOfYearAfterRewind()
+    {
+        $months = (new Year(2007))->months();
+        $months->next();
+        $months->rewind();
+        assert($months->current(), equals(new Month(2007, 1)));
     }
 
     /**

@@ -276,4 +276,14 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
         assert($customDatespan->formatEnd('Y-m-d'), equals('2006-04-20'));
     }
+
+    /**
+     * @test
+     * @since  7.0.0
+     */
+    public function typeIsCustom()
+    {
+        $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
+        assert($customDatespan->type(), equals('custom'));
+    }
 }

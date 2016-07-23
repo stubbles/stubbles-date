@@ -14,7 +14,7 @@ namespace stubbles\date\span;
  *
  * @since  5.2.0
  */
-class Months implements \Iterator
+class Months implements \Iterator, \Countable
 {
     /**
      * start date of the iteration
@@ -38,6 +38,17 @@ class Months implements \Iterator
     {
         $this->year         = $year->asInt();
         $this->currentMonth = new Month($this->year, 1);
+    }
+
+    /**
+     * returns amount of month (duh!)
+     *
+     * @return  int
+     * @since   7.0.0
+     */
+    public function count(): int
+    {
+        return 12;
     }
 
     /**
