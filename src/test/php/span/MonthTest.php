@@ -257,14 +257,29 @@ class MonthTest extends \PHPUnit_Framework_TestCase
         assert(Month::fromString('2014-05')->asString(), equals('2014-05'));
     }
 
+    public function invalidMonthStrings(): array
+    {
+        return [
+                ['invalid', 'Can not parse month from string "invalid", format should be "YYYY-MM"'],
+                ['in-10', 'Detected value in for year is not a valid year.'],
+                ['2016-in', 'Detected value in for month is not a valid month.'],
+                ['2016-0', 'Detected value 0 for month is not a valid month.'],
+                ['2016-13', 'Detected value 13 for month is not a valid month.']
+        ];
+    }
+
     /**
      * @test
+     * @dataProvider  invalidMonthStrings
      * @since  3.5.3
      */
-    public function createFromInvalidStringThrowsInvalidArgumentException()
-    {
-         expect(function() { Month::fromString('invalid'); })
-                ->throws(\InvalidArgumentException::class);
+    public function createFromInvalidStringThrowsInvalidArgumentException(
+            string $invalid,
+            string $expectedExceptionMessage
+    ) {
+         expect(function() use ($invalid) { Month::fromString($invalid); })
+                ->throws(\InvalidArgumentException::class)
+                ->withMessage($expectedExceptionMessage);
     }
 
     /**

@@ -89,10 +89,25 @@ class Month extends CustomDatespan
     {
         $data = explode('-', $input);
         if (!isset($data[0]) || !isset($data[1])) {
-            throw new \InvalidArgumentException('Can not parse month from string "' . $input . '", format should be "YYYY-MM"');
+            throw new \InvalidArgumentException(
+                    'Can not parse month from string "' . $input
+                    . '", format should be "YYYY-MM"'
+            );
         }
 
         list($year, $month) = $data;
+        if (!ctype_digit($year)) {
+            throw new \InvalidArgumentException(
+                    'Detected value ' . $year . ' for year is not a valid year.'
+            );
+        }
+
+        if (!ctype_digit($month) || 1 > $month || 12 < $month) {
+            throw new \InvalidArgumentException(
+                    'Detected value ' . $month . ' for month is not a valid month.'
+            );
+        }
+
         return new self($year, $month);
     }
 
