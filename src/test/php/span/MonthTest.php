@@ -20,6 +20,19 @@ use function bovigo\assert\{
     predicate\equals,
     predicate\isOfSize
 };
+class MonthMockDay
+{
+    public static $result;
+}
+function date()
+{
+    $args = func_get_args();
+    if (null !== MonthMockDay::$result && 'd' === $args[0]) {
+        return MonthMockDay::$result;
+    }
+
+    return call_user_func_array('\date', $args);
+}
 /**
  * Tests for stubbles\date\span\Month.
  *
@@ -28,6 +41,11 @@ use function bovigo\assert\{
  */
 class MonthTest extends \PHPUnit_Framework_TestCase
 {
+    public function tearDown()
+    {
+        MonthMockDay::$result = null;
+    }
+
     /**
      * @test
      */
@@ -317,13 +335,19 @@ class MonthTest extends \PHPUnit_Framework_TestCase
      * @test
      * @since  5.5.0
      */
-    public function currentOrLastWhenFirstDay()
+    public function currentOrLastReturnsCurrentWhenTodayIsNotFirstOfMonth()
     {
-        $month = Month::currentOrLastWhenFirstDay();
-        if (Date::now()->day() === 1) {
-            assert($month, equals(Month::last()));
-        } else {
-            assert($month, equals(new Month()));
-        }
+        MonthMockDay::$result = '02';
+        assert(Month::currentOrLastWhenFirstDay(), equals(new Month()));
+    }
+
+    /**
+     * @test
+     * @since  7.0.0
+     */
+    public function currentOrLastReturnsLastWhenTodayIsFirstOfMonth()
+    {
+        MonthMockDay::$result = '01';
+        assert(Month::currentOrLastWhenFirstDay(), equals(Month::last()));
     }
 }
