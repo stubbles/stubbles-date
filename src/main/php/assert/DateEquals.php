@@ -100,9 +100,9 @@ class DateEquals extends Predicate
     /**
      * returns diff for last failure
      *
-     * @return  string
+     * @return  string|null
      */
-    public function diffForLastFailure(): string
+    public function diffForLastFailure()
     {
         return $this->lastFailureDiff;
     }
