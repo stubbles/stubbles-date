@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of stubbles.
  *
@@ -35,10 +36,7 @@ class WeekTest extends \PHPUnit_Framework_TestCase
         assert($week->days(), isOfSize(7));
     }
 
-    /**
-     * @return  array
-     */
-    public function weekDays()
+    public function weekDays(): array
     {
         $return      = [];
         $expectedDay = 14;
@@ -58,8 +56,12 @@ class WeekTest extends \PHPUnit_Framework_TestCase
      * @test
      * @dataProvider  weekDays
      */
-    public function daysReturnsAllSevenDays($dayString, $expectedString, Day $day, $expectedDay)
-    {
+    public function daysReturnsAllSevenDays(
+            string $dayString,
+            string $expectedString,
+            Day $day,
+            int $expectedDay
+    ) {
         assert($dayString, equals($expectedString));
         assert($day->asInt(), equals($expectedDay));
     }

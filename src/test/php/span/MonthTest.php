@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of stubbles.
  *
@@ -88,12 +89,7 @@ class MonthTest extends \PHPUnit_Framework_TestCase
         assert($month->asString(), equals(date('Y') . '-' . date('m')));
     }
 
-    /**
-     * data provider for amountOfDaysIsAlwaysCorrect() and getDaysReturnsAllDaysInMonth()
-     *
-     * @return  array
-     */
-    public function dayMonth()
+    public function dayMonth(): array
     {
         return [[new Month(2007, 4), 30],
                 [new Month(2007, 3), 31],
@@ -108,23 +104,20 @@ class MonthTest extends \PHPUnit_Framework_TestCase
      * @test
      * @dataProvider  dayMonth
      */
-    public function amountOfDaysIsAlwaysCorrect(Month $month, $dayCount)
+    public function amountOfDaysIsAlwaysCorrect(Month $month, int $dayCount)
     {
         assert($month->amountOfDays(), equals($dayCount));
         assert($month->days(), isOfSize($dayCount));
     }
 
-    /**
-     * @return  array
-     */
-    public function monthDays()
+    public function monthDays(): array
     {
         $return      = [];
         $expectedDay = 1;
         foreach ((new Month(2007, 3))->days() as $dayString => $day) {
             $return[] = [
                     $dayString,
-                    '2007-03-' . str_pad($expectedDay, 2, '0', STR_PAD_LEFT),
+                    '2007-03-' . str_pad((string) $expectedDay, 2, '0', STR_PAD_LEFT),
                     $day,
                     $expectedDay++
             ];
@@ -137,8 +130,12 @@ class MonthTest extends \PHPUnit_Framework_TestCase
      * @test
      * @dataProvider  monthDays
      */
-    public function daysReturnsAllDaysInMonth($dayString, $expectedString, Day $day, $expectedDay)
-    {
+    public function daysReturnsAllDaysInMonth(
+            string $dayString,
+            string $expectedString,
+            Day $day,
+            int $expectedDay
+    ) {
         assert($dayString, equals($expectedString));
         assert($day->asInt(), equals($expectedDay));
     }

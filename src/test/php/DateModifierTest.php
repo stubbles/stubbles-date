@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of stubbles.
  *
@@ -60,27 +61,36 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @test
+     * @since  7.0.0
      */
-    public function changeTimeWithInvalidArgumentThrowsIllegalArgumentException()
+    public function invalidArgumentsForTime(): array
     {
-        $date = new Date('2011-03-31 01:00:00');
-        expect(function() use($date) { $date->change()->timeTo('invalid'); })
-                ->throws(\InvalidArgumentException::class);
+        return [
+                ['invalid', 'Given time "invalid" does not follow required format HH:MM:SS'],
+                ['in:23:45', 'Given value in for hour not suitable for changing the time.'],
+                ['-1:23:45', 'Given value -1 for hour not suitable for changing the time.'],
+                ['24:23:45', 'Given value 24 for hour not suitable for changing the time.'],
+                ['12:in:00', 'Given value in for minute not suitable for changing the time.'],
+                ['12:-1:59', 'Given value -1 for minute not suitable for changing the time.'],
+                ['12:60:45', 'Given value 60 for minute not suitable for changing the time.'],
+                ['12:00:in', 'Given value in for second not suitable for changing the time.'],
+                ['12:59:-1', 'Given value -1 for second not suitable for changing the time.'],
+                ['12:23:60', 'Given value 60 for second not suitable for changing the time.']
+        ];
     }
 
     /**
      * @test
+     * @dataProvider  invalidArgumentsForTime
      */
-    public function changeTimeWithInvalidValuesThrowsIllegalArgumentException()
-    {
-        if (defined('HHVM_VERSION')) {
-            $this->markTestSkipped('HHVM errors in another way, test can be removed once migrated to PHP 7 and typehints for int added');
-        }
-
+    public function changeTimeWithInvalidArgumentThrowsIllegalArgumentException(
+            string $invalid,
+            string $exceptionMessage
+    ) {
         $date = new Date('2011-03-31 01:00:00');
-        expect(function() use($date) { $date->change()->timeTo('in:val:id'); })
-                ->throws(\InvalidArgumentException::class);
+        expect(function() use($date, $invalid) { $date->change()->timeTo($invalid); })
+                ->throws(\InvalidArgumentException::class)
+                ->withMessage($exceptionMessage);
     }
 
     /**
@@ -299,27 +309,34 @@ class DateModifierTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @test
+     * since  7.0.0
      */
-    public function changeDateWithInvalidArgumentThrowsIllegalArgumentException()
+    public function invalidDates(): array
     {
-        $date = new Date('2011-03-31 01:00:00');
-        expect(function() use($date) { $date->change()->dateTo('invalid'); })
-                ->throws(\InvalidArgumentException::class);
+        return [
+                ['invalid', 'Given date "invalid" does not follow required format YYYY-MM-DD'],
+                ['in-05-22', 'Given value in for year not suitable for changing the date.'],
+                ['2016-in-22', 'Given value in for month not suitable for changing the date.'],
+                ['2016-00-22', 'Given value 00 for month not suitable for changing the date.'],
+                ['2016-13-22', 'Given value 13 for month not suitable for changing the date.'],
+                ['2016-01-in', 'Given value in for day not suitable for changing the date.'],
+                ['2016-12-00', 'Given value 00 for day not suitable for changing the date.'],
+                ['2016-04-32', 'Given value 32 for day not suitable for changing the date.']
+        ];
     }
 
     /**
      * @test
+     * @dataProvider  invalidDates
      */
-    public function changeDateWithInvalidValuesThrowsIllegalArgumentException()
-    {
-        if (defined('HHVM_VERSION')) {
-            $this->markTestSkipped('HHVM errors in another way, test can be removed once migrated to PHP 7 and typehints for int added');
-        }
-
+    public function changeDateWithInvalidArgumentThrowsIllegalArgumentException(
+            string $invalid,
+            string $expectedExceptionMessage
+    ) {
         $date = new Date('2011-03-31 01:00:00');
-        expect(function() use($date) { $date->change()->dateTo('in-val-id'); })
-                ->throws(\InvalidArgumentException::class);
+        expect(function() use($date, $invalid) { $date->change()->dateTo($invalid); })
+                ->throws(\InvalidArgumentException::class)
+                ->withMessage($expectedExceptionMessage);
     }
 
     /**

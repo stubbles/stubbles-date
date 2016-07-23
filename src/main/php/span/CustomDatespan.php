@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of stubbles.
  *
@@ -30,7 +31,7 @@ class CustomDatespan extends AbstractDatespan
      *
      * @return  string
      */
-    public function asString()
+    public function asString(): string
     {
         return $this->formatStart('Y-m-d') . ',' . $this->formatEnd('Y-m-d');
     }
@@ -41,7 +42,7 @@ class CustomDatespan extends AbstractDatespan
      * @return  string
      * @since   5.3.0
      */
-    public function type()
+    public function type(): string
     {
         return 'custom';
     }

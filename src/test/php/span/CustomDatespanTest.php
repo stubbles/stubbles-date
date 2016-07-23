@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of stubbles.
  *
@@ -93,10 +94,7 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
         assert($customDatespan->amountOfDays(), equals(14));
     }
 
-    /**
-     * @return  array
-     */
-    public function datespanDays()
+    public function datespanDays(): array
     {
         $return      = [];
         $expectedDay = 14;
@@ -111,7 +109,7 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
      * @test
      * @dataProvider  datespanDays
      */
-    public function daysReturnsListOfAllDays($dayString, $day, $expectedDay)
+    public function daysReturnsListOfAllDays(string $dayString, Day $day, int $expectedDay)
     {
         assert($dayString, equals('2007-05-' . $expectedDay));
         assert($day->asInt(), equals($expectedDay));

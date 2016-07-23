@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of stubbles.
  *
@@ -35,7 +36,7 @@ class Week extends CustomDatespan
      * @throws  \InvalidArgumentException
      * @since   5.3.0
      */
-    public static function fromString($input)
+    public static function fromString(string $input): self
     {
         $data = explode('-', $input);
         if (!isset($data[0]) || !isset($data[1])) {
@@ -51,9 +52,9 @@ class Week extends CustomDatespan
      *
      * @return  int
      */
-    public function number()
+    public function number(): int
     {
-        return $this->formatStart('W');
+        return (int) $this->formatStart('W');
     }
 
     /**
@@ -61,7 +62,7 @@ class Week extends CustomDatespan
      *
      * @return  int
      */
-    public function amountOfDays()
+    public function amountOfDays(): int
     {
         return 7;
     }
@@ -71,7 +72,7 @@ class Week extends CustomDatespan
      *
      * @return  string
      */
-    public function asString()
+    public function asString(): string
     {
         return $this->formatStart('Y-\WW');
     }
@@ -82,7 +83,7 @@ class Week extends CustomDatespan
      * @return  string
      * @since   5.3.0
      */
-    public function type()
+    public function type(): string
     {
         return 'week';
     }

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of stubbles.
  *
@@ -46,7 +47,7 @@ abstract class AbstractDatespan implements Datespan
      *
      * @return  \stubbles\date\Date
      */
-    public function start()
+    public function start(): Date
     {
         return $this->start;
     }
@@ -58,7 +59,7 @@ abstract class AbstractDatespan implements Datespan
      * @return  bool
      * @since   3.5.0
      */
-    public function startsBefore($date)
+    public function startsBefore($date): bool
     {
         return $this->start->isBefore($date);
     }
@@ -70,7 +71,7 @@ abstract class AbstractDatespan implements Datespan
      * @return  bool
      * @since   3.5.0
      */
-    public function startsAfter($date)
+    public function startsAfter($date): bool
     {
         return $this->start->isAfter($date);
     }
@@ -80,7 +81,7 @@ abstract class AbstractDatespan implements Datespan
      *
      * @return  \stubbles\date\Date
      */
-    public function end()
+    public function end(): Date
     {
         return $this->end;
     }
@@ -92,7 +93,7 @@ abstract class AbstractDatespan implements Datespan
      * @return  bool
      * @since   3.5.0
      */
-    public function endsBefore($date)
+    public function endsBefore($date): bool
     {
         return $this->end->isBefore($date);
     }
@@ -104,7 +105,7 @@ abstract class AbstractDatespan implements Datespan
      * @return  bool
      * @since   3.5.0
      */
-    public function endsAfter($date)
+    public function endsAfter($date): bool
     {
         return $this->end->isAfter($date);
     }
@@ -117,7 +118,7 @@ abstract class AbstractDatespan implements Datespan
      * @return  string
      * @since   3.5.0
      */
-    public function formatStart($format, TimeZone $timeZone = null)
+    public function formatStart(string $format, TimeZone $timeZone = null): string
     {
         return $this->start->format($format, $timeZone);
     }
@@ -130,7 +131,7 @@ abstract class AbstractDatespan implements Datespan
      * @return  string
      * @since   3.5.0
      */
-    public function formatEnd($format, TimeZone $timeZone = null)
+    public function formatEnd(string $format, TimeZone $timeZone = null): string
     {
         return $this->end->format($format, $timeZone);
     }
@@ -140,7 +141,7 @@ abstract class AbstractDatespan implements Datespan
      *
      * @return  int
      */
-    public function amountOfDays()
+    public function amountOfDays(): int
     {
         return $this->end->handle()->diff($this->start->handle())->days + 1;
     }
@@ -150,9 +151,9 @@ abstract class AbstractDatespan implements Datespan
      *
      * @return  bool
      */
-    public function isInFuture()
+    public function isInFuture(): bool
     {
-        $today = mktime(23, 59, 59, date('m'), date('d'), date('Y'));
+        $today = mktime(23, 59, 59, (int) date('m'), (int) date('d'), (int) date('Y'));
         if ($this->start->timestamp() > $today) {
             return true;
         }
@@ -166,7 +167,7 @@ abstract class AbstractDatespan implements Datespan
      * @param   int|string|\DateTime|\stubbles\date\Date  $date
      * @return  bool
      */
-    public function containsDate($date)
+    public function containsDate($date): bool
     {
         $date = Date::castFrom($date);
         if (!$this->start->isBefore($date) && !$this->start->equals($date)) {
@@ -185,7 +186,7 @@ abstract class AbstractDatespan implements Datespan
      *
      * @return  string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->asString();
     }

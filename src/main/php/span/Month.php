@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of stubbles.
  *
@@ -67,7 +68,7 @@ class Month extends CustomDatespan
             $start = new Date($year . '-' . $month . '-01 00:00:00');
         }
 
-        $this->amountOfDays = $start->format('t');
+        $this->amountOfDays = (int) $start->format('t');
         $this->year         = $year;
         $this->month        = $month;
         parent::__construct(
@@ -84,7 +85,7 @@ class Month extends CustomDatespan
      * @throws  \InvalidArgumentException
      * @since   3.5.2
      */
-    public static function fromString($input)
+    public static function fromString(string $input): self
     {
         $data = explode('-', $input);
         if (!isset($data[0]) || !isset($data[1])) {
@@ -101,7 +102,7 @@ class Month extends CustomDatespan
      * @return  \stubbles\date\span\Month
      * @since   3.5.1
      */
-    public static function last()
+    public static function last(): self
     {
         $timestamp = strtotime('first day of previous month');
         return new self(date('Y', $timestamp), date('m', $timestamp));
@@ -113,7 +114,7 @@ class Month extends CustomDatespan
      * @return  \stubbles\date\span\Month
      * @since   5.5.0
      */
-    public static function currentOrLastWhenFirstDay()
+    public static function currentOrLastWhenFirstDay(): self
     {
         $self = new self();
         if (date('d', time()) === '01') {
@@ -129,7 +130,7 @@ class Month extends CustomDatespan
      * @return  \stubbles\date\span\Month
      * @since   5.2.0
      */
-    public function next()
+    public function next(): self
     {
         return new self($this->start()->change()->byMonths(1));
     }
@@ -140,7 +141,7 @@ class Month extends CustomDatespan
      * @return  \stubbles\date\span\Month
      * @since   5.2.0
      */
-    public function before()
+    public function before(): self
     {
         return new self($this->start()->change()->byMonths(-1));
     }
@@ -150,7 +151,7 @@ class Month extends CustomDatespan
      *
      * @return  int
      */
-    public function year()
+    public function year(): int
     {
         return $this->year;
     }
@@ -160,7 +161,7 @@ class Month extends CustomDatespan
      *
      * @return  int
      */
-    public function amountOfDays()
+    public function amountOfDays(): int
     {
         return $this->amountOfDays;
     }
@@ -170,7 +171,7 @@ class Month extends CustomDatespan
      *
      * @return  bool
      */
-    public function isCurrentMonth()
+    public function isCurrentMonth(): bool
     {
         return $this->asString() === Date::now()->format('Y-m');
     }
@@ -180,9 +181,9 @@ class Month extends CustomDatespan
      *
      * @return  string
      */
-    public function asString()
+    public function asString(): string
     {
-        return $this->year . '-' . ((10 > $this->month && strlen($this->month) === 1) ? ('0' . $this->month) : ($this->month));
+        return (string) $this->year . '-' . ((10 > $this->month && strlen((string) $this->month) === 1) ? ('0' . $this->month) : ($this->month));
     }
 
     /**
@@ -191,7 +192,7 @@ class Month extends CustomDatespan
      * @return  string
      * @since   5.3.0
      */
-    public function type()
+    public function type(): string
     {
         return 'month';
     }

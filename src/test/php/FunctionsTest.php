@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of stubbles.
  *
@@ -24,10 +25,7 @@ use function bovigo\assert\predicate\equals;
  */
 class FunctionsTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @return  array
-     */
-    public function emptyValues()
+    public function emptyValues(): array
     {
         return [[null], ['']];
     }
@@ -50,10 +48,7 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
         assert(span\parse('2015'), equals(new Year(2015)));
     }
 
-    /**
-     * @return  array
-     */
-    public function dayValues()
+    public function dayValues(): array
     {
         return [['today'], ['tomorrow'], ['yesterday'], ['2015-03-05']];
     }
@@ -64,15 +59,12 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
      * @test
      * @dataProvider  dayValues
      */
-    public function parsesDay($dayValue)
+    public function parsesDay(string $dayValue)
     {
         assert(span\parse($dayValue), equals(new Day($dayValue)));
     }
 
-    /**
-     * @return  array
-     */
-    public function monthValues()
+    public function monthValues(): array
     {
         return [['2015-03']];
     }
@@ -83,15 +75,12 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
      * @test
      * @dataProvider  monthValues
      */
-    public function parsesMonth($monthValue)
+    public function parsesMonth(string $monthValue)
     {
         assert(span\parse($monthValue), equals(Month::fromString($monthValue)));
     }
 
-    /**
-     * @return  array
-     */
-    public function customDatespanValues()
+    public function customDatespanValues(): array
     {
         return [
                 [new CustomDatespan('yesterday', 'tomorrow'), 'yesterday,tomorrow'],
@@ -106,7 +95,7 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
      * @test
      * @dataProvider  customDatespanValues
      */
-    public function parsesCustomDatespan(CustomDatespan $expected, $value)
+    public function parsesCustomDatespan(CustomDatespan $expected, string $value)
     {
         assert(span\parse($value), equals($expected));
     }

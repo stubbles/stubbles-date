@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of stubbles.
  *
@@ -14,7 +15,7 @@ namespace stubbles\date\assert {
      * @return  \stubbles\date\assert\DateEquals
      * @since   6.0.0
      */
-    function equalsDate($expected)
+    function equalsDate($expected): DateEquals
     {
         return new DateEquals($expected);
     }
@@ -25,8 +26,8 @@ namespace stubbles\date\span {
      *
      * If input value is empty return value will be <null>.
      *
-     * @param   string  $value
-     * @return  \stubbles\date\span\Datespan
+     * @param   string|null  $value
+     * @return  \stubbles\date\span\Datespan|null
      * @throws  \InvalidArgumentException
      */
     function parse($value)
@@ -35,7 +36,7 @@ namespace stubbles\date\span {
             return null;
         }
 
-        if (strlen((int) $value) == strlen($value)) {
+        if (strlen((string) ((int) $value)) == strlen($value)) {
             return new Year($value);
         }
 

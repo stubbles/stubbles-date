@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of stubbles.
  *
@@ -54,7 +55,7 @@ class TimeZone
      *
      * @return  \DateTimeZone
      */
-    public function handle()
+    public function handle(): \DateTimeZone
     {
         return clone $this->timeZone;
     }
@@ -64,7 +65,7 @@ class TimeZone
      *
      * @return  string
      */
-    public function name()
+    public function name(): string
     {
         return $this->timeZone->getName();
     }
@@ -75,7 +76,7 @@ class TimeZone
      * @param   int|string|\DateTime|\stubbles\date\Date  $date  defaults to current date
      * @return  string
      */
-    public function offset($date = null)
+    public function offset($date = null): string
     {
         $offset  = $this->offsetInSeconds($date);
         $hours   = intval(abs($offset) / 3600);
@@ -93,7 +94,7 @@ class TimeZone
      * @param   int|string|\DateTime|\stubbles\date\Date  $date  defaults to current date
      * @return  int
      */
-    public function offsetInSeconds($date = null)
+    public function offsetInSeconds($date = null): int
     {
         if (null === $date) {
             return $this->timeZone->getOffset(new \DateTime('now'));
@@ -107,7 +108,7 @@ class TimeZone
      *
      * @return  bool
      */
-    public function hasDst()
+    public function hasDst(): bool
     {
         // if there is at least one transition the time zone has a dst mode
         return (count($this->timeZone->getTransitions()) > 0);
@@ -121,7 +122,7 @@ class TimeZone
      * @param   int|string|\DateTime|\stubbles\date\Date  $date
      * @return  \stubbles\date\Date
      */
-    public function translate($date)
+    public function translate($date): Date
     {
         $handle = Date::castFrom($date)->handle();
         $handle->setTimezone($this->timeZone);
@@ -134,7 +135,7 @@ class TimeZone
      * @param   mixed  $compare
      * @return  bool
      */
-    public function equals($compare)
+    public function equals($compare): bool
     {
         if ($compare instanceof self) {
             return ($this->name() === $compare->name());
@@ -148,7 +149,7 @@ class TimeZone
      *
      * @return  string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->timeZone->getName();
     }

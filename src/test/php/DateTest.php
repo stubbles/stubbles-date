@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of stubbles.
  *
@@ -118,7 +119,7 @@ class DateTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function constructorTimezones()
+    public function constructorTimezones(): array
     {
         return [
             [
@@ -146,8 +147,12 @@ class DateTest extends \PHPUnit_Framework_TestCase
      * @test
      * @dataProvider  constructorTimezones
      */
-    public function constructorParseTz($expectedTimestamp, $expectedTimeZone, $constructorTimestamp, $constructorTimeZone)
-    {
+    public function constructorParseTz(
+            string $expectedTimestamp,
+            string $expectedTimeZone,
+            string $constructorTimestamp,
+            TimeZone $constructorTimeZone = null
+    ) {
         $date = new Date($constructorTimestamp, $constructorTimeZone);
         assert($date->timeZone()->name(), equals($expectedTimeZone));
         assert($date, equalsDate($expectedTimestamp));
@@ -290,10 +295,7 @@ class DateTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    /**
-     * @return  array
-     */
-    public function anteAndPostMeridiemTestValues()
+    public function anteAndPostMeridiemTestValues(): array
     {
         return [
                 ['May 28 1980 1:00AM', 1, '1:00AM != 1h'],
@@ -308,16 +310,13 @@ class DateTest extends \PHPUnit_Framework_TestCase
      * @test
      * @dataProvider  anteAndPostMeridiemTestValues
      */
-    public function anteAndPostMeridiem($date, $expected, $description)
+    public function anteAndPostMeridiem(string $date, int $expected, string $description)
     {
         $date = new Date($date);
         assert($date->hours(), equals($expected), $description);
     }
 
-    /**
-     * @return  array
-     */
-    public function anteAndPostMeridiemInMidageTestValues()
+    public function anteAndPostMeridiemInMidageTestValues(): array
     {
         return [
                 ['May 28 1580 1:00AM', 1, '1:00AM != 1h'],
@@ -333,8 +332,11 @@ class DateTest extends \PHPUnit_Framework_TestCase
      * @test
      * @dataProvider  anteAndPostMeridiemInMidageTestValues
      */
-    public function anteAndPostMeridiemInMidage($date, $expected, $description)
-    {
+    public function anteAndPostMeridiemInMidage(
+            string $date,
+            int $expected,
+            string $description
+    ) {
         $date = new Date($date);
         assert($date->hours(), equals($expected), $description);
     }
@@ -559,12 +561,7 @@ class DateTest extends \PHPUnit_Framework_TestCase
         assertTrue(annotationsOf('stubbles\date\Date')->contain('XmlTag'));
     }
 
-    /**
-     * returns list of methods which should be annotated with XmlIgnore
-     *
-     * @return  array
-     */
-    public function getXmlIgnoredMethods()
+    public function methodsWithXmlIgnore(): array
     {
         return [['handle'],
                 ['change'],
@@ -582,9 +579,9 @@ class DateTest extends \PHPUnit_Framework_TestCase
     }
     /**
      * @test
-     * @dataProvider  getXmlIgnoredMethods
+     * @dataProvider  methodsWithXmlIgnore
      */
-    public function methodIsAnnotatedWithXmlIgnore($method)
+    public function methodIsAnnotatedWithXmlIgnore(string $method)
     {
         assertTrue(
                 annotationsOf('stubbles\date\Date', $method)

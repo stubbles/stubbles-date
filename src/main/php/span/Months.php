@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of stubbles.
  *
@@ -44,7 +45,7 @@ class Months implements \Iterator
      *
      * @return  \stubbles\date\span\Month
      */
-    public function current()
+    public function current(): Month
     {
         return $this->currentMonth;
     }
@@ -54,7 +55,7 @@ class Months implements \Iterator
      *
      * @return  string
      */
-    public function key()
+    public function key(): string
     {
         return $this->currentMonth->asString();
     }
@@ -80,7 +81,7 @@ class Months implements \Iterator
      *
      * @return  bool
      */
-    public function valid()
+    public function valid(): bool
     {
         return $this->currentMonth->year() == $this->year;
     }

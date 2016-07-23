@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of stubbles.
  *
@@ -8,6 +9,7 @@
  * @package  stubbles
  */
 namespace stubbles\date\span;
+use stubbles\date\Date;
 /**
  * Interface for the datespan classes.
  *
@@ -20,7 +22,7 @@ interface Datespan
      *
      * @return  \stubbles\date\Date
      */
-    public function start();
+    public function start(): Date;
 
     /**
      * checks whether datespan starts before a given date
@@ -29,7 +31,7 @@ interface Datespan
      * @return  bool
      * @since   3.5.0
      */
-    public function startsBefore($date);
+    public function startsBefore($date): bool;
 
     /**
      * checks whether datespan starts after a given date
@@ -38,14 +40,14 @@ interface Datespan
      * @return  bool
      * @since   3.5.0
      */
-    public function startsAfter($date);
+    public function startsAfter($date): bool;
 
     /**
      * returns the end date
      *
      * @return  \stubbles\date\Date
      */
-    public function end();
+    public function end(): Date;
 
     /**
      * checks whether datespan ends before a given date
@@ -54,7 +56,7 @@ interface Datespan
      * @return  bool
      * @since   3.5.0
      */
-    public function endsBefore($date);
+    public function endsBefore($date): bool;
 
     /**
      * checks whether datespan ends after a given date
@@ -63,7 +65,7 @@ interface Datespan
      * @return  bool
      * @since   3.5.0
      */
-    public function endsAfter($date);
+    public function endsAfter($date): bool;
 
     /**
      * returns formatted date/time string for start date
@@ -73,7 +75,7 @@ interface Datespan
      * @return  string
      * @since   3.5.0
      */
-    public function formatStart($format, TimeZone $timeZone = null);
+    public function formatStart(string $format, TimeZone $timeZone = null): string;
 
     /**
      * returns formatted date/time string for end date
@@ -83,14 +85,14 @@ interface Datespan
      * @return  string
      * @since   3.5.0
      */
-    public function formatEnd($format, TimeZone $timeZone = null);
+    public function formatEnd(string $format, TimeZone $timeZone = null): string;
 
     /**
      * returns amount of days in this datespan
      *
      * @return  int
      */
-    public function amountOfDays();
+    public function amountOfDays(): int;
 
 
     /**
@@ -105,7 +107,7 @@ interface Datespan
      *
      * @return  bool
      */
-    public function isInFuture();
+    public function isInFuture(): bool;
 
     /**
      * checks whether the span contains the given date
@@ -113,7 +115,7 @@ interface Datespan
      * @param   int|string|\DateTime|\stubbles\date\Date  $date
      * @return  bool
      */
-    public function containsDate($date);
+    public function containsDate($date): bool;
 
     /**
      * returns a string representation of the datespan

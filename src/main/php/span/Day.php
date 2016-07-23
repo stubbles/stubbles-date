@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of stubbles.
  *
@@ -40,7 +41,7 @@ class Day extends AbstractDatespan implements Datespan
      * @return  \stubbles\date\span\Day
      * @since   3.5.1
      */
-    public static function tomorrow()
+    public static function tomorrow(): self
     {
         return new self('tomorrow');
     }
@@ -51,7 +52,7 @@ class Day extends AbstractDatespan implements Datespan
      * @return  \stubbles\date\span\Day
      * @since   3.5.1
      */
-    public static function yesterday()
+    public static function yesterday(): self
     {
         return new self('yesterday');
     }
@@ -62,7 +63,7 @@ class Day extends AbstractDatespan implements Datespan
      * @return  \stubbles\date\span\Day
      * @since   5.2.0
      */
-    public function next()
+    public function next(): self
     {
         return new self($this->start()->change()->byDays(1));
     }
@@ -73,7 +74,7 @@ class Day extends AbstractDatespan implements Datespan
      * @return  \stubbles\date\span\Day
      * @since   5.2.0
      */
-    public function before()
+    public function before(): self
     {
         return new self($this->start()->change()->byDays(-1));
     }
@@ -85,7 +86,7 @@ class Day extends AbstractDatespan implements Datespan
      *
      * @return  int
      */
-    public function amountOfDays()
+    public function amountOfDays(): int
     {
         return 1;
     }
@@ -105,7 +106,7 @@ class Day extends AbstractDatespan implements Datespan
      *
      * @return  bool
      */
-    public function isToday()
+    public function isToday(): bool
     {
         return $this->date->format('Y-m-d') === Date::now($this->date->timezone())->format('Y-m-d');
     }
@@ -115,7 +116,7 @@ class Day extends AbstractDatespan implements Datespan
      *
      * @return  string
      */
-    public function asString()
+    public function asString(): string
     {
         return $this->date->format('Y-m-d');
     }

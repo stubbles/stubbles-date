@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of stubbles.
  *
@@ -39,7 +40,7 @@ class DateModifier
      * @param   string  $target  relative format accepted by strtotime()
      * @return  \stubbles\date\Date
      */
-    public function to($target)
+    public function to(string $target): Date
     {
         $modifiedHandle = clone $this->originalDate->handle();
         $modifiedHandle->modify($target);
@@ -54,15 +55,35 @@ class DateModifier
      * @return  \stubbles\date\Date
      * @throws  \InvalidArgumentException
      */
-    public function timeTo($time)
+    public function timeTo(string $time): Date
     {
         $times = explode(':', $time);
         if (count($times) != 3) {
-            throw new \InvalidArgumentException('Given time ' . $time . ' does not follow required format HH:MM:SS');
+            throw new \InvalidArgumentException(
+                    'Given time "' . $time . '" does not follow required format HH:MM:SS'
+            );
         }
 
         list($hour, $minute, $second) = $times;
-        return $this->createDateWithNewTime($hour, $minute, $second);
+        if (!ctype_digit($hour) || 0 > $hour || 23 < $hour) {
+            throw new \InvalidArgumentException(
+                    'Given value ' . $hour . ' for hour not suitable for changing the time.'
+            );
+        }
+
+        if (!ctype_digit($minute) || 0 > $minute || 59 < $minute) {
+            throw new \InvalidArgumentException(
+                    'Given value ' . $minute . ' for minute not suitable for changing the time.'
+            );
+        }
+
+        if (!ctype_digit($second) || 0 > $second || 59 < $second) {
+            throw new \InvalidArgumentException(
+                    'Given value ' . $second . ' for second not suitable for changing the time.'
+            );
+        }
+
+        return $this->createDateWithNewTime((int) $hour, (int) $minute, (int) $second);
     }
 
     /**
@@ -72,9 +93,9 @@ class DateModifier
      * @return  \stubbles\date\Date
      * @since   5.1.0
      */
-    public function timeToStartOfDay()
+    public function timeToStartOfDay(): Date
     {
-        return $this->timeTo('00:00:00');
+        return $this->createDateWithNewTime(0, 0, 0);
     }
 
     /**
@@ -84,9 +105,9 @@ class DateModifier
      * @return  \stubbles\date\Date
      * @since   5.1.0
      */
-    public function timeToEndOfDay()
+    public function timeToEndOfDay(): Date
     {
-        return $this->timeTo('23:59:59');
+        return $this->createDateWithNewTime(23, 59, 59);
     }
 
     /**
@@ -96,7 +117,7 @@ class DateModifier
      * @param   int  $hour
      * @return  \stubbles\date\Date
      */
-    public function hourTo($hour)
+    public function hourTo(int $hour): Date
     {
         return $this->createDateWithNewTime(
                 $hour,
@@ -112,7 +133,7 @@ class DateModifier
      * @param   int  $hours
      * @return  \stubbles\date\Date
      */
-    public function byHours($hours)
+    public function byHours(int $hours): Date
     {
         return $this->hourTo($this->originalDate->hours() + $hours);
     }
@@ -124,7 +145,7 @@ class DateModifier
      * @param   int  $minute
      * @return  \stubbles\date\Date
      */
-    public function minuteTo($minute)
+    public function minuteTo(int $minute): Date
     {
         return $this->createDateWithNewTime(
                 $this->originalDate->hours(),
@@ -140,7 +161,7 @@ class DateModifier
      * @param   int  $minutes
      * @return  \stubbles\date\Date
      */
-    public function byMinutes($minutes)
+    public function byMinutes(int $minutes): Date
     {
         return $this->minuteTo($this->originalDate->minutes() + $minutes);
     }
@@ -152,7 +173,7 @@ class DateModifier
      * @param   int  $second
      * @return  \stubbles\date\Date
      */
-    public function secondTo($second)
+    public function secondTo(int $second): Date
     {
         return $this->createDateWithNewTime(
                 $this->originalDate->hours(),
@@ -168,7 +189,7 @@ class DateModifier
      * @param   int  $seconds
      * @return  \stubbles\date\Date
      */
-    public function bySeconds($seconds)
+    public function bySeconds(int $seconds): Date
     {
         return $this->secondTo($this->originalDate->seconds() + $seconds);
     }
@@ -176,21 +197,14 @@ class DateModifier
     /**
      * creates new date instance with changed time
      *
-     * @api
      * @param   int  $hour
      * @param   int  $minute
      * @param   int  $second
      * @return  \stubbles\date\Date
-     * @throws  \InvalidArgumentException
      */
-    protected function createDateWithNewTime($hour, $minute, $second)
+    private function createDateWithNewTime(int $hour, int $minute, int $second): Date
     {
-        $modifiedHandle = clone $this->originalDate->handle();
-        if (false === @$modifiedHandle->setTime($hour, $minute, $second)) {
-            throw new \InvalidArgumentException('Given values for hour, minute and/or second not suitable for changing the time.');
-        }
-
-        return new Date($modifiedHandle);
+        return new Date($this->originalDate->handle()->setTime($hour, $minute, $second));
     }
 
     /**
@@ -201,25 +215,45 @@ class DateModifier
      * @return  \stubbles\date\Date
      * @throws  \InvalidArgumentException
      */
-    public function dateTo($date)
+    public function dateTo(string $date): Date
     {
         $dates = explode('-', $date);
         if (count($dates) != 3) {
-            throw new \InvalidArgumentException('Given date ' . $date . ' does not follow required format YYYY-MM-DD');
+            throw new \InvalidArgumentException(
+                    'Given date "' . $date . '" does not follow required format YYYY-MM-DD'
+            );
         }
 
         list($year, $month, $day) = $dates;
-        return $this->createNewDateWithExistingTime($year, $month, $day);
+        if (!ctype_digit($year)) {
+            throw new \InvalidArgumentException(
+                    'Given value ' . $year . ' for year not suitable for changing the date.'
+            );
+        }
+
+        if (!ctype_digit($month) || 1 > $month || 12 < $month) {
+            throw new \InvalidArgumentException(
+                    'Given value ' . $month . ' for month not suitable for changing the date.'
+            );
+        }
+
+        if (!ctype_digit($day) || 1 > $day || 31 < $day) {
+            throw new \InvalidArgumentException(
+                    'Given value ' . $day . ' for day not suitable for changing the date.'
+            );
+        }
+
+        return $this->createNewDateWithExistingTime((int) $year, (int) $month, (int) $day);
     }
 
     /**
      * returns a new date instance with changed year but same time, month and day
      *
      * @api
-     * @param   string  $year
+     * @param   int  $year
      * @return  \stubbles\date\Date
      */
-    public function yearTo($year)
+    public function yearTo(int $year): Date
     {
         return $this->createNewDateWithExistingTime(
                 $year,
@@ -235,7 +269,7 @@ class DateModifier
      * @param   int  $years
      * @return  \stubbles\date\Date
      */
-    public function byYears($years)
+    public function byYears(int $years): Date
     {
         return $this->yearTo($this->originalDate->year() + $years);
     }
@@ -244,10 +278,10 @@ class DateModifier
      * returns a new date instance with changed month but same time, year and day
      *
      * @api
-     * @param   string  $month
+     * @param   int  $month
      * @return  \stubbles\date\Date
      */
-    public function monthTo($month)
+    public function monthTo(int $month): Date
     {
         return $this->createNewDateWithExistingTime(
                 $this->originalDate->year(),
@@ -263,7 +297,7 @@ class DateModifier
      * @param   int  $months
      * @return  \stubbles\date\Date
      */
-    public function byMonths($months)
+    public function byMonths(int $months): Date
     {
         return $this->monthTo($this->originalDate->month() + $months);
     }
@@ -272,10 +306,10 @@ class DateModifier
      * returns a new date instance with changed day but same time, year and month
      *
      * @api
-     * @param   string  $day
+     * @param   int  $day
      * @return  \stubbles\date\Date
      */
-    public function dayTo($day)
+    public function dayTo(int $day): Date
     {
         return $this->createNewDateWithExistingTime(
                 $this->originalDate->year(),
@@ -291,7 +325,7 @@ class DateModifier
      * @param   int  $days
      * @return  \stubbles\date\Date
      */
-    public function byDays($days)
+    public function byDays(int $days): Date
     {
         return $this->dayTo($this->originalDate->day() + $days);
     }
@@ -303,15 +337,9 @@ class DateModifier
      * @param   int   $month
      * @param   int   $day
      * @return  \stubbles\date\Date
-     * @throws  \InvalidArgumentException
      */
-    protected function createNewDateWithExistingTime($year, $month, $day)
+    private function createNewDateWithExistingTime(int $year, int $month, int $day): Date
     {
-        $modifiedHandle = clone $this->originalDate->handle();
-        if (false === @$modifiedHandle->setDate($year, $month, $day)) {
-            throw new \InvalidArgumentException('Given values for year, month and/or day not suitable for changing the date.');
-        }
-
-        return new Date($modifiedHandle);
+        return new Date($this->originalDate->handle()->setDate($year, $month, $day));
     }
 }

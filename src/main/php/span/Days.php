@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of stubbles.
  *
@@ -44,7 +45,7 @@ class Days implements \Iterator
      *
      * @return  \stubbles\date\span\Day
      */
-    public function current()
+    public function current(): Day
     {
         return $this->current;
     }
@@ -54,7 +55,7 @@ class Days implements \Iterator
      *
      * @return  string
      */
-    public function key()
+    public function key(): string
     {
         return $this->current->asString();
     }
@@ -80,7 +81,7 @@ class Days implements \Iterator
      *
      * @return  bool
      */
-    public function valid()
+    public function valid(): bool
     {
         return $this->current->startsBefore($this->datespan->end());
     }

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of stubbles.
  *
@@ -82,7 +83,7 @@ class Date
      * @param   \stubbles\date\TimeZone  $timeZone  initial timezone
      * @return  \stubbles\date\Date
      */
-    public static function now(TimeZone $timeZone = null)
+    public static function now(TimeZone $timeZone = null): self
     {
         return new self(time(), $timeZone);
     }
@@ -96,7 +97,7 @@ class Date
      * @throws  \InvalidArgumentException
      * @since   3.4.4
      */
-    public static function castFrom($value, $name = 'Date')
+    public static function castFrom($value, string $name = 'Date'): self
     {
         if (is_int($value) || is_string($value) || $value instanceof \DateTime) {
             return new self($value);
@@ -115,7 +116,7 @@ class Date
      * @return  \DateTime
      * @XmlIgnore
      */
-    public function handle()
+    public function handle(): \DateTime
     {
         return clone $this->dateTime;
     }
@@ -126,7 +127,7 @@ class Date
      * @return  \stubbles\date\DateModifier
      * @XmlIgnore
      */
-    public function change()
+    public function change(): DateModifier
     {
         return new DateModifier($this);
     }
@@ -137,7 +138,7 @@ class Date
      * @return  int
      * @XmlIgnore
      */
-    public function timestamp()
+    public function timestamp(): int
     {
         return (int) $this->dateTime->format('U');
     }
@@ -148,7 +149,7 @@ class Date
      * @return  int
      * @XmlIgnore
      */
-    public function seconds()
+    public function seconds(): int
     {
         return (int) $this->dateTime->format('s');
     }
@@ -159,7 +160,7 @@ class Date
      * @return  int
      * @XmlIgnore
      */
-    public function minutes()
+    public function minutes(): int
     {
         return (int) $this->dateTime->format('i');
     }
@@ -170,7 +171,7 @@ class Date
      * @return  int
      * @XmlIgnore
      */
-    public function hours()
+    public function hours(): int
     {
         return (int) $this->dateTime->format('G');
     }
@@ -181,7 +182,7 @@ class Date
      * @return  int
      * @XmlIgnore
      */
-    public function day()
+    public function day(): int
     {
         return (int) $this->dateTime->format('d');
     }
@@ -192,7 +193,7 @@ class Date
      * @return  int
      * @XmlIgnore
      */
-    public function month()
+    public function month(): int
     {
         return (int) $this->dateTime->format('m');
     }
@@ -203,7 +204,7 @@ class Date
      * @return  int
      * @XmlIgnore
      */
-    public function year()
+    public function year(): int
     {
         return (int) $this->dateTime->format('Y');
     }
@@ -214,7 +215,7 @@ class Date
      * @return  string
      * @XmlIgnore
      */
-    public function offset()
+    public function offset(): string
     {
         return $this->dateTime->format('O');
     }
@@ -225,7 +226,7 @@ class Date
      * @return  int
      * @XmlIgnore
      */
-    public function offsetInSeconds()
+    public function offsetInSeconds(): int
     {
         return (int) $this->dateTime->format('Z');
     }
@@ -236,7 +237,7 @@ class Date
      * @param   int|string|\DateTime|\stubbles\date\Date  $date
      * @return  bool
      */
-    public function isBefore($date)
+    public function isBefore($date): bool
     {
         return $this->timestamp() < self::castFrom($date, 'date')->timestamp();
     }
@@ -247,7 +248,7 @@ class Date
      * @param   int|string|\DateTime|\stubbles\date\Date  $date
      * @return  bool
      */
-    public function isAfter($date)
+    public function isAfter($date): bool
     {
         return $this->timestamp() > self::castFrom($date, 'date')->timestamp();
     }
@@ -258,7 +259,7 @@ class Date
      * @return  \stubbles\date\TimeZone
      * @XmlIgnore
      */
-    public function timeZone()
+    public function timeZone(): TimeZone
     {
         return new TimeZone($this->dateTime->getTimezone());
     }
@@ -269,7 +270,7 @@ class Date
      * @return  string
      * @XmlAttribute(attributeName='value')
      */
-    public function asString()
+    public function asString(): string
     {
         return $this->format('Y-m-d H:i:sO');
     }
@@ -281,7 +282,7 @@ class Date
      * @param   \stubbles\date\TimeZone  $timeZone  target time zone of formatted string
      * @return  string
      */
-    public function format($format, TimeZone $timeZone = null)
+    public function format(string $format, TimeZone $timeZone = null): string
     {
         if (null !== $timeZone) {
             return $timeZone->translate($this)->format($format);
@@ -296,7 +297,7 @@ class Date
      * @param   mixed  $compare
      * @return  bool
      */
-    public function equals($compare)
+    public function equals($compare): bool
     {
         if ($compare instanceof self) {
             return ($this->timestamp() === $compare->timestamp());
@@ -310,7 +311,7 @@ class Date
      *
      * @return  string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->asString();
     }

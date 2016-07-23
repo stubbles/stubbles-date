@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of stubbles.
  *
@@ -35,15 +36,18 @@ class Year extends CustomDatespan
     {
         if (null === $year) {
             $year = date('Y');
-        } elseif (strlen((int) $year) != strlen($year)) {
-            throw new \InvalidArgumentException('Given year ' . $year . ' can not be treated as year, should be something that can be casted to int without data loss');
+        } elseif (!ctype_digit($year)) {
+            throw new \InvalidArgumentException(
+                    'Given year ' . $year . ' can not be treated as year, should'
+                    . ' be something that can be casted to int without data loss'
+            );
         }
 
         $start = new \DateTime();
         $start->setDate((int) $year, 1, 1);
         $start->setTime(0, 0, 0);
         $end = new \DateTime();
-        $end->setDate((int) $year, 12, $start->format('t'));
+        $end->setDate((int) $year, 12, (int) $start->format('t'));
         $end->setTime(23, 59, 59);
         parent::__construct(new Date($start), new Date($end));
         $this->year = (int) $year;
@@ -54,7 +58,7 @@ class Year extends CustomDatespan
      *
      * @return  int
      */
-    public function amountOfDays()
+    public function amountOfDays(): int
     {
        if ($this->isLeapYear()) {
            return 366;
@@ -66,9 +70,9 @@ class Year extends CustomDatespan
     /**
      * returns list of months for this year
      *
-     * @return  \stubbles\date\span\Month[]
+     * @return  \stubbles\date\span\Months
      */
-    public function months()
+    public function months(): \Iterator
     {
         return new Months($this);
     }
@@ -78,7 +82,7 @@ class Year extends CustomDatespan
      *
      * @return  bool
      */
-    public function isLeapYear()
+    public function isLeapYear(): bool
     {
         return $this->formatStart('L') == 1;
     }
@@ -88,7 +92,7 @@ class Year extends CustomDatespan
      *
      * @return  bool
      */
-    public function isCurrentYear()
+    public function isCurrentYear(): bool
     {
         return ((int) date('Y')) === $this->year;
     }
@@ -99,7 +103,7 @@ class Year extends CustomDatespan
      * @return  int
      * @since   5.2.0
      */
-    public function asInt()
+    public function asInt(): int
     {
         return $this->year;
     }
@@ -109,7 +113,7 @@ class Year extends CustomDatespan
      *
      * @return  string
      */
-    public function asString()
+    public function asString(): string
     {
         return (string) $this->year;
     }
@@ -120,7 +124,7 @@ class Year extends CustomDatespan
      * @return  string
      * @since   5.3.0
      */
-    public function type()
+    public function type(): string
     {
         return 'year';
     }

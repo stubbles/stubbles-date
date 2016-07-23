@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of stubbles.
  *
@@ -98,10 +99,7 @@ class YearTest extends \PHPUnit_Framework_TestCase
         assert((new Year(2008))->days(), each(isInstanceOf(Day::class)));
     }
 
-    /**
-     * @return  array
-     */
-    public function yearMonths()
+    public function yearMonths(): array
     {
         $return        = [];
         $expectedMonth = 1;
@@ -109,7 +107,7 @@ class YearTest extends \PHPUnit_Framework_TestCase
             $return[] = [
                     $monthString,
                     $month,
-                    '2007-' . str_pad($expectedMonth++, 2, '0', STR_PAD_LEFT)
+                    '2007-' . str_pad((string) $expectedMonth++, 2, '0', STR_PAD_LEFT)
             ];
         }
 
@@ -120,8 +118,11 @@ class YearTest extends \PHPUnit_Framework_TestCase
      * @test
      * @dataProvider  yearMonths
      */
-    public function monthsReturnsAllMonth($monthString, Month $month, $expectedMonth)
-    {
+    public function monthsReturnsAllMonth(
+            string $monthString,
+            Month $month,
+            string $expectedMonth
+    ) {
         assert($month->asString(), equals($monthString));
         assert($monthString, equals($expectedMonth));
     }
@@ -170,10 +171,7 @@ class YearTest extends \PHPUnit_Framework_TestCase
         assertFalse($year->containsDate(new Date('2006-12-31')));
     }
 
-    /**
-     * @return  array
-     */
-    public function allDays()
+    public function allDays(): array
     {
         $return = [];
         $year = new Year(2007);
@@ -191,7 +189,7 @@ class YearTest extends \PHPUnit_Framework_TestCase
      * @test
      * @dataProvider  allDays
      */
-    public function doesContainAllDatesForThisYear(Year $year, $month, $day)
+    public function doesContainAllDatesForThisYear(Year $year, int $month, int $day)
     {
         assertTrue($year->containsDate(new Date('2007-' . $month . '-' . $day)));
     }
