@@ -23,21 +23,6 @@ use function bovigo\assert\{
 use function stubbles\date\assert\equalsDate;
 use function stubbles\reflect\annotationsOf;
 /**
- * Helper class for the test.
- */
-class DateHandleDeliverer extends Date
-{
-    /**
-     * returns handle
-     *
-     * @return  \DateTime
-     */
-    public static function deliverHandle(Date $date)
-    {
-        return $date->dateTime;
-    }
-}
-/**
  * Tests for stubbles\date\Date.
  *
  * @group  date
@@ -511,10 +496,11 @@ class DateTest extends \PHPUnit_Framework_TestCase
     {
         $date       = new Date('31.12.1969 00:00 GMT');
         $clonedDate = clone $date;
-        assert(
-                DateHandleDeliverer::deliverHandle($clonedDate),
-                isNotSameAs(DateHandleDeliverer::deliverHandle($date))
-        );
+        $dateHandle = new class('today') extends Date
+        {
+            public function of(Date $date) { return $date->dateTime; }
+        };
+        assert($dateHandle->of($clonedDate), isNotSameAs($dateHandle->of($date)));
     }
 
     /**
