@@ -56,7 +56,10 @@ class Date
         if (is_numeric($dateTime)) {
             $this->dateTime = date_create('@' . $dateTime, timezone_open('UTC'));
             if (false !== $this->dateTime) {
-                date_timezone_set($this->dateTime, (null === $timeZone) ? (new \DateTimeZone(date_default_timezone_get())) : ($timeZone->handle()));
+                date_timezone_set(
+                        $this->dateTime,
+                        (null === $timeZone) ? (new \DateTimeZone(date_default_timezone_get())) : ($timeZone->handle())
+                );
             }
         } elseif (is_string($dateTime)) {
             try {
@@ -66,14 +69,23 @@ class Date
                     $this->dateTime = new \DateTime($dateTime, $timeZone->handle());
                 }
             } catch (\Exception $e) {
-                throw new \InvalidArgumentException('Given datetime string ' . $dateTime . ' is not a valid date string: ' . $e->getMessage(), $e->getCode(), $e);
+                throw new \InvalidArgumentException(
+                        'Given datetime string ' . $dateTime
+                        . ' is not a valid date string: ' . $e->getMessage(),
+                        $e->getCode(),
+                        $e
+                );
             }
         } else {
             $this->dateTime = $dateTime;
         }
 
         if (!($this->dateTime instanceof \DateTime)) {
-            throw new \InvalidArgumentException('Datetime must be either unix timestamp, well-formed timestamp or instance of DateTime, but was ' . gettype($dateTime) . ' ' . $dateTime);
+            throw new \InvalidArgumentException(
+                    'Datetime must be either unix timestamp, well-formed timestamp'
+                    . ' or instance of \DateTime, but was ' . gettype($dateTime)
+                    . ' ' . $dateTime
+            );
         }
     }
 
@@ -104,7 +116,11 @@ class Date
         }
 
         if (!($value instanceof Date)) {
-            throw new \InvalidArgumentException($name . ' must be a timestamp, a string containing time info or an instance of \DateTime or stubbles\date\Date, but was ' . gettype($value));
+            throw new \InvalidArgumentException(
+                    $name . ' must be a timestamp, a string containing time info'
+                    . ' or an instance of \DateTime or ' . __CLASS__
+                    . ', but was ' . gettype($value)
+            );
         }
 
         return $value;
