@@ -11,12 +11,14 @@ declare(strict_types=1);
 namespace stubbles\date\span;
 use stubbles\date\Date;
 
-use function bovigo\assert\assert;
-use function bovigo\assert\assertFalse;
-use function bovigo\assert\assertTrue;
-use function bovigo\assert\predicate\each;
-use function bovigo\assert\predicate\equals;
-use function bovigo\assert\predicate\isInstanceOf;
+use function bovigo\assert\{
+    assert,
+    assertFalse,
+    assertTrue,
+    predicate\each,
+    predicate\equals,
+    predicate\isInstanceOf
+};
 /**
  * Tests for stubbles\date\span\CustomDatespan.
  *
