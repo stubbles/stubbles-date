@@ -4,37 +4,37 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c6842a890e9d5237954bda1f0d8df30b",
-    "content-hash": "1d9873bde360f7eef1992c4a4d15a44c",
+    "hash": "168d26967ac550fc95c890b7ceef6a1e",
+    "content-hash": "6f3bd74aff445655f9177d00a48fdbb0",
     "packages": [],
     "packages-dev": [
         {
             "name": "bovigo/assert",
-            "version": "v1.7.0",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mikey179/bovigo-assert.git",
-                "reference": "2b034d8a475956463f2c6635baf4d0d041de8b62"
+                "reference": "5187f3f880fbe8c4a937c0d362682431429f999f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mikey179/bovigo-assert/zipball/2b034d8a475956463f2c6635baf4d0d041de8b62",
-                "reference": "2b034d8a475956463f2c6635baf4d0d041de8b62",
+                "url": "https://api.github.com/repos/mikey179/bovigo-assert/zipball/5187f3f880fbe8c4a937c0d362682431429f999f",
+                "reference": "5187f3f880fbe8c4a937c0d362682431429f999f",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.6.0",
+                "php": "^7.0",
                 "sebastian/comparator": "^1.2",
                 "sebastian/exporter": "^1.2"
             },
             "require-dev": {
                 "mikey179/vfsstream": "^1.6",
-                "phpunit/phpunit": "^5.2"
+                "phpunit/phpunit": "^5.4"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.7.x-dev"
+                    "dev-master": "2.0.x-dev"
                 }
             },
             "autoload": {
@@ -51,7 +51,7 @@
                 "BSD-3-Clause"
             ],
             "description": "Provides assertions for unit tests.",
-            "time": "2016-06-24 15:39:57"
+            "time": "2016-07-10 10:31:41"
         },
         {
             "name": "doctrine/instantiator",
@@ -603,16 +603,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.4.6",
+            "version": "5.4.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "2f1fc94b77ea6418bd6a06c64a1dac0645fbce59"
+                "reference": "6c8a756c17a1a92a066c99860eb57922e8b723da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/2f1fc94b77ea6418bd6a06c64a1dac0645fbce59",
-                "reference": "2f1fc94b77ea6418bd6a06c64a1dac0645fbce59",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/6c8a756c17a1a92a066c99860eb57922e8b723da",
+                "reference": "6c8a756c17a1a92a066c99860eb57922e8b723da",
                 "shasum": ""
             },
             "require": {
@@ -677,7 +677,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-06-16 06:01:15"
+            "time": "2016-07-21 06:55:27"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -1253,32 +1253,32 @@
         },
         {
             "name": "stubbles/reflect",
-            "version": "v7.0.0",
+            "version": "v8.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stubbles/stubbles-reflect.git",
-                "reference": "1e5fe395856278a047e363cb70a872520457edcb"
+                "reference": "4c45bd493dfea16df871294c62323e042becd016"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stubbles/stubbles-reflect/zipball/1e5fe395856278a047e363cb70a872520457edcb",
-                "reference": "1e5fe395856278a047e363cb70a872520457edcb",
+                "url": "https://api.github.com/repos/stubbles/stubbles-reflect/zipball/4c45bd493dfea16df871294c62323e042becd016",
+                "reference": "4c45bd493dfea16df871294c62323e042becd016",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.6.0",
-                "stubbles/sequence": "^7.0",
-                "stubbles/values": "^7.0"
+                "php": "^7.0",
+                "stubbles/sequence": "^8.1",
+                "stubbles/values": "^8.0"
             },
             "require-dev": {
-                "bovigo/assert": "^1.5",
+                "bovigo/assert": "^2.0",
                 "mikey179/vfsstream": "^1.6",
-                "phpunit/phpunit": "^5.1"
+                "phpunit/phpunit": "^5.4"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "7.0.x-dev"
+                    "dev-master": "8.0.x-dev"
                 }
             },
             "autoload": {
@@ -1295,33 +1295,34 @@
             ],
             "description": "Reflection helper functions and annotations.",
             "homepage": "http://stubbles.net/",
-            "time": "2016-01-11 20:01:25"
+            "time": "2016-07-21 08:47:05"
         },
         {
             "name": "stubbles/sequence",
-            "version": "v7.0.0",
+            "version": "v8.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stubbles/stubbles-sequence.git",
-                "reference": "68defca3fdcae102b4d0c13c9f98d898aa75fcda"
+                "reference": "258d2247f1cdd826818348fe15829d5a98a9de70"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stubbles/stubbles-sequence/zipball/68defca3fdcae102b4d0c13c9f98d898aa75fcda",
-                "reference": "68defca3fdcae102b4d0c13c9f98d898aa75fcda",
+                "url": "https://api.github.com/repos/stubbles/stubbles-sequence/zipball/258d2247f1cdd826818348fe15829d5a98a9de70",
+                "reference": "258d2247f1cdd826818348fe15829d5a98a9de70",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.6.0"
+                "php": "^7.0"
             },
             "require-dev": {
-                "bovigo/assert": "^1.5",
-                "phpunit/phpunit": "^5.1"
+                "bovigo/assert": "^2.0",
+                "bovigo/callmap": "^3.0",
+                "phpunit/phpunit": "^5.4"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "7.0.x-dev"
+                    "dev-master": "8.1.x-dev"
                 }
             },
             "autoload": {
@@ -1338,36 +1339,36 @@
             ],
             "description": "Stream your iterators.",
             "homepage": "http://stubbles.net/",
-            "time": "2016-01-11 19:11:27"
+            "time": "2016-07-11 16:21:11"
         },
         {
             "name": "stubbles/values",
-            "version": "v7.2.0",
+            "version": "v8.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stubbles/stubbles-values.git",
-                "reference": "d976722a2a48ceb605da7214d777eecfe43715ef"
+                "reference": "d2caf21b46293552c050c38eba7bd50fe4b307c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stubbles/stubbles-values/zipball/d976722a2a48ceb605da7214d777eecfe43715ef",
-                "reference": "d976722a2a48ceb605da7214d777eecfe43715ef",
+                "url": "https://api.github.com/repos/stubbles/stubbles-values/zipball/d2caf21b46293552c050c38eba7bd50fe4b307c7",
+                "reference": "d2caf21b46293552c050c38eba7bd50fe4b307c7",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.6.0"
+                "ext-iconv": "*",
+                "php": "^7.0"
             },
             "require-dev": {
-                "bovigo/assert": "^1.6",
-                "bovigo/callmap": "^2.0",
+                "bovigo/assert": "^2.0",
+                "bovigo/callmap": "^3.0",
                 "mikey179/vfsstream": "^1.6",
-                "phpunit/phpunit": "^5.4",
-                "stubbles/reflect": "^7.0"
+                "phpunit/phpunit": "^5.4"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "7.2.x-dev"
+                    "dev-master": "8.0.x-dev"
                 }
             },
             "autoload": {
@@ -1384,20 +1385,20 @@
             ],
             "description": "Useful classes to ease the work with values.",
             "homepage": "http://stubbles.net/",
-            "time": "2016-06-08 12:38:39"
+            "time": "2016-07-11 14:20:22"
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.1.1",
+            "version": "v3.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "c5a7e7fc273c758b92b85dcb9c46149ccda89623"
+                "reference": "2884c26ce4c1d61aebf423a8b912950fe7c764de"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/c5a7e7fc273c758b92b85dcb9c46149ccda89623",
-                "reference": "c5a7e7fc273c758b92b85dcb9c46149ccda89623",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/2884c26ce4c1d61aebf423a8b912950fe7c764de",
+                "reference": "2884c26ce4c1d61aebf423a8b912950fe7c764de",
                 "shasum": ""
             },
             "require": {
@@ -1433,7 +1434,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-06-14 11:18:07"
+            "time": "2016-06-29 05:41:56"
         },
         {
             "name": "webmozart/assert",
@@ -1491,7 +1492,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.6.0"
+        "php": "^7.0"
     },
     "platform-dev": []
 }

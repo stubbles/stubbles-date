@@ -47,7 +47,7 @@ class DateEquals extends Predicate
      * @param   mixed  $value
      * @return  bool
      */
-    public function test($value)
+    public function test($value): bool
     {
         if (!($value instanceof Date)) {
             throw new \InvalidArgumentException(
@@ -76,7 +76,7 @@ class DateEquals extends Predicate
      *
      * @return  string
      */
-    public function __toString()
+    public function __toString(): string
     {
         $result = 'is equal to date ' . $this->expected;
         if ($this->hasDiffForLastFailure()) {
@@ -91,7 +91,7 @@ class DateEquals extends Predicate
      *
      * @return  bool
      */
-    public function hasDiffForLastFailure()
+    public function hasDiffForLastFailure(): bool
     {
         return !empty($this->lastFailureDiff);
     }
@@ -101,7 +101,7 @@ class DateEquals extends Predicate
      *
      * @return  string
      */
-    public function diffForLastFailure()
+    public function diffForLastFailure(): string
     {
         return $this->lastFailureDiff;
     }
@@ -113,7 +113,7 @@ class DateEquals extends Predicate
      * @param   mixed                                 $value
      * @return  string
      */
-    public function describeValue(Exporter $exporter, $value)
+    public function describeValue(Exporter $exporter, $value): string
     {
         if ($value instanceof Date) {
             return 'date ' . $value->format('c');
