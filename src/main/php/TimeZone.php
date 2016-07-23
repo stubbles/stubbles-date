@@ -46,7 +46,9 @@ class TimeZone
         }
 
         if (!($this->timeZone instanceof \DateTimeZone)) {
-            throw new \InvalidArgumentException('Invalid time zone identifier ' . $timeZone);
+            throw new \InvalidArgumentException(
+                    'Invalid time zone identifier ' . $timeZone
+            );
         }
     }
 
