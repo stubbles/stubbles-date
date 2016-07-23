@@ -36,7 +36,7 @@ namespace stubbles\date\span {
             return null;
         }
 
-        if (strlen((string) ((int) $value)) == strlen($value)) {
+        if (ctype_digit($value)) {
             return new Year($value);
         }
 
