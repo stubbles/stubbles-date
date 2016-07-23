@@ -65,11 +65,10 @@ class DayTest extends \PHPUnit_Framework_TestCase
      */
     public function getDaysReturnsListWithSelf()
     {
-        $day       = new Day('2007-05-14');
-        $dateSpans = $day->days();
+        $day = new Day('2007-05-14');
         assert(
-                $dateSpans,
-                isOfSize(1)->and(each(isSameAs($dateSpans['2007-05-14'])))
+                $day->days(),
+                isOfSize(1)->and(each(isSameAs($day)))
         );
     }
 

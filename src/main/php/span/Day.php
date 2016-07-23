@@ -94,11 +94,11 @@ class Day extends AbstractDatespan implements Datespan
     /**
      * returns list of days
      *
-     * @return  \stubbles\date\span\Day[]
+     * @return  iterable
      */
-    public function days()
+    public function days(): \Iterator
     {
-        return [$this->asString() => $this];
+        return new Days($this);
     }
 
     /**

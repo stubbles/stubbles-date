@@ -19,9 +19,9 @@ class CustomDatespan extends AbstractDatespan
     /**
      * returns list of days within this datespan
      *
-     * @return  \stubbles\date\span\Day[]
+     * @return  iterable
      */
-    public function days()
+    public function days(): \Iterator
     {
         return new Days($this);
     }

@@ -14,7 +14,7 @@ namespace stubbles\date\span;
  *
  * @since  5.2.0
  */
-class Days implements \Iterator
+class Days implements \Iterator, \Countable
 {
     /**
      * start date of the iteration
@@ -37,7 +37,18 @@ class Days implements \Iterator
     public function __construct(Datespan $datespan)
     {
         $this->datespan = $datespan;
-        $this->current  = new Day($this->datespan->start());
+        $this->rewind();
+    }
+
+    /**
+     * returns amount of days
+     *
+     * @return  int
+     * @since   7.0.0
+     */
+    public function count(): int
+    {
+        return $this->datespan->amountOfDays();
     }
 
     /**
@@ -73,7 +84,11 @@ class Days implements \Iterator
      */
     public function rewind()
     {
-        $this->current = new Day($this->datespan->start());
+        if ($this->datespan instanceof Day) {
+            $this->current = $this->datespan;
+        } else {
+            $this->current = new Day($this->datespan->start());
+        }
     }
 
     /**

@@ -94,13 +94,12 @@ interface Datespan
      */
     public function amountOfDays(): int;
 
-
     /**
      * returns list of days
      *
-     * @return  \stubbles\date\span\Day[]
+     * @return  iterable
      */
-    public function days();
+    public function days(): \Iterator;
 
     /**
      * checks whether the span is in the future compared to current date
