@@ -5,14 +5,13 @@ declare(strict_types=1);
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
- * @package  stubbles\date
  */
 namespace stubbles\date\span;
+use PHPUnit\Framework\TestCase;
 use stubbles\date\Date;
 
 use function bovigo\assert\{
-    assert,
+    assertThat,
     assertFalse,
     assertTrue,
     expect,
@@ -27,7 +26,7 @@ use function bovigo\assert\{
  * @group  date
  * @group  span
  */
-class YearTest extends \PHPUnit_Framework_TestCase
+class YearTest extends TestCase
 {
     /**
      * @test
@@ -49,7 +48,7 @@ class YearTest extends \PHPUnit_Framework_TestCase
     public function stringRepresentationContainsYear()
     {
         $year = new Year(2007);
-        assert($year->asString(), equals('2007'));
+        assertThat($year->asString(), equals('2007'));
     }
 
     /**
@@ -58,7 +57,7 @@ class YearTest extends \PHPUnit_Framework_TestCase
     public function properStringConversion()
     {
         $year = new Year(2007);
-        assert((string) $year, equals('2007'));
+        assertThat((string) $year, equals('2007'));
     }
 
     /**
@@ -67,7 +66,7 @@ class YearTest extends \PHPUnit_Framework_TestCase
     public function usesCurrentYearIfNotGiven()
     {
         $year = new Year();
-        assert($year->asString(), equals(date('Y')));
+        assertThat($year->asString(), equals(date('Y')));
     }
 
     /**
@@ -76,7 +75,7 @@ class YearTest extends \PHPUnit_Framework_TestCase
     public function amountOfDaysIs366ForLeapYears()
     {
         $year = new Year(2008);
-        assert($year->amountOfDays(), equals(366));
+        assertThat($year->amountOfDays(), equals(366));
     }
 
     /**
@@ -85,7 +84,7 @@ class YearTest extends \PHPUnit_Framework_TestCase
     public function amountOfDaysIs365ForNonLeapYears()
     {
         $year = new Year(2007);
-        assert($year->amountOfDays(), equals(365));
+        assertThat($year->amountOfDays(), equals(365));
     }
 
     /**
@@ -104,7 +103,7 @@ class YearTest extends \PHPUnit_Framework_TestCase
      */
     public function daysReturnsAmountOfDaysWithinYear(Year $year, $dayCount)
     {
-        assert($year->days(), isOfSize($dayCount));
+        assertThat($year->days(), isOfSize($dayCount));
     }
 
     /**
@@ -112,7 +111,7 @@ class YearTest extends \PHPUnit_Framework_TestCase
      */
     public function daysReturnsAllDaysInYear()
     {
-        assert((new Year(2008))->days(), each(isInstanceOf(Day::class)));
+        assertThat((new Year(2008))->days(), each(isInstanceOf(Day::class)));
     }
 
     public function yearMonths(): array
@@ -139,8 +138,8 @@ class YearTest extends \PHPUnit_Framework_TestCase
             Month $month,
             string $expectedMonth
     ) {
-        assert($month->asString(), equals($monthString));
-        assert($monthString, equals($expectedMonth));
+        assertThat($month->asString(), equals($monthString));
+        assertThat($monthString, equals($expectedMonth));
     }
 
     /**
@@ -181,7 +180,7 @@ class YearTest extends \PHPUnit_Framework_TestCase
      */
     public function yearMonthCurrentReturnsFirstMonthOfYearOnStart()
     {
-        assert((new Year(2007))->months()->current(), equals(new Month(2007, 1)));
+        assertThat((new Year(2007))->months()->current(), equals(new Month(2007, 1)));
     }
 
     /**
@@ -190,7 +189,7 @@ class YearTest extends \PHPUnit_Framework_TestCase
      */
     public function yearMonthKeyIsStringRepresentationOfMonth()
     {
-        assert((new Year(2007))->months()->key(), equals('2007-01'));
+        assertThat((new Year(2007))->months()->key(), equals('2007-01'));
     }
 
     /**
@@ -202,7 +201,7 @@ class YearTest extends \PHPUnit_Framework_TestCase
         $months = (new Year(2007))->months();
         $months->next();
         $months->rewind();
-        assert($months->current(), equals(new Month(2007, 1)));
+        assertThat($months->current(), equals(new Month(2007, 1)));
     }
 
     /**
@@ -210,7 +209,7 @@ class YearTest extends \PHPUnit_Framework_TestCase
      */
     public function monthReturnsRightAmountOfMonth()
     {
-        assert((new Year(2007))->months(), isOfSize(12));
+        assertThat((new Year(2007))->months(), isOfSize(12));
     }
 
     /**
@@ -333,6 +332,6 @@ class YearTest extends \PHPUnit_Framework_TestCase
     public function typeIsYear()
     {
         $year = new Year(2007);
-        assert($year->type(), equals('year'));
+        assertThat($year->type(), equals('year'));
     }
 }

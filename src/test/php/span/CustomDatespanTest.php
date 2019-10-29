@@ -5,14 +5,13 @@ declare(strict_types=1);
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
- * @package  stubbles\date
  */
 namespace stubbles\date\span;
+use PHPUnit\Framework\TestCase;
 use stubbles\date\Date;
 
 use function bovigo\assert\{
-    assert,
+    assertThat,
     assertFalse,
     assertTrue,
     predicate\each,
@@ -25,7 +24,7 @@ use function bovigo\assert\{
  * @group  date
  * @group  span
  */
-class CustomDatespanTest extends \PHPUnit_Framework_TestCase
+class CustomDatespanTest extends TestCase
 {
     /**
      * @test
@@ -34,8 +33,8 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
         $startDate      = $customDatespan->start();
-        assert($startDate, isInstanceOf(Date::class));
-        assert(
+        assertThat($startDate, isInstanceOf(Date::class));
+        assertThat(
                 $startDate->asString(),
                 equals('2006-04-04 00:00:00' . $startDate->offset())
         );
@@ -48,8 +47,8 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
         $endDate        = $customDatespan->end();
-        assert($endDate, isInstanceOf(Date::class));
-        assert(
+        assertThat($endDate, isInstanceOf(Date::class));
+        assertThat(
                 $endDate->asString(),
                 equals('2006-04-20 23:59:59' . $endDate->offset())
         );
@@ -65,7 +64,7 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
                 new Date('2006-04-20')
         );
         $startDate = $customDatespan->start();
-        assert(
+        assertThat(
                 $startDate->asString(),
                 equals('2006-04-04 00:00:00' . $startDate->offset())
         );
@@ -81,7 +80,7 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
                 new Date('2006-04-20')
         );
         $endDate = $customDatespan->end();
-        assert(
+        assertThat(
                 $endDate->asString(),
                 equals('2006-04-20 23:59:59' . $endDate->offset())
         );
@@ -93,7 +92,7 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
     public function returnsAmountOfDaysInDatespan()
     {
         $customDatespan = new CustomDatespan('2007-05-14', '2007-05-27');
-        assert($customDatespan->amountOfDays(), equals(14));
+        assertThat($customDatespan->amountOfDays(), equals(14));
     }
 
     public function datespanDays(): array
@@ -113,8 +112,8 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
      */
     public function daysReturnsListOfAllDays(string $dayString, Day $day, int $expectedDay)
     {
-        assert($dayString, equals('2007-05-' . $expectedDay));
-        assert($day->asInt(), equals($expectedDay));
+        assertThat($dayString, equals('2007-05-' . $expectedDay));
+        assertThat($day->asInt(), equals($expectedDay));
     }
 
     /**
@@ -159,7 +158,7 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
     public function containsAllDatesInSpan()
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
-        assert(
+        assertThat(
                 range(4, 20),
                 each(function($day) use($customDatespan)
                 {
@@ -205,7 +204,7 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
     public function stringRepresentationOfDayContainsStartAndEndDate()
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
-        assert($customDatespan->asString(), equals('2006-04-04,2006-04-20'));
+        assertThat($customDatespan->asString(), equals('2006-04-04,2006-04-20'));
     }
 
     /**
@@ -214,7 +213,7 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
     public function properStringConversion()
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
-        assert((string) $customDatespan, equals('2006-04-04,2006-04-20'));
+        assertThat((string) $customDatespan, equals('2006-04-04,2006-04-20'));
     }
 
     /**
@@ -264,7 +263,7 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
     public function formatStartReturnsFormattedStartDate()
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
-        assert($customDatespan->formatStart('Y-m-d'), equals('2006-04-04'));
+        assertThat($customDatespan->formatStart('Y-m-d'), equals('2006-04-04'));
     }
 
     /**
@@ -274,7 +273,7 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
     public function formatEndReturnsFormattedStartDate()
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
-        assert($customDatespan->formatEnd('Y-m-d'), equals('2006-04-20'));
+        assertThat($customDatespan->formatEnd('Y-m-d'), equals('2006-04-20'));
     }
 
     /**
@@ -284,6 +283,6 @@ class CustomDatespanTest extends \PHPUnit_Framework_TestCase
     public function typeIsCustom()
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
-        assert($customDatespan->type(), equals('custom'));
+        assertThat($customDatespan->type(), equals('custom'));
     }
 }

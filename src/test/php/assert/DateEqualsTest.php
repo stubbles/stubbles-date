@@ -5,15 +5,14 @@ declare(strict_types=1);
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
- * @package  stubbles\date
  */
 namespace stubbles\date\assert;
+use PHPUnit\Framework\TestCase;
 use SebastianBergmann\Exporter\Exporter;
 use stubbles\date\Date;
 
 use function bovigo\assert\{
-    assert,
+    assertThat,
     assertFalse,
     assertNull,
     assertTrue,
@@ -30,14 +29,14 @@ use function bovigo\assert\{
  * @group  assert
  * @since  7.0.0
  */
-class DateEqualsTest extends \PHPUnit_Framework_TestCase
+class DateEqualsTest extends TestCase
 {
     /**
      * @type  DateEquals
      */
     private $equalsDate;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->equalsDate = equalsDate('2007-08-23T12:35:47+00:00');
     }
@@ -63,7 +62,7 @@ class DateEqualsTest extends \PHPUnit_Framework_TestCase
      */
     public function stringRepresentationContainsExpectedValue()
     {
-        assert(
+      assertThat(
                 (string) $this->equalsDate,
                 equals('is equal to date 2007-08-23T12:35:47+00:00')
         );
@@ -110,7 +109,7 @@ class DateEqualsTest extends \PHPUnit_Framework_TestCase
     public function stringRepresentationContainsExpectedValueOnlyAfterSuccessfulTest()
     {
         $this->equalsDate->test(new Date('2007-08-23T12:35:47+00:00'));
-        assert(
+        assertThat(
                 (string) $this->equalsDate,
                 equals('is equal to date 2007-08-23T12:35:47+00:00')
         );
@@ -139,7 +138,7 @@ class DateEqualsTest extends \PHPUnit_Framework_TestCase
     public function lastFailureDiffContainsDiffBetweenExpectedAndTestedWhenTestFailed()
     {
         $this->equalsDate->test(new Date('2007-08-23T12:35:47+01:00'));
-        assert(
+        assertThat(
                 $this->equalsDate->diffForLastFailure(),
                 equals("
 --- Expected
@@ -157,7 +156,7 @@ class DateEqualsTest extends \PHPUnit_Framework_TestCase
     public function stringRepresentationContainsDiffWhenTestFailed()
     {
         $this->equalsDate->test(new Date('2007-08-23T12:35:47+01:00'));
-        assert(
+        assertThat(
                 (string) $this->equalsDate,
                 equals("is equal to date 2007-08-23T12:35:47+00:00.
 --- Expected
@@ -174,7 +173,7 @@ class DateEqualsTest extends \PHPUnit_Framework_TestCase
      */
     public function describeValueForDateReturnsFormattedDateString()
     {
-        assert(
+      assertThat(
             $this->equalsDate->describeValue(
                     new Exporter(),
                     new Date('2007-08-23T12:35:47+01:00')
@@ -188,7 +187,7 @@ class DateEqualsTest extends \PHPUnit_Framework_TestCase
      */
     public function describeValueForNonDateReturnsParentFormat()
     {
-        assert(
+      assertThat(
             $this->equalsDate->describeValue(new Exporter(), 'foo'),
             equals("'foo'")
         );

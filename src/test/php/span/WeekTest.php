@@ -5,14 +5,13 @@ declare(strict_types=1);
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
- * @package  stubbles\date
  */
 namespace stubbles\date\span;
+use PHPUnit\Framework\TestCase;
 use stubbles\date\Date;
 
 use function bovigo\assert\{
-    assert,
+    assertThat,
     assertFalse,
     assertTrue,
     expect,
@@ -26,7 +25,7 @@ use function bovigo\assert\{
  * @group  date
  * @group  span
  */
-class WeekTest extends \PHPUnit_Framework_TestCase
+class WeekTest extends TestCase
 {
     /**
      * @test
@@ -34,8 +33,8 @@ class WeekTest extends \PHPUnit_Framework_TestCase
     public function amountOfDaysIsAlwaysSeven()
     {
         $week = new Week('2007-05-14');
-        assert($week->amountOfDays(), equals(7));
-        assert($week->days(), isOfSize(7));
+        assertThat($week->amountOfDays(), equals(7));
+        assertThat($week->days(), isOfSize(7));
     }
 
     public function weekDays(): array
@@ -64,8 +63,8 @@ class WeekTest extends \PHPUnit_Framework_TestCase
             Day $day,
             int $expectedDay
     ) {
-        assert($dayString, equals($expectedString));
-        assert($day->asInt(), equals($expectedDay));
+        assertThat($dayString, equals($expectedString));
+        assertThat($day->asInt(), equals($expectedDay));
     }
 
     /**
@@ -110,7 +109,7 @@ class WeekTest extends \PHPUnit_Framework_TestCase
     public function containsAllDaysOfThisWeek()
     {
         $week = new Week('2009-01-05');
-        assert(
+        assertThat(
                 range(5, 11),
                 each(function($day) use($week)
                 {
@@ -134,7 +133,7 @@ class WeekTest extends \PHPUnit_Framework_TestCase
     public function stringRepresentationOfWeekContainsNumberOfWeek()
     {
         $week = new Week('2007-04-02');
-        assert($week->asString(), equals('2007-W14'));
+        assertThat($week->asString(), equals('2007-W14'));
     }
 
     /**
@@ -143,7 +142,7 @@ class WeekTest extends \PHPUnit_Framework_TestCase
     public function properStringConversion()
     {
         $week = new Week('2007-04-02');
-        assert((string) $week, equals('2007-W14'));
+        assertThat((string) $week, equals('2007-W14'));
     }
 
     /**
@@ -153,7 +152,7 @@ class WeekTest extends \PHPUnit_Framework_TestCase
     public function numberReturnsNumberOfWeek()
     {
         $week = new Week('2007-04-02');
-        assert($week->number(), equals(14));
+        assertThat($week->number(), equals(14));
     }
 
     /**
@@ -162,7 +161,7 @@ class WeekTest extends \PHPUnit_Framework_TestCase
      */
     public function createFromStringParsesStringToCreateInstance()
     {
-        assert(Week::fromString('2014-W05')->asString(), equals('2014-W05'));
+        assertThat(Week::fromString('2014-W05')->asString(), equals('2014-W05'));
     }
 
     /**
@@ -191,6 +190,6 @@ class WeekTest extends \PHPUnit_Framework_TestCase
      */
     public function typeIsWeek()
     {
-        assert(Week::fromString('2014-W05')->type(), equals('week'));
+        assertThat(Week::fromString('2014-W05')->type(), equals('week'));
     }
 }

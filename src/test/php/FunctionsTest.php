@@ -9,12 +9,13 @@ declare(strict_types=1);
  * @package  stubbles\date
  */
 namespace stubbles\date;
+use PHPUnit\Framework\TestCase;
 use stubbles\date\span\CustomDatespan;
 use stubbles\date\span\Day;
 use stubbles\date\span\Month;
 use stubbles\date\span\Year;
 
-use function bovigo\assert\assert;
+use function bovigo\assert\assertThat;
 use function bovigo\assert\assertNull;
 use function bovigo\assert\predicate\equals;
 /**
@@ -23,7 +24,7 @@ use function bovigo\assert\predicate\equals;
  * @group  date
  * @since  5.2.0
  */
-class FunctionsTest extends \PHPUnit_Framework_TestCase
+class FunctionsTest extends TestCase
 {
     public function emptyValues(): array
     {
@@ -45,7 +46,7 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
      */
     public function parsesYear()
     {
-        assert(span\parse('2015'), equals(new Year(2015)));
+        assertThat(span\parse('2015'), equals(new Year(2015)));
     }
 
     public function dayValues(): array
@@ -61,7 +62,7 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
      */
     public function parsesDay(string $dayValue)
     {
-        assert(span\parse($dayValue), equals(new Day($dayValue)));
+        assertThat(span\parse($dayValue), equals(new Day($dayValue)));
     }
 
     public function monthValues(): array
@@ -77,7 +78,7 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
      */
     public function parsesMonth(string $monthValue)
     {
-        assert(span\parse($monthValue), equals(Month::fromString($monthValue)));
+        assertThat(span\parse($monthValue), equals(Month::fromString($monthValue)));
     }
 
     public function customDatespanValues(): array
@@ -97,6 +98,6 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
      */
     public function parsesCustomDatespan(CustomDatespan $expected, string $value)
     {
-        assert(span\parse($value), equals($expected));
+        assertThat(span\parse($value), equals($expected));
     }
 }

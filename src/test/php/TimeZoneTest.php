@@ -5,12 +5,11 @@ declare(strict_types=1);
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
- * @package  stubbles\date
  */
 namespace stubbles\date;
+use PHPUnit\Framework\TestCase;
 use function bovigo\assert\{
-    assert,
+    assertThat,
     assertFalse,
     assertTrue,
     expect,
@@ -21,7 +20,7 @@ use function bovigo\assert\{
  *
  * @group  date
  */
-class TimeZoneTest extends \PHPUnit_Framework_TestCase
+class TimeZoneTest extends TestCase
 {
     /**
      * instance to test
@@ -33,7 +32,7 @@ class TimeZoneTest extends \PHPUnit_Framework_TestCase
     /**
      * set up test environment
      */
-    public function setUp()
+    protected function setUp(): void
     {
         $this->timeZone = new TimeZone('Europe/Berlin');
     }
@@ -43,7 +42,7 @@ class TimeZoneTest extends \PHPUnit_Framework_TestCase
      */
     public function nameReturnsTimezoneName()
     {
-        assert($this->timeZone->name(), equals('Europe/Berlin'));
+        assertThat($this->timeZone->name(), equals('Europe/Berlin'));
     }
 
     /**
@@ -52,8 +51,8 @@ class TimeZoneTest extends \PHPUnit_Framework_TestCase
     public function offsetDstIsTwoHours()
     {
         $date = new Date('2007-08-21');
-        assert($this->timeZone->offset($date), equals('+0200'));
-        assert($this->timeZone->offsetInSeconds($date), equals(7200));
+        assertThat($this->timeZone->offset($date), equals('+0200'));
+        assertThat($this->timeZone->offsetInSeconds($date), equals(7200));
     }
 
     /**
@@ -62,8 +61,8 @@ class TimeZoneTest extends \PHPUnit_Framework_TestCase
     public function offsetNoDstIsOneHour()
     {
         $date = new Date('2007-01-21');
-        assert($this->timeZone->offset($date), equals('+0100'));
-        assert($this->timeZone->offsetInSeconds($date), equals(3600));
+        assertThat($this->timeZone->offset($date), equals('+0100'));
+        assertThat($this->timeZone->offsetInSeconds($date), equals(3600));
     }
 
     /**
@@ -86,7 +85,7 @@ class TimeZoneTest extends \PHPUnit_Framework_TestCase
     public function offsetWithHalfHourDST()
     {
         $timeZone = new TimeZone('Australia/Adelaide');
-        assert($timeZone->offset(new Date('2007-01-21')), equals('+1030'));
+        assertThat($timeZone->offset(new Date('2007-01-21')), equals('+1030'));
     }
 
     /**
@@ -97,7 +96,7 @@ class TimeZoneTest extends \PHPUnit_Framework_TestCase
     public function offsetWithHalfHourNoDST()
     {
         $timeZone = new TimeZone('Australia/Adelaide');
-        assert($timeZone->offset(new Date('2007-08-21')), equals('+0930'));
+        assertThat($timeZone->offset(new Date('2007-08-21')), equals('+0930'));
     }
 
     /**
@@ -108,7 +107,7 @@ class TimeZoneTest extends \PHPUnit_Framework_TestCase
     public function translate()
     {
         $date = new Date('2007-01-01 00:00 Australia/Sydney');
-        assert(
+        assertThat(
                 $this->timeZone->translate($date),
                 equals(new Date('2006-12-31 14:00:00 Europe/Berlin'))
         );
@@ -157,6 +156,6 @@ class TimeZoneTest extends \PHPUnit_Framework_TestCase
      */
     public function toStringConversionCreatesReadableRepresentation()
     {
-        assert((string) $this->timeZone, equals('Europe/Berlin'));
+        assertThat((string) $this->timeZone, equals('Europe/Berlin'));
     }
 }

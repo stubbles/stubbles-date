@@ -5,14 +5,13 @@ declare(strict_types=1);
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
- * @package  stubbles\date
  */
 namespace stubbles\date\span;
+use PHPUnit\Framework\TestCase;
 use stubbles\date\Date;
 
 use function bovigo\assert\{
-    assert,
+    assertThat,
     assertFalse,
     assertTrue,
     predicate\each,
@@ -27,7 +26,7 @@ use function bovigo\assert\{
  * @group  date
  * @group  span
  */
-class DayTest extends \PHPUnit_Framework_TestCase
+class DayTest extends TestCase
 {
     /**
      * @test
@@ -35,7 +34,7 @@ class DayTest extends \PHPUnit_Framework_TestCase
     public function startDateSetToMidNight()
     {
         $day = new Day('2007-04-04');
-        assert(
+        assertThat(
                 $day->start()->asString(),
                 equals('2007-04-04 00:00:00' . $day->start()->offset())
         );
@@ -47,7 +46,7 @@ class DayTest extends \PHPUnit_Framework_TestCase
     public function endDateSetToOneSecondBeforeMidNight()
     {
         $day = new Day('2007-04-04');
-        assert(
+        assertThat(
                 $day->end()->asString(),
                 equals('2007-04-04 23:59:59' . $day->end()->offset())
         );
@@ -59,7 +58,7 @@ class DayTest extends \PHPUnit_Framework_TestCase
     public function amountOfDaysIsAlwaysOne()
     {
         $day = new Day('2007-04-04');
-        assert($day->amountOfDays(), equals(1));
+        assertThat($day->amountOfDays(), equals(1));
     }
 
     /**
@@ -68,7 +67,7 @@ class DayTest extends \PHPUnit_Framework_TestCase
     public function getDaysReturnsListWithSelf()
     {
         $day = new Day('2007-05-14');
-        assert(
+        assertThat(
                 $day->days(),
                 isOfSize(1)->and(each(isSameAs($day)))
         );
@@ -163,7 +162,7 @@ class DayTest extends \PHPUnit_Framework_TestCase
     public function stringRepresentationOfDayContainsNameOfDayAndDate()
     {
         $day = new Day('2007-04-04');
-        assert($day->asString(), equals('2007-04-04'));
+        assertThat($day->asString(), equals('2007-04-04'));
     }
 
     /**
@@ -172,7 +171,7 @@ class DayTest extends \PHPUnit_Framework_TestCase
     public function properStringConversion()
     {
         $day = new Day('2007-04-04');
-        assert((string) $day, equals('2007-04-04'));
+        assertThat((string) $day, equals('2007-04-04'));
     }
 
     /**
@@ -181,7 +180,7 @@ class DayTest extends \PHPUnit_Framework_TestCase
     public function asIntReturnsRepresentationOfDayWithinMonth()
     {
         $day = new Day('2007-05-14');
-        assert($day->asInt(), equals(14));
+        assertThat($day->asInt(), equals(14));
     }
 
     /**
@@ -190,7 +189,7 @@ class DayTest extends \PHPUnit_Framework_TestCase
     public function formatReturnsOtherStringRepresentation()
     {
         $day = new Day('2007-05-14');
-        assert($day->format('l, d.m.Y'), equals('Monday, 14.05.2007'));
+        assertThat($day->format('l, d.m.Y'), equals('Monday, 14.05.2007'));
     }
 
     /**
@@ -199,7 +198,7 @@ class DayTest extends \PHPUnit_Framework_TestCase
      */
     public function tomorrowCreatesInstanceForTomorrow()
     {
-        assert(
+        assertThat(
                 Day::tomorrow()->asString(),
                 equals(date('Y-m-d', strtotime('tomorrow')))
         );
@@ -211,7 +210,7 @@ class DayTest extends \PHPUnit_Framework_TestCase
      */
     public function yesterdayCreatesInstanceForYesterday()
     {
-        assert(
+        assertThat(
                 Day::yesterday()->asString(),
                 equals(date('Y-m-d', strtotime('yesterday')))
         );
@@ -224,7 +223,7 @@ class DayTest extends \PHPUnit_Framework_TestCase
     public function nextDayRaisesYearForDecember31st()
     {
         $day = new Day('2014-12-31');
-        assert($day->next(), equals('2015-01-01'));
+        assertThat($day->next(), equals('2015-01-01'));
     }
 
     /**
@@ -234,7 +233,7 @@ class DayTest extends \PHPUnit_Framework_TestCase
     public function beforeDayLowersYearForJanuary1st()
     {
         $day = new Day('2014-01-01');
-        assert($day->before(), equals('2013-12-31'));
+        assertThat($day->before(), equals('2013-12-31'));
     }
 
     /**
@@ -244,6 +243,6 @@ class DayTest extends \PHPUnit_Framework_TestCase
     public function typeIsDay()
     {
         $day = new Day('2014-01-01');
-        assert($day->type(), equals('day'));
+        assertThat($day->type(), equals('day'));
     }
 }
