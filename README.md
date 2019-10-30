@@ -19,13 +19,13 @@ _stubbles/date_ is distributed as [Composer](https://getcomposer.org/)
 package. To install it as a dependency of your package use the following
 command:
 
-    composer require "stubbles/date": "^7.0"
+    composer require "stubbles/date": "^8.0"
 
 
 Requirements
 ------------
 
-_stubbles/date_ requires at least PHP 7.0.
+_stubbles/date_ requires at least PHP 7.3.
 
 
 

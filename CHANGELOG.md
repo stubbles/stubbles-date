@@ -4,6 +4,7 @@
 
 ### BC breaks
 
+* raised minimum required PHP version to 7.3
 * parameter `$expected` of `stubbles\date\assert\equalsDate` now requires a string
 
 ### Other changes
