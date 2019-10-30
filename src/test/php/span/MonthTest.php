@@ -19,19 +19,6 @@ use function bovigo\assert\{
     predicate\equals,
     predicate\isOfSize
 };
-class MonthMockDay
-{
-    public static $result;
-}
-function date()
-{
-    $args = func_get_args();
-    if (null !== MonthMockDay::$result && 'd' === $args[0]) {
-        return MonthMockDay::$result;
-    }
-
-    return call_user_func_array('\date', $args);
-}
 /**
  * Tests for stubbles\date\span\Month.
  *

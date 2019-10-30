@@ -44,6 +44,16 @@ class DateEqualsTest extends TestCase
     /**
      * @test
      */
+    public function invalidExpectedDateThrowsInvalidArgumentException()
+    {
+        expect(function() { equalsDate('this is not a valid date'); })
+            ->throws(\InvalidArgumentException::class)
+            ->withMessage('Given value for expected "this is not a valid date" is not a valid date.');
+    }
+
+    /**
+     * @test
+     */
     public function hasNoDiffByDefault()
     {
         assertFalse($this->equalsDate->hasDiffForLastFailure());

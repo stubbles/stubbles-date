@@ -29,7 +29,7 @@ class Year extends CustomDatespan
      *
      * If no value for the year is supplied the current year will be used.
      *
-     * @param   int  $year   year of the span
+     * @param   int|string  $year   year of the span
      * @throws  \InvalidArgumentException
      */
     public function __construct($year = null)

@@ -1,5 +1,15 @@
 # Changelog
 
+## 8.0.0 (2019-11-30)
+
+### BC breaks
+
+* parameter `$expected` of `stubbles\date\assert\equalsDate` now requires a string
+
+### Other changes
+
+* fixed various possible bugs due to incorrect type usage
+
 ## 7.0.0 (2016-07-23)
 
 ### BC breaks

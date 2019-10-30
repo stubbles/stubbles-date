@@ -1,0 +1,8 @@
+parameters:
+  level: 7
+  paths:
+    - ./src
+  ignoreErrors:
+    # Tests are explicit tests that this will fail and throw an exception
+    - '#method stubbles\\date\\Date::castFrom\(\) expects DateTime\|int\|string\|stubbles\\date\\Date, stdClass given.#'
+    - '#class stubbles\\date\\TimeZone constructor expects DateTimeZone\|string\|null, int given#'

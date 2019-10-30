@@ -10,6 +10,7 @@ declare(strict_types=1);
  */
 namespace stubbles\date\span;
 use stubbles\date\Date;
+use stubbles\date\TimeZone;
 /**
  * Datespan with a custom start and end date.
  *

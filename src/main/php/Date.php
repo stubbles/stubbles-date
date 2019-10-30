@@ -84,7 +84,6 @@ class Date
             throw new \InvalidArgumentException(
                     'Datetime must be either unix timestamp, well-formed timestamp'
                     . ' or instance of \DateTime, but was ' . gettype($dateTime)
-                    . ' ' . $dateTime
             );
         }
     }

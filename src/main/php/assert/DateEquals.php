@@ -9,6 +9,7 @@ declare(strict_types=1);
  * @package  stubbles\date
  */
 namespace stubbles\date\assert;
+use bovigo\assert\predicate\Equals;
 use bovigo\assert\predicate\Predicate;
 use SebastianBergmann\Exporter\Exporter;
 use stubbles\date\Date;
@@ -28,6 +29,10 @@ class DateEquals extends Predicate
      */
     private $expected;
     /**
+     * @type  \Date
+     */
+    private $expectedDate;
+    /**
      * @type  string
      */
     private $lastFailureDiff;
@@ -35,10 +40,16 @@ class DateEquals extends Predicate
     /**
      * constructor
      *
-     * @param  mixed   $expected  value to which test values must be equal
+     * @param  string   $expected  value to which test values must be equal
+     * @throws  \InvalidArgumentException  in case given date can not be parsed
      */
-    public function __construct($expected)
+    public function __construct(string $expected)
     {
+        $this->expectedDate = date_create($expected);
+        if (false === $this->expectedDate) {
+            throw new \InvalidArgumentException('Given value for expected "' . $expected . '" is not a valid date.');
+        }
+
         $this->expected = $expected;
     }
 
@@ -58,7 +69,7 @@ class DateEquals extends Predicate
 
         // compare unix timestamp, as rfc formatted date contains tinmezones and
         // strings may differ, even if both point to the exact same point in time
-        $equals = equals(date_format(date_create($this->expected), 'U'));
+        $equals = equals(date_format($this->expectedDate, 'U'));
         if ($equals->test(date_format($value->handle(), 'U'))) {
             return true;
         }
@@ -66,7 +77,7 @@ class DateEquals extends Predicate
         // get a diff based on a human readable form, as the diff from
         // comparison above would just contain unix timestamps which nobody can
         // really differentiate what is wrong about them
-        $getDiff = equals(date_format(date_create($this->expected), 'r'));
+        $getDiff = new Equals(date_format($this->expectedDate, 'r'));
         $getDiff->test(date_format($value->handle(), 'r'));
         $this->lastFailureDiff = $getDiff->diffForLastFailure();
         return false;

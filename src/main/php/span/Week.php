@@ -39,11 +39,12 @@ class Week extends CustomDatespan
     public static function fromString(string $input): self
     {
         $data = explode('-', $input);
-        if (!isset($data[0]) || !isset($data[1])) {
+        $week = strtotime($input);
+        if (!isset($data[0]) || !isset($data[1]) || false === $week) {
             throw new \InvalidArgumentException('Can not parse week from string "' . $input . '", format should be "YYYY-Www"');
         }
 
-        $self = new self(strtotime($input));
+        $self = new self($week);
         return $self;
     }
 

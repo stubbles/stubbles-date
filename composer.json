@@ -21,9 +21,15 @@
         },
         "files": ["src/main/php/functions.php"]
     },
+    "autoload-dev": {
+        "psr-4": {
+          "stubbles\\date\\": "src/test/php"
+        },
+        "files": ["src/test/php/span/functions.php"]
+    },
     "extra": {
         "branch-alias": {
-            "dev-master": "7.0.x-dev"
+            "dev-master": "8.0.x-dev"
         }
     },
     "minimum-stability": "dev",

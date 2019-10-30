@@ -10,6 +10,7 @@ declare(strict_types=1);
  */
 namespace stubbles\date\span;
 use stubbles\date\Date;
+use stubbles\date\TimeZone;
 /**
  * Interface for the datespan classes.
  *
@@ -97,7 +98,7 @@ interface Datespan
     /**
      * returns list of days
      *
-     * @return  iterable
+     * @return  \Iterator
      */
     public function days(): \Iterator;
 

@@ -12,10 +12,11 @@ namespace stubbles\date\assert {
     /**
      * returns predicate which tests for equality of dates
      *
+     * @param   string  $expected  expected date as string
      * @return  \stubbles\date\assert\DateEquals
      * @since   6.0.0
      */
-    function equalsDate($expected): DateEquals
+    function equalsDate(string $expected): DateEquals
     {
         return new DateEquals($expected);
     }

@@ -43,8 +43,8 @@ class Month extends CustomDatespan
      *
      * If no value for the month is supplied the current month will be used.
      *
-     * @param  int  $year   year of the span
-     * @param  int  $month  month of the span
+     * @param  int|string|\stubbles\date\Date  $year   year of the span
+     * @param  int|string                      $month  month of the span
      */
     public function __construct($year = null, $month = null)
     {

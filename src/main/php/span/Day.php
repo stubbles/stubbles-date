@@ -94,7 +94,7 @@ class Day extends AbstractDatespan implements Datespan
     /**
      * returns list of days
      *
-     * @return  iterable
+     * @return  \Iterator
      */
     public function days(): \Iterator
     {
