@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.0.1 (2019-12-10)
+
+* fixed type hints in various doc comments
+
 ## 8.0.0 (2019-11-30)
 
 ### BC breaks
