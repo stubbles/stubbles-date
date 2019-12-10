@@ -27,7 +27,7 @@ class DateEquals extends Predicate
      */
     private $expected;
     /**
-     * @var  \Date
+     * @var  \DateTime
      */
     private $expectedDate;
     /**
@@ -43,12 +43,13 @@ class DateEquals extends Predicate
      */
     public function __construct(string $expected)
     {
-        $this->expectedDate = date_create($expected);
-        if (false === $this->expectedDate) {
+        $expectedDate = date_create($expected);
+        if (false === $expectedDate) {
             throw new \InvalidArgumentException('Given value for expected "' . $expected . '" is not a valid date.');
         }
 
-        $this->expected = $expected;
+        $this->expectedDate = $expectedDate;
+        $this->expected     = $expected;
     }
 
     /**
