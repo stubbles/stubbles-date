@@ -32,7 +32,7 @@ use function bovigo\assert\{
 class DateEqualsTest extends TestCase
 {
     /**
-     * @type  DateEquals
+     * @var  DateEquals
      */
     private $equalsDate;
 
@@ -44,7 +44,7 @@ class DateEqualsTest extends TestCase
     /**
      * @test
      */
-    public function invalidExpectedDateThrowsInvalidArgumentException()
+    public function invalidExpectedDateThrowsInvalidArgumentException(): void
     {
         expect(function() { equalsDate('this is not a valid date'); })
             ->throws(\InvalidArgumentException::class)
@@ -54,7 +54,7 @@ class DateEqualsTest extends TestCase
     /**
      * @test
      */
-    public function hasNoDiffByDefault()
+    public function hasNoDiffByDefault(): void
     {
         assertFalse($this->equalsDate->hasDiffForLastFailure());
     }
@@ -62,7 +62,7 @@ class DateEqualsTest extends TestCase
     /**
      * @test
      */
-    public function lastFailureDiffIsNullByDefault()
+    public function lastFailureDiffIsNullByDefault(): void
     {
         assertNull($this->equalsDate->diffForLastFailure());
     }
@@ -70,7 +70,7 @@ class DateEqualsTest extends TestCase
     /**
      * @test
      */
-    public function stringRepresentationContainsExpectedValue()
+    public function stringRepresentationContainsExpectedValue(): void
     {
       assertThat(
                 (string) $this->equalsDate,
@@ -81,7 +81,7 @@ class DateEqualsTest extends TestCase
     /**
      * @test
      */
-    public function testAgainstNonDateThrowsInvalidArgumentException()
+    public function testAgainstNonDateThrowsInvalidArgumentException(): void
     {
         expect(function() { $this->equalsDate->test(303); })
                 ->throws(\InvalidArgumentException::class);
@@ -90,7 +90,7 @@ class DateEqualsTest extends TestCase
     /**
      * @test
      */
-    public function testAgainstEqualDateReturnsTrue()
+    public function testAgainstEqualDateReturnsTrue(): void
     {
         assertTrue($this->equalsDate->test(new Date('2007-08-23T12:35:47+00:00')));
     }
@@ -98,7 +98,7 @@ class DateEqualsTest extends TestCase
     /**
      * @test
      */
-    public function hasNoDiffWhenTestWasSuccessful()
+    public function hasNoDiffWhenTestWasSuccessful(): void
     {
         $this->equalsDate->test(new Date('2007-08-23T12:35:47+00:00'));
         assertFalse($this->equalsDate->hasDiffForLastFailure());
@@ -107,7 +107,7 @@ class DateEqualsTest extends TestCase
     /**
      * @test
      */
-    public function lastFailureDiffIsNullWhenTestWasSuccessful()
+    public function lastFailureDiffIsNullWhenTestWasSuccessful(): void
     {
         $this->equalsDate->test(new Date('2007-08-23T12:35:47+00:00'));
         assertNull($this->equalsDate->diffForLastFailure());
@@ -116,7 +116,7 @@ class DateEqualsTest extends TestCase
     /**
      * @test
      */
-    public function stringRepresentationContainsExpectedValueOnlyAfterSuccessfulTest()
+    public function stringRepresentationContainsExpectedValueOnlyAfterSuccessfulTest(): void
     {
         $this->equalsDate->test(new Date('2007-08-23T12:35:47+00:00'));
         assertThat(
@@ -128,7 +128,7 @@ class DateEqualsTest extends TestCase
     /**
      * @test
      */
-    public function testAgainstUnequalDateReturnsFalse()
+    public function testAgainstUnequalDateReturnsFalse(): void
     {
         assertFalse($this->equalsDate->test(new Date('2007-08-23T12:35:47+01:00')));
     }
@@ -136,7 +136,7 @@ class DateEqualsTest extends TestCase
     /**
      * @test
      */
-    public function hasDiffWhenTestFailed()
+    public function hasDiffWhenTestFailed(): void
     {
         $this->equalsDate->test(new Date('2007-08-23T12:35:47+01:00'));
         assertTrue($this->equalsDate->hasDiffForLastFailure());
@@ -145,7 +145,7 @@ class DateEqualsTest extends TestCase
     /**
      * @test
      */
-    public function lastFailureDiffContainsDiffBetweenExpectedAndTestedWhenTestFailed()
+    public function lastFailureDiffContainsDiffBetweenExpectedAndTestedWhenTestFailed(): void
     {
         $this->equalsDate->test(new Date('2007-08-23T12:35:47+01:00'));
         assertThat(
@@ -163,7 +163,7 @@ class DateEqualsTest extends TestCase
     /**
      * @test
      */
-    public function stringRepresentationContainsDiffWhenTestFailed()
+    public function stringRepresentationContainsDiffWhenTestFailed(): void
     {
         $this->equalsDate->test(new Date('2007-08-23T12:35:47+01:00'));
         assertThat(
@@ -181,7 +181,7 @@ class DateEqualsTest extends TestCase
     /**
      * @test
      */
-    public function describeValueForDateReturnsFormattedDateString()
+    public function describeValueForDateReturnsFormattedDateString(): void
     {
       assertThat(
             $this->equalsDate->describeValue(
@@ -195,7 +195,7 @@ class DateEqualsTest extends TestCase
     /**
      * @test
      */
-    public function describeValueForNonDateReturnsParentFormat()
+    public function describeValueForNonDateReturnsParentFormat(): void
     {
       assertThat(
             $this->equalsDate->describeValue(new Exporter(), 'foo'),

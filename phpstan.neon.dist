@@ -1,4 +1,5 @@
 parameters:
+  inferPrivatePropertyTypeFromConstructor: true
   level: 7
   paths:
     - ./src
@@ -6,3 +7,10 @@ parameters:
     # Tests are explicit tests that this will fail and throw an exception
     - '#method stubbles\\date\\Date::castFrom\(\) expects DateTime\|int\|string\|stubbles\\date\\Date, stdClass given.#'
     - '#class stubbles\\date\\TimeZone constructor expects DateTimeZone\|string\|null, int given#'
+    # Test is explicit test that this will fail and throw an exception
+    -
+        message: '#method stubbles\\date\\Date::isBefore\(\) expects DateTime\|int\|string\|stubbles\\date\\Date, stdClass given#'
+        path: src/test/php/DateTest.php
+    -
+        message: '#method stubbles\\date\\Date::isAfter\(\) expects DateTime\|int\|string\|stubbles\\date\\Date, stdClass given#'
+        path: src/test/php/DateTest.php

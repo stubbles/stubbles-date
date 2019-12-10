@@ -20,7 +20,7 @@ class TimeZone
     /**
      * internal time zone handle
      *
-     * @type  \DateTimeZone
+     * @var  \DateTimeZone
      */
     protected $timeZone;
 

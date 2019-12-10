@@ -30,13 +30,16 @@ class WeekTest extends TestCase
     /**
      * @test
      */
-    public function amountOfDaysIsAlwaysSeven()
+    public function amountOfDaysIsAlwaysSeven(): void
     {
         $week = new Week('2007-05-14');
         assertThat($week->amountOfDays(), equals(7));
         assertThat($week->days(), isOfSize(7));
     }
 
+    /**
+     * @return  array<array<mixed>>
+     */
     public function weekDays(): array
     {
         $return      = [];
@@ -62,7 +65,7 @@ class WeekTest extends TestCase
             string $expectedString,
             Day $day,
             int $expectedDay
-    ) {
+    ): void {
         assertThat($dayString, equals($expectedString));
         assertThat($day->asInt(), equals($expectedDay));
     }
@@ -70,7 +73,7 @@ class WeekTest extends TestCase
     /**
      * @test
      */
-    public function weekWhichStartsAfterTodayIsInFuture()
+    public function weekWhichStartsAfterTodayIsInFuture(): void
     {
         $week = new Week('tomorrow');
         assertTrue($week->isInFuture());
@@ -79,7 +82,7 @@ class WeekTest extends TestCase
     /**
      * @test
      */
-    public function weekWhichStartsBeforeTodayIsNotInFuture()
+    public function weekWhichStartsBeforeTodayIsNotInFuture(): void
     {
         $week = new Week('yesterday');
         assertFalse($week->isInFuture());
@@ -88,7 +91,7 @@ class WeekTest extends TestCase
     /**
      * @test
      */
-    public function weekWhichStartsTodayIsNotInFuture()
+    public function weekWhichStartsTodayIsNotInFuture(): void
     {
         $week = new Week('now');
         assertFalse($week->isInFuture());
@@ -97,7 +100,7 @@ class WeekTest extends TestCase
     /**
      * @test
      */
-    public function doesNotContainDatesBeforeBeginnOfWeek()
+    public function doesNotContainDatesBeforeBeginnOfWeek(): void
     {
         $week = new Week('2009-01-05');
         assertFalse($week->containsDate(new Date('2009-01-04')));
@@ -106,7 +109,7 @@ class WeekTest extends TestCase
     /**
      * @test
      */
-    public function containsAllDaysOfThisWeek()
+    public function containsAllDaysOfThisWeek(): void
     {
         $week = new Week('2009-01-05');
         assertThat(
@@ -121,7 +124,7 @@ class WeekTest extends TestCase
     /**
      * @test
      */
-    public function doesNotContainDatesAfterEndOfWeek()
+    public function doesNotContainDatesAfterEndOfWeek(): void
     {
         $week = new Week('2009-01-05');
         assertFalse($week->containsDate(new Date('2009-01-12')));
@@ -130,7 +133,7 @@ class WeekTest extends TestCase
     /**
      * @test
      */
-    public function stringRepresentationOfWeekContainsNumberOfWeek()
+    public function stringRepresentationOfWeekContainsNumberOfWeek(): void
     {
         $week = new Week('2007-04-02');
         assertThat($week->asString(), equals('2007-W14'));
@@ -139,7 +142,7 @@ class WeekTest extends TestCase
     /**
      * @test
      */
-    public function properStringConversion()
+    public function properStringConversion(): void
     {
         $week = new Week('2007-04-02');
         assertThat((string) $week, equals('2007-W14'));
@@ -149,7 +152,7 @@ class WeekTest extends TestCase
      * @test
      * @since  5.3.0
      */
-    public function numberReturnsNumberOfWeek()
+    public function numberReturnsNumberOfWeek(): void
     {
         $week = new Week('2007-04-02');
         assertThat($week->number(), equals(14));
@@ -159,7 +162,7 @@ class WeekTest extends TestCase
      * @test
      * @since  5.3.0
      */
-    public function createFromStringParsesStringToCreateInstance()
+    public function createFromStringParsesStringToCreateInstance(): void
     {
         assertThat(Week::fromString('2014-W05')->asString(), equals('2014-W05'));
     }
@@ -168,7 +171,7 @@ class WeekTest extends TestCase
      * @test
      * @since  5.3.0
      */
-    public function createFromInvalidStringThrowsInvalidArgumentException()
+    public function createFromInvalidStringThrowsInvalidArgumentException(): void
     {
          expect(function() { Week::fromString('invalid'); })
                 ->throws(\InvalidArgumentException::class);
@@ -178,7 +181,7 @@ class WeekTest extends TestCase
      * @test
      * @since  5.3.0
      */
-    public function createFromInvalidWeekNumberThrowsInvalidArgumentException()
+    public function createFromInvalidWeekNumberThrowsInvalidArgumentException(): void
     {
          expect(function() { Week::fromString('2014-W63'); })
                 ->throws(\InvalidArgumentException::class);
@@ -188,7 +191,7 @@ class WeekTest extends TestCase
      * @test
      * @since  5.3.0
      */
-    public function typeIsWeek()
+    public function typeIsWeek(): void
     {
         assertThat(Week::fromString('2014-W05')->type(), equals('week'));
     }

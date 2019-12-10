@@ -11,19 +11,20 @@ namespace stubbles\date\span;
  * Allows iteration over months of a datespan.
  *
  * @since  5.2.0
+ * @implements  \Iterator<string,Month>
  */
 class Months implements \Iterator, \Countable
 {
     /**
      * start date of the iteration
      *
-     * @type  int
+     * @var  int
      */
     private $year;
     /**
      * start date of the span
      *
-     * @type  \stubbles\date\span\Month
+     * @var  \stubbles\date\span\Month
      */
     private $currentMonth;
 
@@ -72,7 +73,7 @@ class Months implements \Iterator, \Countable
     /**
      * advances iteration to next day
      */
-    public function next()
+    public function next(): void
     {
         $this->currentMonth = $this->currentMonth->next();
     }
@@ -80,7 +81,7 @@ class Months implements \Iterator, \Countable
     /**
      * returns iteration back to first day of datespan
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->currentMonth = new Month($this->year, 1);
     }

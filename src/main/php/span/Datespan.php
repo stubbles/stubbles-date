@@ -96,7 +96,7 @@ interface Datespan
     /**
      * returns list of days
      *
-     * @return  \Iterator
+     * @return  \Iterator<string,Day>
      */
     public function days(): \Iterator;
 

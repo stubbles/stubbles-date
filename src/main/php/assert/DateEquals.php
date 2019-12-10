@@ -23,15 +23,15 @@ class DateEquals extends Predicate
     /**
      * the expected value
      *
-     * @type  mixed
+     * @var  mixed
      */
     private $expected;
     /**
-     * @type  \Date
+     * @var  \Date
      */
     private $expectedDate;
     /**
-     * @type  string
+     * @var  string
      */
     private $lastFailureDiff;
 

@@ -25,7 +25,7 @@ class TimeZoneTest extends TestCase
     /**
      * instance to test
      *
-     * @type  \stubbles\date\TimeZone
+     * @var  \stubbles\date\TimeZone
      */
     private $timeZone;
 
@@ -40,7 +40,7 @@ class TimeZoneTest extends TestCase
     /**
      * @test
      */
-    public function nameReturnsTimezoneName()
+    public function nameReturnsTimezoneName(): void
     {
         assertThat($this->timeZone->name(), equals('Europe/Berlin'));
     }
@@ -48,7 +48,7 @@ class TimeZoneTest extends TestCase
     /**
      * @test
      */
-    public function offsetDstIsTwoHours()
+    public function offsetDstIsTwoHours(): void
     {
         $date = new Date('2007-08-21');
         assertThat($this->timeZone->offset($date), equals('+0200'));
@@ -58,7 +58,7 @@ class TimeZoneTest extends TestCase
     /**
      * @test
      */
-    public function offsetNoDstIsOneHour()
+    public function offsetNoDstIsOneHour(): void
     {
         $date = new Date('2007-01-21');
         assertThat($this->timeZone->offset($date), equals('+0100'));
@@ -71,7 +71,7 @@ class TimeZoneTest extends TestCase
      *
      * @test
      */
-    public function offsetForCurrentDateIs3600SecondsOr7200SecondsDependingWhetherInDstOrNot()
+    public function offsetForCurrentDateIs3600SecondsOr7200SecondsDependingWhetherInDstOrNot(): void
     {
         $offset = $this->timeZone->offsetInSeconds();
         assertTrue((3600 === $offset || 7200 === $offset));
@@ -82,7 +82,7 @@ class TimeZoneTest extends TestCase
      *
      * @test
      */
-    public function offsetWithHalfHourDST()
+    public function offsetWithHalfHourDST(): void
     {
         $timeZone = new TimeZone('Australia/Adelaide');
         assertThat($timeZone->offset(new Date('2007-01-21')), equals('+1030'));
@@ -93,7 +93,7 @@ class TimeZoneTest extends TestCase
      *
      * @test
      */
-    public function offsetWithHalfHourNoDST()
+    public function offsetWithHalfHourNoDST(): void
     {
         $timeZone = new TimeZone('Australia/Adelaide');
         assertThat($timeZone->offset(new Date('2007-08-21')), equals('+0930'));
@@ -104,7 +104,7 @@ class TimeZoneTest extends TestCase
      *
      * @test
      */
-    public function translate()
+    public function translate(): void
     {
         $date = new Date('2007-01-01 00:00 Australia/Sydney');
         assertThat(
@@ -116,7 +116,7 @@ class TimeZoneTest extends TestCase
     /**
      * @test
      */
-    public function timeZonesHavingDstShouldBeMarkedAsSuch()
+    public function timeZonesHavingDstShouldBeMarkedAsSuch(): void
     {
         assertTrue($this->timeZone->hasDst());
     }
@@ -124,7 +124,7 @@ class TimeZoneTest extends TestCase
     /**
      * @test
      */
-    public function timeZonesAreEqualsIfTheyRepresentTheSameTimeZoneString()
+    public function timeZonesAreEqualsIfTheyRepresentTheSameTimeZoneString(): void
     {
         assertTrue($this->timeZone->equals($this->timeZone));
         assertTrue($this->timeZone->equals(new TimeZone('Europe/Berlin')));
@@ -135,7 +135,7 @@ class TimeZoneTest extends TestCase
     /**
      * @test
      */
-    public function invalidTimeZoneValueThrowsIllegalArgumentExceptionOnConstruction()
+    public function invalidTimeZoneValueThrowsIllegalArgumentExceptionOnConstruction(): void
     {
         expect(function() { new TimeZone(500); })
                 ->throws(\InvalidArgumentException::class);
@@ -144,7 +144,7 @@ class TimeZoneTest extends TestCase
     /**
      * @test
      */
-    public function nonExistingTimeZoneValueThrowsIllegalArgumentExceptionOnConstruction()
+    public function nonExistingTimeZoneValueThrowsIllegalArgumentExceptionOnConstruction(): void
     {
         expect(function() { new TimeZone('Europe/Karlsruhe'); })->throws(
                 defined('HHVM_VERSION') ? \Exception::class : \InvalidArgumentException::class
@@ -154,7 +154,7 @@ class TimeZoneTest extends TestCase
     /**
      * @test
      */
-    public function toStringConversionCreatesReadableRepresentation()
+    public function toStringConversionCreatesReadableRepresentation(): void
     {
         assertThat((string) $this->timeZone, equals('Europe/Berlin'));
     }

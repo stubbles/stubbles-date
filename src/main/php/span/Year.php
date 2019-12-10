@@ -18,7 +18,7 @@ class Year extends CustomDatespan
     /**
      * the represented year
      *
-     * @type  int
+     * @var  int
      */
     private $year;
 

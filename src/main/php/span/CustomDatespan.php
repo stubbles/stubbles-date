@@ -17,7 +17,7 @@ class CustomDatespan extends AbstractDatespan
     /**
      * returns list of days within this datespan
      *
-     * @return  \Iterator
+     * @return  \Iterator<string,Day>
      */
     public function days(): \Iterator
     {

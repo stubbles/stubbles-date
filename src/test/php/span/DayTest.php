@@ -31,7 +31,7 @@ class DayTest extends TestCase
     /**
      * @test
      */
-    public function startDateSetToMidNight()
+    public function startDateSetToMidNight(): void
     {
         $day = new Day('2007-04-04');
         assertThat(
@@ -43,7 +43,7 @@ class DayTest extends TestCase
     /**
      * @test
      */
-    public function endDateSetToOneSecondBeforeMidNight()
+    public function endDateSetToOneSecondBeforeMidNight(): void
     {
         $day = new Day('2007-04-04');
         assertThat(
@@ -55,7 +55,7 @@ class DayTest extends TestCase
     /**
      * @test
      */
-    public function amountOfDaysIsAlwaysOne()
+    public function amountOfDaysIsAlwaysOne(): void
     {
         $day = new Day('2007-04-04');
         assertThat($day->amountOfDays(), equals(1));
@@ -64,7 +64,7 @@ class DayTest extends TestCase
     /**
      * @test
      */
-    public function getDaysReturnsListWithSelf()
+    public function getDaysReturnsListWithSelf(): void
     {
         $day = new Day('2007-05-14');
         assertThat(
@@ -76,7 +76,7 @@ class DayTest extends TestCase
     /**
      * @test
      */
-    public function tomorrowIsNotToday()
+    public function tomorrowIsNotToday(): void
     {
         $day = new Day('tomorrow');
         assertFalse($day->isToday());
@@ -85,7 +85,7 @@ class DayTest extends TestCase
     /**
      * @test
      */
-    public function yesterdayIsNotToday()
+    public function yesterdayIsNotToday(): void
     {
         $day = new Day('yesterday');
         assertFalse($day->isToday());
@@ -94,7 +94,7 @@ class DayTest extends TestCase
     /**
      * @test
      */
-    public function nowIsToday()
+    public function nowIsToday(): void
     {
         $day = new Day('now');
         assertTrue($day->isToday());
@@ -103,7 +103,7 @@ class DayTest extends TestCase
     /**
      * @test
      */
-    public function tomorrowIsFuture()
+    public function tomorrowIsFuture(): void
     {
         $day = new Day('tomorrow');
         assertTrue($day->isInFuture());
@@ -112,7 +112,7 @@ class DayTest extends TestCase
     /**
      * @test
      */
-    public function yesterdayIsNotFuture()
+    public function yesterdayIsNotFuture(): void
     {
         $day = new Day('yesterday');
         assertFalse($day->isInFuture());
@@ -121,7 +121,7 @@ class DayTest extends TestCase
     /**
      * @test
      */
-    public function todayIsNotFuture()
+    public function todayIsNotFuture(): void
     {
         $day = new Day('now');
         assertFalse($day->isInFuture());
@@ -132,7 +132,7 @@ class DayTest extends TestCase
     /**
      * @test
      */
-    public function doesNotContainTheDayBefore()
+    public function doesNotContainTheDayBefore(): void
     {
         $day = new Day('2007-04-04');
         assertFalse($day->containsDate(new Date('2007-04-03')));
@@ -141,7 +141,7 @@ class DayTest extends TestCase
     /**
      * @test
      */
-    public function doesContainTheExactDay()
+    public function doesContainTheExactDay(): void
     {
         $day = new Day('2007-04-04');
         assertTrue($day->containsDate(new Date('2007-04-04')));
@@ -150,7 +150,7 @@ class DayTest extends TestCase
     /**
      * @test
      */
-    public function doesNotContainTheDayAfter()
+    public function doesNotContainTheDayAfter(): void
     {
         $day = new Day('2007-04-04');
         assertFalse($day->containsDate(new Date('2007-04-05')));
@@ -159,7 +159,7 @@ class DayTest extends TestCase
     /**
      * @test
      */
-    public function stringRepresentationOfDayContainsNameOfDayAndDate()
+    public function stringRepresentationOfDayContainsNameOfDayAndDate(): void
     {
         $day = new Day('2007-04-04');
         assertThat($day->asString(), equals('2007-04-04'));
@@ -168,7 +168,7 @@ class DayTest extends TestCase
     /**
      * @test
      */
-    public function properStringConversion()
+    public function properStringConversion(): void
     {
         $day = new Day('2007-04-04');
         assertThat((string) $day, equals('2007-04-04'));
@@ -177,7 +177,7 @@ class DayTest extends TestCase
     /**
      * @test
      */
-    public function asIntReturnsRepresentationOfDayWithinMonth()
+    public function asIntReturnsRepresentationOfDayWithinMonth(): void
     {
         $day = new Day('2007-05-14');
         assertThat($day->asInt(), equals(14));
@@ -186,7 +186,7 @@ class DayTest extends TestCase
     /**
      * @test
      */
-    public function formatReturnsOtherStringRepresentation()
+    public function formatReturnsOtherStringRepresentation(): void
     {
         $day = new Day('2007-05-14');
         assertThat($day->format('l, d.m.Y'), equals('Monday, 14.05.2007'));
@@ -196,7 +196,7 @@ class DayTest extends TestCase
      * @test
      * @since  3.5.1
      */
-    public function tomorrowCreatesInstanceForTomorrow()
+    public function tomorrowCreatesInstanceForTomorrow(): void
     {
         assertThat(
                 Day::tomorrow()->asString(),
@@ -208,7 +208,7 @@ class DayTest extends TestCase
      * @test
      * @since  3.5.1
      */
-    public function yesterdayCreatesInstanceForYesterday()
+    public function yesterdayCreatesInstanceForYesterday(): void
     {
         assertThat(
                 Day::yesterday()->asString(),
@@ -220,7 +220,7 @@ class DayTest extends TestCase
      * @test
      * @since  5.2.0
      */
-    public function nextDayRaisesYearForDecember31st()
+    public function nextDayRaisesYearForDecember31st(): void
     {
         $day = new Day('2014-12-31');
         assertThat($day->next(), equals('2015-01-01'));
@@ -230,7 +230,7 @@ class DayTest extends TestCase
      * @test
      * @since  5.2.0
      */
-    public function beforeDayLowersYearForJanuary1st()
+    public function beforeDayLowersYearForJanuary1st(): void
     {
         $day = new Day('2014-01-01');
         assertThat($day->before(), equals('2013-12-31'));
@@ -240,7 +240,7 @@ class DayTest extends TestCase
      * @test
      * @since  5.3.0
      */
-    public function typeIsDay()
+    public function typeIsDay(): void
     {
         $day = new Day('2014-01-01');
         assertThat($day->type(), equals('day'));

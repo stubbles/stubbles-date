@@ -7,7 +7,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace stubbles\date\span;
-function date()
+function date(): string
 {
     $args = func_get_args();
     if (null !== MonthMockDay::$result && 'd' === $args[0]) {

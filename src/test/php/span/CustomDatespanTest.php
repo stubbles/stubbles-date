@@ -29,7 +29,7 @@ class CustomDatespanTest extends TestCase
     /**
      * @test
      */
-    public function startDateCreatedFromStringInput()
+    public function startDateCreatedFromStringInput(): void
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
         $startDate      = $customDatespan->start();
@@ -43,7 +43,7 @@ class CustomDatespanTest extends TestCase
     /**
      * @test
      */
-    public function endDateCreatedFromStringInput()
+    public function endDateCreatedFromStringInput(): void
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
         $endDate        = $customDatespan->end();
@@ -57,7 +57,7 @@ class CustomDatespanTest extends TestCase
     /**
      * @test
      */
-    public function startDateIsSetToMidnight()
+    public function startDateIsSetToMidnight(): void
     {
         $customDatespan = new CustomDatespan(
                 new Date('2006-04-04'),
@@ -73,7 +73,7 @@ class CustomDatespanTest extends TestCase
     /**
      * @test
      */
-    public function endDateIsSetToMidnight()
+    public function endDateIsSetToMidnight(): void
     {
         $customDatespan = new CustomDatespan(
                 new Date('2006-04-04'),
@@ -89,12 +89,15 @@ class CustomDatespanTest extends TestCase
     /**
      * @test
      */
-    public function returnsAmountOfDaysInDatespan()
+    public function returnsAmountOfDaysInDatespan(): void
     {
         $customDatespan = new CustomDatespan('2007-05-14', '2007-05-27');
         assertThat($customDatespan->amountOfDays(), equals(14));
     }
 
+    /**
+     * @return  array<array<mixed>>
+     */
     public function datespanDays(): array
     {
         $return      = [];
@@ -110,7 +113,7 @@ class CustomDatespanTest extends TestCase
      * @test
      * @dataProvider  datespanDays
      */
-    public function daysReturnsListOfAllDays(string $dayString, Day $day, int $expectedDay)
+    public function daysReturnsListOfAllDays(string $dayString, Day $day, int $expectedDay): void
     {
         assertThat($dayString, equals('2007-05-' . $expectedDay));
         assertThat($day->asInt(), equals($expectedDay));
@@ -119,7 +122,7 @@ class CustomDatespanTest extends TestCase
     /**
      * @test
      */
-    public function isInFutureIfCurrentDateBeforeStartDate()
+    public function isInFutureIfCurrentDateBeforeStartDate(): void
     {
         $customDatespan = new CustomDatespan('tomorrow', '+3 days');
         assertTrue($customDatespan->isInFuture());
@@ -128,7 +131,7 @@ class CustomDatespanTest extends TestCase
     /**
      * @test
      */
-    public function isNotInFutureIfCurrentDateWithinSpan()
+    public function isNotInFutureIfCurrentDateWithinSpan(): void
     {
         $customDatespan = new CustomDatespan('yesterday', '+3 days');
         assertFalse($customDatespan->isInFuture());
@@ -137,7 +140,7 @@ class CustomDatespanTest extends TestCase
     /**
      * @test
      */
-    public function isNotInFutureIfCurrentDateAfterEndDate()
+    public function isNotInFutureIfCurrentDateAfterEndDate(): void
     {
         $customDatespan = new CustomDatespan('-3 days', 'yesterday');
         assertFalse($customDatespan->isInFuture());
@@ -146,7 +149,7 @@ class CustomDatespanTest extends TestCase
     /**
      * @test
      */
-    public function doesNotContainDateBeforeStartDate()
+    public function doesNotContainDateBeforeStartDate(): void
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
         assertFalse($customDatespan->containsDate(new Date('2006-04-03')));
@@ -155,7 +158,7 @@ class CustomDatespanTest extends TestCase
     /**
      * @test
      */
-    public function containsAllDatesInSpan()
+    public function containsAllDatesInSpan(): void
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
         assertThat(
@@ -170,7 +173,7 @@ class CustomDatespanTest extends TestCase
     /**
      * @test
      */
-    public function doesNotContainDateAfterEndDate()
+    public function doesNotContainDateAfterEndDate(): void
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
         assertFalse($customDatespan->containsDate(new Date('2006-04-21')));
@@ -179,7 +182,7 @@ class CustomDatespanTest extends TestCase
     /**
      * @test
      */
-    public function serializeAndUnserializeDoesNotDestroyStartDate()
+    public function serializeAndUnserializeDoesNotDestroyStartDate(): void
     {
         $customDatespan = new CustomDatespan('2007-05-14', '2007-05-27');
         $serialized     = serialize($customDatespan);
@@ -190,7 +193,7 @@ class CustomDatespanTest extends TestCase
     /**
      * @test
      */
-    public function serializeAndUnserializeDoesNotDestroyEndDate()
+    public function serializeAndUnserializeDoesNotDestroyEndDate(): void
     {
         $customDatespan = new CustomDatespan('2007-05-14', '2007-05-27');
         $serialized     = serialize($customDatespan);
@@ -201,7 +204,7 @@ class CustomDatespanTest extends TestCase
     /**
      * @test
      */
-    public function stringRepresentationOfDayContainsStartAndEndDate()
+    public function stringRepresentationOfDayContainsStartAndEndDate(): void
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
         assertThat($customDatespan->asString(), equals('2006-04-04,2006-04-20'));
@@ -210,7 +213,7 @@ class CustomDatespanTest extends TestCase
     /**
      * @test
      */
-    public function properStringConversion()
+    public function properStringConversion(): void
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
         assertThat((string) $customDatespan, equals('2006-04-04,2006-04-20'));
@@ -220,7 +223,7 @@ class CustomDatespanTest extends TestCase
      * @test
      * @since  3.5.0
      */
-    public function startsBeforeChecksStartDate()
+    public function startsBeforeChecksStartDate(): void
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
         assertTrue($customDatespan->startsBefore('2006-04-05'));
@@ -230,7 +233,7 @@ class CustomDatespanTest extends TestCase
      * @test
      * @since  3.5.0
      */
-    public function startsAfterChecksStartDate()
+    public function startsAfterChecksStartDate(): void
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
         assertTrue($customDatespan->startsAfter('2006-04-03'));
@@ -240,7 +243,7 @@ class CustomDatespanTest extends TestCase
      * @test
      * @since  3.5.0
      */
-    public function endsBeforeChecksStartDate()
+    public function endsBeforeChecksStartDate(): void
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
         assertTrue($customDatespan->endsBefore('2006-04-21'));
@@ -250,7 +253,7 @@ class CustomDatespanTest extends TestCase
      * @test
      * @since  3.5.0
      */
-    public function endsAfterChecksStartDate()
+    public function endsAfterChecksStartDate(): void
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
         assertTrue($customDatespan->endsAfter('2006-04-19'));
@@ -260,7 +263,7 @@ class CustomDatespanTest extends TestCase
      * @test
      * @since  3.5.0
      */
-    public function formatStartReturnsFormattedStartDate()
+    public function formatStartReturnsFormattedStartDate(): void
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
         assertThat($customDatespan->formatStart('Y-m-d'), equals('2006-04-04'));
@@ -270,7 +273,7 @@ class CustomDatespanTest extends TestCase
      * @test
      * @since  3.5.0
      */
-    public function formatEndReturnsFormattedStartDate()
+    public function formatEndReturnsFormattedStartDate(): void
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
         assertThat($customDatespan->formatEnd('Y-m-d'), equals('2006-04-20'));
@@ -280,7 +283,7 @@ class CustomDatespanTest extends TestCase
      * @test
      * @since  7.0.0
      */
-    public function typeIsCustom()
+    public function typeIsCustom(): void
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
         assertThat($customDatespan->type(), equals('custom'));

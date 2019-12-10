@@ -35,7 +35,7 @@ class MonthTest extends TestCase
     /**
      * @test
      */
-    public function stringRepresentationContainsYearAndMonth()
+    public function stringRepresentationContainsYearAndMonth(): void
     {
         $month = new Month(2007, 4);
         assertThat($month->asString(), equals('2007-04'));
@@ -44,7 +44,7 @@ class MonthTest extends TestCase
     /**
      * @test
      */
-    public function stringRepresentationForCorrectMonthNotFixed()
+    public function stringRepresentationForCorrectMonthNotFixed(): void
     {
         $month = new Month(2007, '04');
         assertThat($month->asString(), equals('2007-04'));
@@ -53,7 +53,7 @@ class MonthTest extends TestCase
     /**
      * @test
      */
-    public function properStringConversionContainsYearAndMonth()
+    public function properStringConversionContainsYearAndMonth(): void
     {
         $month = new Month(2007, 4);
         assertThat((string) $month, equals('2007-04'));
@@ -62,7 +62,7 @@ class MonthTest extends TestCase
     /**
      * @test
      */
-    public function properStringConversionForCorrectMonthNotFixed()
+    public function properStringConversionForCorrectMonthNotFixed(): void
     {
         $month = new Month(2007, '04');
         assertThat((string) $month, equals('2007-04'));
@@ -71,7 +71,7 @@ class MonthTest extends TestCase
     /**
      * @test
      */
-    public function usesCurrentYearIfNotGiven()
+    public function usesCurrentYearIfNotGiven(): void
     {
         $month = new Month(null, 10);
         assertThat($month->asString(), equals(date('Y') . '-10'));
@@ -80,7 +80,7 @@ class MonthTest extends TestCase
     /**
      * @test
      */
-    public function usesCurrentMonthIfNotGiven()
+    public function usesCurrentMonthIfNotGiven(): void
     {
         $month = new Month(2007);
         assertThat($month->asString(), equals('2007-' . date('m')));
@@ -89,12 +89,15 @@ class MonthTest extends TestCase
     /**
      * @test
      */
-    public function usesCurrentYearAndMonthIfNotGiven()
+    public function usesCurrentYearAndMonthIfNotGiven(): void
     {
         $month = new Month();
         assertThat($month->asString(), equals(date('Y') . '-' . date('m')));
     }
 
+    /**
+     * @return  array<array<mixed>>
+     */
     public function dayMonth(): array
     {
         return [[new Month(2007, 4), 30],
@@ -110,12 +113,15 @@ class MonthTest extends TestCase
      * @test
      * @dataProvider  dayMonth
      */
-    public function amountOfDaysIsAlwaysCorrect(Month $month, int $dayCount)
+    public function amountOfDaysIsAlwaysCorrect(Month $month, int $dayCount): void
     {
         assertThat($month->amountOfDays(), equals($dayCount));
         assertThat($month->days(), isOfSize($dayCount));
     }
 
+    /**
+     * @return  array<array<mixed>>
+     */
     public function monthDays(): array
     {
         $return      = [];
@@ -141,7 +147,7 @@ class MonthTest extends TestCase
             string $expectedString,
             Day $day,
             int $expectedDay
-    ) {
+    ): void {
         assertThat($dayString, equals($expectedString));
         assertThat($day->asInt(), equals($expectedDay));
     }
@@ -149,25 +155,25 @@ class MonthTest extends TestCase
     /**
      * @test
      */
-    public function monthInNextYearIsInFuture()
+    public function monthInNextYearIsInFuture(): void
     {
-        $month = new Month(date('Y') + 1, 7);
+        $month = new Month(((int) date('Y')) + 1, 7);
         assertTrue($month->isInFuture());
     }
 
     /**
      * @test
      */
-    public function monthInLastYearIsNotInFuture()
+    public function monthInLastYearIsNotInFuture(): void
     {
-        $month = new Month(date('Y') - 1, 7);
+        $month = new Month(((int) date('Y')) - 1, 7);
         assertFalse($month->isInFuture());
     }
 
     /**
      * @test
      */
-    public function currentMonthIsNotInFuture()
+    public function currentMonthIsNotInFuture(): void
     {
         $month = new Month(date('Y'), date('m'));
         assertFalse($month->isInFuture());
@@ -176,7 +182,7 @@ class MonthTest extends TestCase
     /**
      * @test
      */
-    public function doesNotContainDateFromPreviousMonth()
+    public function doesNotContainDateFromPreviousMonth(): void
     {
         $month = new Month(2007, 4);
         assertFalse($month->containsDate(new Date('2007-03-31')));
@@ -185,7 +191,7 @@ class MonthTest extends TestCase
     /**
      * @test
      */
-    public function doesContainAllDatesForThisMonth()
+    public function doesContainAllDatesForThisMonth(): void
     {
         $month = new Month(2007, 4);
         assertThat(
@@ -200,7 +206,7 @@ class MonthTest extends TestCase
     /**
      * @test
      */
-    public function doesNotContainDateFromLaterMonth()
+    public function doesNotContainDateFromLaterMonth(): void
     {
         $month = new Month(2007, 4);
         assertFalse($month->containsDate(new Date('2007-05-01')));
@@ -209,7 +215,7 @@ class MonthTest extends TestCase
     /**
      * @test
      */
-    public function isCurrentMonthReturnsTrueForCreationWithoutArguments()
+    public function isCurrentMonthReturnsTrueForCreationWithoutArguments(): void
     {
         $month = new Month();
         assertTrue($month->isCurrentMonth());
@@ -218,7 +224,7 @@ class MonthTest extends TestCase
     /**
      * @test
      */
-    public function isCurrentMonthReturnsTrueWhenCreatedForCurrentMonth()
+    public function isCurrentMonthReturnsTrueWhenCreatedForCurrentMonth(): void
     {
         $month = new Month(date('Y'), date('m'));
         assertTrue($month->isCurrentMonth());
@@ -227,7 +233,7 @@ class MonthTest extends TestCase
     /**
      * @test
      */
-    public function isCurrentMonthReturnsFalseForAllOtherMonths()
+    public function isCurrentMonthReturnsFalseForAllOtherMonths(): void
     {
         $month = new Month(2007, 4);
         assertFalse($month->isCurrentMonth());
@@ -237,7 +243,7 @@ class MonthTest extends TestCase
      * @test
      * @since  3.5.1
      */
-    public function lastCreatesInstanceWhichIsNotCurrentMonth()
+    public function lastCreatesInstanceWhichIsNotCurrentMonth(): void
     {
         assertFalse(Month::last()->isCurrentMonth());
     }
@@ -246,7 +252,7 @@ class MonthTest extends TestCase
      * @test
      * @since  3.5.1
      */
-    public function lastCreatesInstanceForPreviousMonth()
+    public function lastCreatesInstanceForPreviousMonth(): void
     {
         assertThat(
                 Month::last()->asString(),
@@ -258,11 +264,14 @@ class MonthTest extends TestCase
      * @test
      * @since  3.5.2
      */
-    public function createFromStringParsesStringToCreateInstance()
+    public function createFromStringParsesStringToCreateInstance(): void
     {
         assertThat(Month::fromString('2014-05')->asString(), equals('2014-05'));
     }
 
+    /**
+     * @return  array<string[]>
+     */
     public function invalidMonthStrings(): array
     {
         return [
@@ -282,7 +291,7 @@ class MonthTest extends TestCase
     public function createFromInvalidStringThrowsInvalidArgumentException(
             string $invalid,
             string $expectedExceptionMessage
-    ) {
+    ): void {
          expect(function() use ($invalid) { Month::fromString($invalid); })
                 ->throws(\InvalidArgumentException::class)
                 ->withMessage($expectedExceptionMessage);
@@ -292,7 +301,7 @@ class MonthTest extends TestCase
      * @test
      * @since  5.2.0
      */
-    public function nextMonthRaisesYearForDecember()
+    public function nextMonthRaisesYearForDecember(): void
     {
         $month = new Month(2014, 12);
         assertThat($month->next(), equals('2015-01'));
@@ -302,7 +311,7 @@ class MonthTest extends TestCase
      * @test
      * @since  5.2.0
      */
-    public function beforeMonthLowersYearForJanuary()
+    public function beforeMonthLowersYearForJanuary(): void
     {
         $month = new Month(2014, 01);
         assertThat($month->before(), equals('2013-12'));
@@ -312,7 +321,7 @@ class MonthTest extends TestCase
      * @test
      * @since  5.3.0
      */
-    public function typeIsMonth()
+    public function typeIsMonth(): void
     {
         assertThat(Month::fromString('2014-05')->type(), equals('month'));
     }
@@ -321,7 +330,7 @@ class MonthTest extends TestCase
      * @test
      * @since  5.5.0
      */
-    public function currentOrLastReturnsCurrentWhenTodayIsNotFirstOfMonth()
+    public function currentOrLastReturnsCurrentWhenTodayIsNotFirstOfMonth(): void
     {
         MonthMockDay::$result = '02';
         assertThat(Month::currentOrLastWhenFirstDay(), equals(new Month()));
@@ -331,7 +340,7 @@ class MonthTest extends TestCase
      * @test
      * @since  7.0.0
      */
-    public function currentOrLastReturnsLastWhenTodayIsFirstOfMonth()
+    public function currentOrLastReturnsLastWhenTodayIsFirstOfMonth(): void
     {
         MonthMockDay::$result = '01';
         assertThat(Month::currentOrLastWhenFirstDay(), equals(Month::last()));

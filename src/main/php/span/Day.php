@@ -18,7 +18,7 @@ class Day extends AbstractDatespan implements Datespan
     /**
      * original date
      *
-     * @type  \stubbles\date\Date
+     * @var  \stubbles\date\Date
      */
     private $date;
 
@@ -92,7 +92,7 @@ class Day extends AbstractDatespan implements Datespan
     /**
      * returns list of days
      *
-     * @return  \Iterator
+     * @return  \Iterator<string,Day>
      */
     public function days(): \Iterator
     {

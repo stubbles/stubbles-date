@@ -18,19 +18,19 @@ class Month extends CustomDatespan
     /**
      * year where month is within
      *
-     * @type  int
+     * @var  int
      */
     private $year;
     /**
      * actual month
      *
-     * @type  int
+     * @var  int
      */
     private $month;
     /**
      * amount of days in this month
      *
-     * @type  int
+     * @var  int
      */
     private $amountOfDays;
 
@@ -67,8 +67,8 @@ class Month extends CustomDatespan
         }
 
         $this->amountOfDays = (int) $start->format('t');
-        $this->year         = $year;
-        $this->month        = $month;
+        $this->year         = (int) $year;
+        $this->month        = (int) $month;
         parent::__construct(
                 $start,
                 new Date($year . '-' . $month . '-' . $this->amountOfDays . ' 23:59:59')

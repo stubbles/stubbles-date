@@ -24,6 +24,9 @@ use function bovigo\assert\predicate\equals;
  */
 class FunctionsTest extends TestCase
 {
+    /**
+     * @return array<array<mixed>>
+     */
     public function emptyValues(): array
     {
         return [[null], ['']];
@@ -34,7 +37,7 @@ class FunctionsTest extends TestCase
      * @test
      * @dataProvider  emptyValues
      */
-    public function returnsNullForEmptyValues($emptyValue)
+    public function returnsNullForEmptyValues($emptyValue): void
     {
         assertNull(span\parse($emptyValue));
     }
@@ -42,11 +45,14 @@ class FunctionsTest extends TestCase
     /**
      * @test
      */
-    public function parsesYear()
+    public function parsesYear(): void
     {
         assertThat(span\parse('2015'), equals(new Year(2015)));
     }
 
+    /**
+     * @return  array<array<string>>
+     */
     public function dayValues(): array
     {
         return [['today'], ['tomorrow'], ['yesterday'], ['2015-03-05']];
@@ -58,11 +64,14 @@ class FunctionsTest extends TestCase
      * @test
      * @dataProvider  dayValues
      */
-    public function parsesDay(string $dayValue)
+    public function parsesDay(string $dayValue): void
     {
         assertThat(span\parse($dayValue), equals(new Day($dayValue)));
     }
 
+    /**
+     * @return  array<array<string>>
+     */
     public function monthValues(): array
     {
         return [['2015-03']];
@@ -74,11 +83,14 @@ class FunctionsTest extends TestCase
      * @test
      * @dataProvider  monthValues
      */
-    public function parsesMonth(string $monthValue)
+    public function parsesMonth(string $monthValue): void
     {
         assertThat(span\parse($monthValue), equals(Month::fromString($monthValue)));
     }
 
+    /**
+     * @return  array<array<mixed>>
+     */
     public function customDatespanValues(): array
     {
         return [
@@ -94,7 +106,7 @@ class FunctionsTest extends TestCase
      * @test
      * @dataProvider  customDatespanValues
      */
-    public function parsesCustomDatespan(CustomDatespan $expected, string $value)
+    public function parsesCustomDatespan(CustomDatespan $expected, string $value): void
     {
         assertThat(span\parse($value), equals($expected));
     }

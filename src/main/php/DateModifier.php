@@ -17,7 +17,7 @@ class DateModifier
     /**
      * original date to base modifications on
      *
-     * @type  \stubbles\date\Date
+     * @var  \stubbles\date\Date
      */
     private $originalDate;
 

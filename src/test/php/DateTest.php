@@ -31,19 +31,19 @@ class DateTest extends TestCase
     /**
      * origin time zone for restoring in tearDown()
      *
-     * @type  string
+     * @var  string
      */
     private $originTimeZone;
     /**
      * current date/time as timestamp
      *
-     * @type  int
+     * @var  int
      */
     private $timestamp;
     /**
      * instance to test
      *
-     * @type  \stubbles\date\Date
+     * @var  \stubbles\date\Date
      */
     private $date;
 
@@ -71,7 +71,7 @@ class DateTest extends TestCase
      *
      * @test
      */
-    public function constructorParseWithoutTz()
+    public function constructorParseWithoutTz(): void
     {
         assertThat(
                 new Date('2007-01-01 01:00:00 Europe/Berlin'),
@@ -84,7 +84,7 @@ class DateTest extends TestCase
      *
      * @test
      */
-    public function constructorUnixtimestampWithoutTz()
+    public function constructorUnixtimestampWithoutTz(): void
     {
         assertThat(
                 new Date(1187872547),
@@ -97,7 +97,7 @@ class DateTest extends TestCase
      *
      * @test
      */
-    public function constructorUnixtimestampWithTz()
+    public function constructorUnixtimestampWithTz(): void
     {
         assertThat(
                 new Date(1187872547, new TimeZone('Europe/Berlin')),
@@ -105,6 +105,9 @@ class DateTest extends TestCase
         );
     }
 
+    /**
+     * @return  array<array<mixed>>
+     */
     public function constructorTimezones(): array
     {
         return [
@@ -138,7 +141,7 @@ class DateTest extends TestCase
             string $expectedTimeZone,
             string $constructorTimestamp,
             TimeZone $constructorTimeZone = null
-    ) {
+    ): void {
         $date = new Date($constructorTimestamp, $constructorTimeZone);
         assertThat($date->timeZone()->name(), equals($expectedTimeZone));
         assertThat($date, equalsDate($expectedTimestamp));
@@ -150,7 +153,7 @@ class DateTest extends TestCase
      *
      * @test
      */
-    public function noDiscreteTimeZone()
+    public function noDiscreteTimeZone(): void
     {
         $date = new Date('2007-11-04 14:32:00+1000');
         assertThat($date->offset(), equals('+1000'));
@@ -162,7 +165,7 @@ class DateTest extends TestCase
      *
      * @test
      */
-    public function constructorParseNoTz()
+    public function constructorParseNoTz(): void
     {
         $date= new Date('2007-01-01 01:00:00', new TimeZone('Europe/Athens'));
         assertThat($date->timeZone()->name(), equals('Europe/Athens'));
@@ -176,7 +179,7 @@ class DateTest extends TestCase
      *
      * @test
      */
-    public function dateHandling()
+    public function dateHandling(): void
     {
         assertThat($this->date->timestamp(), equals($this->timestamp));
         assertThat($this->date->format('r'), equals(date('r', $this->timestamp)));
@@ -188,7 +191,7 @@ class DateTest extends TestCase
      * @test
      * @since  3.5.0
      */
-    public function dateComparisonWithoutDateInstances()
+    public function dateComparisonWithoutDateInstances(): void
     {
         assertTrue($this->date->isAfter('yesterday'));
         assertTrue($this->date->isBefore('tomorrow'));
@@ -198,7 +201,7 @@ class DateTest extends TestCase
      * @test
      * @since  3.5.0
      */
-    public function isBeforeWithInvalidDate()
+    public function isBeforeWithInvalidDate(): void
     {
         expect(function() { $this->date->isBefore(new \stdClass()); })
                 ->throws(\InvalidArgumentException::class);
@@ -208,7 +211,7 @@ class DateTest extends TestCase
      * @test
      * @since  3.5.0
      */
-    public function isAfterWithInvalidDate()
+    public function isAfterWithInvalidDate(): void
     {
         expect(function() { $this->date->isAfter(new \stdClass()); })
                 ->throws(\InvalidArgumentException::class);
@@ -219,7 +222,7 @@ class DateTest extends TestCase
      *
      * @test
      */
-    public function preUnixEpoch()
+    public function preUnixEpoch(): void
     {
         assertThat(
                 new Date('31.12.1969 00:00 GMT'),
@@ -241,7 +244,7 @@ class DateTest extends TestCase
      * @test
      * @see   http://en.wikipedia.org/wiki/Gregorian_calendar
      */
-    public function pre1582()
+    public function pre1582(): void
     {
         //assertThat(new Date('01.01.1500 00:00 GMT'), equalsDate('1499-12-21T00:00:00+00:00'));
         assertThat(
@@ -267,7 +270,7 @@ class DateTest extends TestCase
      * @test
      * @see   http://en.wikipedia.org/wiki/Gregorian_calendar
      */
-    public function calendarAct1750()
+    public function calendarAct1750(): void
     {
         //assertThat(new Date('01.01.1753 00:00 GMT'), equalsDate('1753-01-01T00:00:00+00:00'));
         //assertThat(new Date('01.01.1752 00:00 GMT'), equalsDate('1751-12-21T00:00:00+00:00'));
@@ -281,6 +284,9 @@ class DateTest extends TestCase
         );
     }
 
+    /**
+     * @return  array<array<mixed>>
+     */
     public function anteAndPostMeridiemTestValues(): array
     {
         return [
@@ -296,12 +302,15 @@ class DateTest extends TestCase
      * @test
      * @dataProvider  anteAndPostMeridiemTestValues
      */
-    public function anteAndPostMeridiem(string $date, int $expected, string $description)
+    public function anteAndPostMeridiem(string $date, int $expected, string $description): void
     {
         $date = new Date($date);
         assertThat($date->hours(), equals($expected), $description);
     }
 
+    /**
+     * @return  array<array<mixed>>
+     */
     public function anteAndPostMeridiemInMidageTestValues(): array
     {
         return [
@@ -322,7 +331,7 @@ class DateTest extends TestCase
             string $date,
             int $expected,
             string $description
-    ) {
+    ): void {
         $date = new Date($date);
         assertThat($date->hours(), equals($expected), $description);
     }
@@ -332,7 +341,7 @@ class DateTest extends TestCase
      *
      * @test
      */
-    public function pre1970()
+    public function pre1970(): void
     {
         assertThat(new Date('01.02.1969'), equalsDate('1969-02-01T00:00:00+00:00'));
         assertThat(new Date('1969-02-01'), equalsDate('1969-02-01T00:00:00+00:00'));
@@ -344,7 +353,7 @@ class DateTest extends TestCase
      *
      * @test
      */
-    public function serialization()
+    public function serialization(): void
     {
         $original = new Date('2007-07-18T09:42:08 Europe/Athens');
         $copy     = unserialize(serialize($original));
@@ -356,7 +365,7 @@ class DateTest extends TestCase
      *
      * @test
      */
-    public function timeZoneSerialization()
+    public function timeZoneSerialization(): void
     {
         date_default_timezone_set('Europe/Athens');
         $date = new Date('2007-11-20 21:45:33 Europe/Berlin');
@@ -372,7 +381,7 @@ class DateTest extends TestCase
      *
      * @test
      */
-    public function handlingOfTimezone()
+    public function handlingOfTimezone(): void
     {
         $date = new Date('2007-07-18T09:42:08 Europe/Athens');
         assertThat($date->timeZone()->name(), equals('Europe/Athens'));
@@ -384,7 +393,7 @@ class DateTest extends TestCase
      *
      * @test
      */
-    public function testTimestamp()
+    public function testTimestamp(): void
     {
         date_default_timezone_set('Europe/Berlin');
         $d1 = new Date('1980-05-28 06:30:00 Europe/Berlin');
@@ -399,7 +408,7 @@ class DateTest extends TestCase
      *
      * @test
      */
-    public function timestampWithTZ()
+    public function timestampWithTZ(): void
     {
         $date = new Date(328336200, new TimeZone('Australia/Sydney'));
         assertThat($date->timeZone()->name(), equals('Australia/Sydney'));
@@ -410,7 +419,7 @@ class DateTest extends TestCase
      *
      * @test
      */
-    public function stringOutputPreserved()
+    public function stringOutputPreserved(): void
     {
         $date = unserialize(serialize(new Date('2007-11-10 20:15 Europe/Berlin')));
         assertThat($date->format('Y-m-d H:i:sO'), equals('2007-11-10 20:15:00+0100'));
@@ -425,7 +434,7 @@ class DateTest extends TestCase
      *
      * @test
      */
-    public function nowConstructsCurrentDate()
+    public function nowConstructsCurrentDate(): void
     {
         $date = Date::now();
         assertThat($date, isInstanceOf(Date::class));
@@ -438,7 +447,7 @@ class DateTest extends TestCase
      * @since  3.5.0
      * @group  bug267
      */
-    public function nowConstructsCurrentDateInGmtTimeZone()
+    public function nowConstructsCurrentDateInGmtTimeZone(): void
     {
         assertThat(Date::now()->timeZone()->name(), equals('GMT'));
     }
@@ -448,7 +457,7 @@ class DateTest extends TestCase
      * @since  1.7.0
      * @group  bug267
      */
-    public function nowConstructsCurrentDateWithTimeZone()
+    public function nowConstructsCurrentDateWithTimeZone(): void
     {
         assertThat(
                 Date::now(new TimeZone('Europe/London'))->timeZone()->name(),
@@ -461,7 +470,7 @@ class DateTest extends TestCase
      *
      * @test
      */
-    public function partsReturned()
+    public function partsReturned(): void
     {
         // 2007-08-23T12:35:47+00:00
         $date = new Date(1187872547);
@@ -478,7 +487,7 @@ class DateTest extends TestCase
      *
      * @test
      */
-    public function sameDatesShouldBeEqual()
+    public function sameDatesShouldBeEqual(): void
     {
         $date = new Date('31.12.1969 00:00 GMT');
         assertFalse($date->equals('foo'));
@@ -491,13 +500,13 @@ class DateTest extends TestCase
      *
      * @test
      */
-    public function cloneClonesHandleAsWell()
+    public function cloneClonesHandleAsWell(): void
     {
         $date       = new Date('31.12.1969 00:00 GMT');
         $clonedDate = clone $date;
         $dateHandle = new class('today') extends Date
         {
-            public function of(Date $date) { return $date->dateTime; }
+            public function of(Date $date): \DateTime { return $date->dateTime; }
         };
         assertThat($dateHandle->of($clonedDate), isNotSameAs($dateHandle->of($date)));
     }
@@ -505,7 +514,7 @@ class DateTest extends TestCase
     /**
      * @test
      */
-    public function failingConstructionThrowsIllegalArgumentException()
+    public function failingConstructionThrowsIllegalArgumentException(): void
     {
         expect(function() { new Date(null); })
                 ->throws(\InvalidArgumentException::class);
@@ -514,7 +523,7 @@ class DateTest extends TestCase
     /**
      * @test
      */
-    public function invalidDateStringhrowsIllegalArgumentException()
+    public function invalidDateStringhrowsIllegalArgumentException(): void
     {
         expect(function() { new Date('invalid'); })
                 ->throws(\InvalidArgumentException::class);
@@ -525,7 +534,7 @@ class DateTest extends TestCase
      *
      * @test
      */
-    public function toStringConvertsDateTimePropertyIntoReadableDateRepresentation()
+    public function toStringConvertsDateTimePropertyIntoReadableDateRepresentation(): void
     {
         $date = new Date('31.12.1969 00:00 GMT');
         assertThat((string) $date, equals('1969-12-31 00:00:00+0000'));
@@ -534,7 +543,7 @@ class DateTest extends TestCase
     /**
      * @test
      */
-    public function asStringReturnsStringValue()
+    public function asStringReturnsStringValue(): void
     {
         $date = new Date('2012-01-21 21:00:00');
         assertThat($date->asString(), equals('2012-01-21 21:00:00' . $date->offset()));
@@ -543,11 +552,14 @@ class DateTest extends TestCase
     /**
      * @test
      */
-    public function classIsAnnotatedWithXmlTag()
+    public function classIsAnnotatedWithXmlTag(): void
     {
         assertTrue(annotationsOf('stubbles\date\Date')->contain('XmlTag'));
     }
 
+    /**
+     * @return array<array<string>>
+     */
     public function methodsWithXmlIgnore(): array
     {
         return [['handle'],
@@ -568,7 +580,7 @@ class DateTest extends TestCase
      * @test
      * @dataProvider  methodsWithXmlIgnore
      */
-    public function methodIsAnnotatedWithXmlIgnore(string $method)
+    public function methodIsAnnotatedWithXmlIgnore(string $method): void
     {
         assertTrue(
                 annotationsOf('stubbles\date\Date', $method)
@@ -579,7 +591,7 @@ class DateTest extends TestCase
     /**
      * @test
      */
-    public function asStringIsAnnotatedWithXmlAttribute()
+    public function asStringIsAnnotatedWithXmlAttribute(): void
     {
         assertTrue(
                 annotationsOf('stubbles\date\Date', 'asString')
@@ -591,7 +603,7 @@ class DateTest extends TestCase
      * @test
      * @since  3.4.4
      */
-    public function castFromIntCreatesDateInstance()
+    public function castFromIntCreatesDateInstance(): void
     {
         assertThat(Date::castFrom(1187872547), equals(new Date(1187872547)));
     }
@@ -600,7 +612,7 @@ class DateTest extends TestCase
      * @test
      * @since  3.4.4
      */
-    public function castFromStringCreatesDateInstance()
+    public function castFromStringCreatesDateInstance(): void
     {
         assertThat(
                 Date::castFrom('2007-11-04 14:32:00+1000'),
@@ -612,7 +624,7 @@ class DateTest extends TestCase
      * @test
      * @since  3.4.4
      */
-    public function castFromDateTimeCreatesDateInstance()
+    public function castFromDateTimeCreatesDateInstance(): void
     {
         assertThat(
                 Date::castFrom(new \DateTime('2007-11-04 14:32:00+1000')),
@@ -624,7 +636,7 @@ class DateTest extends TestCase
      * @test
      * @since  3.4.4
      */
-    public function castFromDateReturnsSameInstance()
+    public function castFromDateReturnsSameInstance(): void
     {
         $date = new Date('2007-11-04 14:32:00+1000');
         assertThat(Date::castFrom($date), isSameAs($date));
@@ -634,7 +646,7 @@ class DateTest extends TestCase
      * @test
      * @since  3.4.4
      */
-    public function castFromOtherValueThrowsIllegalArgumentException()
+    public function castFromOtherValueThrowsIllegalArgumentException(): void
     {
         expect(function() { Date::castFrom(new \stdClass()); })
                 ->throws(\InvalidArgumentException::class);

@@ -11,19 +11,20 @@ namespace stubbles\date\span;
  * Allows iteration over days of a datespan.
  *
  * @since  5.2.0
+ * @implements  \Iterator<string,Day>
  */
 class Days implements \Iterator, \Countable
 {
     /**
      * start date of the iteration
      *
-     * @type  \stubbles\date\span\Datespan
+     * @var  \stubbles\date\span\Datespan
      */
     private $datespan;
     /**
      * start date of the span
      *
-     * @type  \stubbles\date\span\Day
+     * @var  \stubbles\date\span\Day
      */
     private $current;
 
@@ -72,7 +73,7 @@ class Days implements \Iterator, \Countable
     /**
      * advances iteration to next day
      */
-    public function next()
+    public function next(): void
     {
         $this->current = $this->current->next();
     }
@@ -80,7 +81,7 @@ class Days implements \Iterator, \Countable
     /**
      * returns iteration back to first day of datespan
      */
-    public function rewind()
+    public function rewind(): void
     {
         if ($this->datespan instanceof Day) {
             $this->current = $this->datespan;

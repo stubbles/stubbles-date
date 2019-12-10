@@ -32,7 +32,7 @@ class YearTest extends TestCase
      * @test
      * @since  7.0.0
      */
-    public function constructWithInvalidValueThrowsInvalidArgumentException()
+    public function constructWithInvalidValueThrowsInvalidArgumentException(): void
     {
         expect(function() { new Year('nope'); } )
                 ->throws(\InvalidArgumentException::class)
@@ -45,7 +45,7 @@ class YearTest extends TestCase
     /**
      * @test
      */
-    public function stringRepresentationContainsYear()
+    public function stringRepresentationContainsYear(): void
     {
         $year = new Year(2007);
         assertThat($year->asString(), equals('2007'));
@@ -54,7 +54,7 @@ class YearTest extends TestCase
     /**
      * @test
      */
-    public function properStringConversion()
+    public function properStringConversion(): void
     {
         $year = new Year(2007);
         assertThat((string) $year, equals('2007'));
@@ -63,7 +63,7 @@ class YearTest extends TestCase
     /**
      * @test
      */
-    public function usesCurrentYearIfNotGiven()
+    public function usesCurrentYearIfNotGiven(): void
     {
         $year = new Year();
         assertThat($year->asString(), equals(date('Y')));
@@ -72,7 +72,7 @@ class YearTest extends TestCase
     /**
      * @test
      */
-    public function amountOfDaysIs366ForLeapYears()
+    public function amountOfDaysIs366ForLeapYears(): void
     {
         $year = new Year(2008);
         assertThat($year->amountOfDays(), equals(366));
@@ -81,16 +81,16 @@ class YearTest extends TestCase
     /**
      * @test
      */
-    public function amountOfDaysIs365ForNonLeapYears()
+    public function amountOfDaysIs365ForNonLeapYears(): void
     {
         $year = new Year(2007);
         assertThat($year->amountOfDays(), equals(365));
     }
 
     /**
-     * @return  array
+     * @return  array<array<mixed>>
      */
-    public function dayYear()
+    public function dayYear(): array
     {
         return [[new Year(2007), 365],
                 [new Year(2008), 366]
@@ -101,7 +101,7 @@ class YearTest extends TestCase
      * @test
      * @dataProvider  dayYear
      */
-    public function daysReturnsAmountOfDaysWithinYear(Year $year, $dayCount)
+    public function daysReturnsAmountOfDaysWithinYear(Year $year, int $dayCount): void
     {
         assertThat($year->days(), isOfSize($dayCount));
     }
@@ -109,11 +109,14 @@ class YearTest extends TestCase
     /**
      * @test
      */
-    public function daysReturnsAllDaysInYear()
+    public function daysReturnsAllDaysInYear(): void
     {
         assertThat((new Year(2008))->days(), each(isInstanceOf(Day::class)));
     }
 
+    /**
+     * @return  array<array<mixed>>
+     */
     public function yearMonths(): array
     {
         $return        = [];
@@ -137,7 +140,7 @@ class YearTest extends TestCase
             string $monthString,
             Month $month,
             string $expectedMonth
-    ) {
+    ): void {
         assertThat($month->asString(), equals($monthString));
         assertThat($monthString, equals($expectedMonth));
     }
@@ -146,7 +149,7 @@ class YearTest extends TestCase
      * @test
      * @since  7.0.0
      */
-    public function yearMonthIsValidOnStart()
+    public function yearMonthIsValidOnStart(): void
     {
         assertTrue((new Year(2007))->months()->valid());
     }
@@ -155,7 +158,7 @@ class YearTest extends TestCase
      * @test
      * @since  7.0.0
      */
-    public function yearMonthIsInvalidWhenFullyIterated()
+    public function yearMonthIsInvalidWhenFullyIterated(): void
     {
         $months = (new Year(2007))->months();
         $months->next();
@@ -178,7 +181,7 @@ class YearTest extends TestCase
      * @test
      * @since  7.0.0
      */
-    public function yearMonthCurrentReturnsFirstMonthOfYearOnStart()
+    public function yearMonthCurrentReturnsFirstMonthOfYearOnStart(): void
     {
         assertThat((new Year(2007))->months()->current(), equals(new Month(2007, 1)));
     }
@@ -187,7 +190,7 @@ class YearTest extends TestCase
      * @test
      * @since  7.0.0
      */
-    public function yearMonthKeyIsStringRepresentationOfMonth()
+    public function yearMonthKeyIsStringRepresentationOfMonth(): void
     {
         assertThat((new Year(2007))->months()->key(), equals('2007-01'));
     }
@@ -196,7 +199,7 @@ class YearTest extends TestCase
      * @test
      * @since  7.0.0
      */
-    public function yearMonthCurrentReturnsFirstMonthOfYearAfterRewind()
+    public function yearMonthCurrentReturnsFirstMonthOfYearAfterRewind(): void
     {
         $months = (new Year(2007))->months();
         $months->next();
@@ -207,7 +210,7 @@ class YearTest extends TestCase
     /**
      * @test
      */
-    public function monthReturnsRightAmountOfMonth()
+    public function monthReturnsRightAmountOfMonth(): void
     {
         assertThat((new Year(2007))->months(), isOfSize(12));
     }
@@ -215,25 +218,25 @@ class YearTest extends TestCase
     /**
      * @test
      */
-    public function nextYearIsInFuture()
+    public function nextYearIsInFuture(): void
     {
-        $year = new Year(date('Y') + 1);
+        $year = new Year(((int) date('Y')) + 1);
         assertTrue($year->isInFuture());
     }
 
     /**
      * @test
      */
-    public function lastYearIsNotInFuture()
+    public function lastYearIsNotInFuture(): void
     {
-        $year = new Year(date('Y') - 1);
+        $year = new Year(((int) date('Y')) - 1);
         assertFalse($year->isInFuture());
     }
 
     /**
      * @test
      */
-    public function currentYearIsNotInFuture()
+    public function currentYearIsNotInFuture(): void
     {
         $year = new Year();
         assertFalse($year->isInFuture());
@@ -242,12 +245,15 @@ class YearTest extends TestCase
     /**
      * @test
      */
-    public function doesNotContainDateFromPreviousYear()
+    public function doesNotContainDateFromPreviousYear(): void
     {
         $year = new Year(2007);
         assertFalse($year->containsDate(new Date('2006-12-31')));
     }
 
+    /**
+     * @return  array<array<mixed>>
+     */
     public function allDays(): array
     {
         $return = [];
@@ -266,7 +272,7 @@ class YearTest extends TestCase
      * @test
      * @dataProvider  allDays
      */
-    public function doesContainAllDatesForThisYear(Year $year, int $month, int $day)
+    public function doesContainAllDatesForThisYear(Year $year, int $month, int $day): void
     {
         assertTrue($year->containsDate(new Date('2007-' . $month . '-' . $day)));
     }
@@ -274,7 +280,7 @@ class YearTest extends TestCase
     /**
      * @test
      */
-    public function doesNotContainDateFromLaterYear()
+    public function doesNotContainDateFromLaterYear(): void
     {
         $year = new Year(2007);
         assertFalse($year->containsDate(new Date('2008-01-01')));
@@ -283,7 +289,7 @@ class YearTest extends TestCase
     /**
      * @test
      */
-    public function isLeapYearReturnsTrueForLeapYears()
+    public function isLeapYearReturnsTrueForLeapYears(): void
     {
         $year = new Year(2008);
         assertTrue($year->isLeapYear());
@@ -292,7 +298,7 @@ class YearTest extends TestCase
     /**
      * @test
      */
-    public function isLeapYearReturnsFalseForNonLeapYears()
+    public function isLeapYearReturnsFalseForNonLeapYears(): void
     {
         $year = new Year(2007);
         assertFalse($year->isLeapYear());
@@ -301,7 +307,7 @@ class YearTest extends TestCase
     /**
      * @test
      */
-    public function isCurrentYearReturnsTrueForCreationWithoutArguments()
+    public function isCurrentYearReturnsTrueForCreationWithoutArguments(): void
     {
         $year = new Year();
         assertTrue($year->isCurrentYear());
@@ -310,7 +316,7 @@ class YearTest extends TestCase
     /**
      * @test
      */
-    public function isCurrentYearReturnsTrueWhenCreatedForCurrentYear()
+    public function isCurrentYearReturnsTrueWhenCreatedForCurrentYear(): void
     {
         $year = new Year(date('Y'));
         assertTrue($year->isCurrentYear());
@@ -319,7 +325,7 @@ class YearTest extends TestCase
     /**
      * @test
      */
-    public function isCurrentYearReturnsFalseForAllOtherYears()
+    public function isCurrentYearReturnsFalseForAllOtherYears(): void
     {
         $year = new Year(2007);
         assertFalse($year->isCurrentYear());
@@ -329,7 +335,7 @@ class YearTest extends TestCase
      * @test
      * @since  5.3.0
      */
-    public function typeIsYear()
+    public function typeIsYear(): void
     {
         $year = new Year(2007);
         assertThat($year->type(), equals('year'));
