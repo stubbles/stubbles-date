@@ -21,7 +21,7 @@ class Date
     /**
      * internal date/time handle
      *
-     * @type  \DateTime
+     * @var  \DateTime
      */
     protected $dateTime;
 
@@ -52,13 +52,16 @@ class Date
     public function __construct($dateTime = null, TimeZone $timeZone = null)
     {
         if (is_numeric($dateTime)) {
-            $this->dateTime = date_create('@' . $dateTime, timezone_open('UTC'));
-            if (false !== $this->dateTime) {
-                date_timezone_set(
-                        $this->dateTime,
-                        (null === $timeZone) ? (new \DateTimeZone(date_default_timezone_get())) : ($timeZone->handle())
-                );
+            $date = date_create('@' . $dateTime, timezone_open('UTC'));
+            if (false === $date) {
+                throw new \InvalidArgumentException('Can not create date from timestamp ' . (string) $dateTime);
             }
+
+            $this->dateTime = $date;
+            date_timezone_set(
+                $this->dateTime,
+                (null === $timeZone) ? (new \DateTimeZone(date_default_timezone_get())) : ($timeZone->handle())
+            );
         } elseif (is_string($dateTime)) {
             try {
                 if (null === $timeZone) {
