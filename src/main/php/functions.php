@@ -52,9 +52,7 @@ namespace stubbles\date\span {
         try {
             return new Day($value);
         } catch (\InvalidArgumentException $ex) {
-            // skip, propably not a day
+            throw new \InvalidArgumentException('Given value ' . $value . ' can not be parsed as a datespan: ' . $ex->getMessage());
         }
-
-        throw new \InvalidArgumentException('Given value ' . $value . ' can not be parsed as a datespan');
     }
 }

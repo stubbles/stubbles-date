@@ -15,6 +15,7 @@ use stubbles\date\span\Year;
 
 use function bovigo\assert\assertThat;
 use function bovigo\assert\assertNull;
+use function bovigo\assert\expect;
 use function bovigo\assert\predicate\equals;
 /**
  * Tests for stubbles\date\*()
@@ -67,6 +68,15 @@ class FunctionsTest extends TestCase
     public function parsesDay(string $dayValue): void
     {
         assertThat(span\parse($dayValue), equals(new Day($dayValue)));
+    }
+
+    /**
+     * @test
+     */
+    public function parseInvalidDayThrowsInvalidArgumentException(): void
+    {
+        expect(function() { span\parse('foo'); })
+            ->throws(\InvalidArgumentException::class);
     }
 
     /**
