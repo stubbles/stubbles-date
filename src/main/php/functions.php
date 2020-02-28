@@ -46,11 +46,7 @@ namespace stubbles\date\span {
         }
 
         if ($chars[ord('-')] === 1) {
-            try {
-                return Month::fromString($value);
-            } catch (\InvalidArgumentException $ex) {
-                // skip, propably not a month
-            }
+            return Month::fromString($value);
         }
 
         try {
