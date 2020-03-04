@@ -39,6 +39,7 @@ namespace stubbles\date\span {
             return new Year($value);
         }
 
+        /** @var array<int,int> */
         $chars = count_chars($value);
         if ($chars[ord(',')] === 1) {
             list($start, $end) = explode(',', $value);
