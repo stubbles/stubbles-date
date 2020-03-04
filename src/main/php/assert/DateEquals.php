@@ -23,7 +23,7 @@ class DateEquals extends Predicate
     /**
      * the expected value
      *
-     * @var  mixed
+     * @var  string
      */
     private $expected;
     /**
@@ -31,7 +31,7 @@ class DateEquals extends Predicate
      */
     private $expectedDate;
     /**
-     * @var  string
+     * @var  string|null
      */
     private $lastFailureDiff;
 
