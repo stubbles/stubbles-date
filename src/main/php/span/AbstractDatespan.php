@@ -143,7 +143,10 @@ abstract class AbstractDatespan implements Datespan
      */
     public function amountOfDays(): int
     {
-        return $this->end->handle()->diff($this->start->handle())->days + 1;
+        // as \DateInterval is created by \DateTime::diff() it is an int,
+        // but psalm doesn't know this, so we cast it to silence it
+        // see https://www.php.net/manual/en/class.dateinterval.php#dateinterval.props.days
+        return ((int) $this->end->handle()->diff($this->start->handle())->days) + 1;
     }
 
     /**
