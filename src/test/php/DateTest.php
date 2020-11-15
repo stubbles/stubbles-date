@@ -504,11 +504,20 @@ class DateTest extends TestCase
     {
         $date       = new Date('31.12.1969 00:00 GMT');
         $clonedDate = clone $date;
-        $dateHandle = new class('today') extends Date
-        {
-            public function of(Date $date): \DateTime { return $date->dateTime; }
-        };
-        assertThat($dateHandle->of($clonedDate), isNotSameAs($dateHandle->of($date)));
+        assertThat($this->retrieveHandle($clonedDate), isNotSameAs($this->retrieveHandle($date)));
+    }
+
+    /**
+     * Retrieves date handle from given date.
+     *
+     * @param  Date $date
+     * @return \DateTime
+     */
+    private function retrieveHandle(Date $date): \DateTime
+    {
+        $property = (new \ReflectionObject($date))->getProperty('dateTime');
+        $property->setAccessible(true);
+        return $property->getValue($date);
     }
 
     /**
