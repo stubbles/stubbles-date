@@ -11,7 +11,8 @@
     "require-dev": {
         "phpunit/phpunit": "^9.4",
         "stubbles/reflect": "^9.0",
-        "bovigo/assert": "^6.1"
+        "bovigo/assert": "^6.1",
+        "phpstan/phpstan": "^0.12.55"
     },
     "suggest": {
         "bovigo/assert": "To use predicates when asserting dates with stubbles\\date\\assert\\equalsDate()"
@@ -37,6 +38,7 @@
     "prefer-stable": true,
     "scripts": {
         "test": "phpunit",
-        "php-coveralls": "php-coveralls"
+        "php-coveralls": "php-coveralls",
+        "phpstan": "phpstan"
     }
 }
