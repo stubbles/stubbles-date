@@ -11,7 +11,7 @@
     "require-dev": {
         "phpunit/phpunit": "^9.0",
         "stubbles/reflect": "^9.0",
-        "bovigo/assert": "^6.0"
+        "bovigo/assert": "^6.1"
     },
     "suggest": {
         "bovigo/assert": "To use predicates when asserting dates with stubbles\\date\\assert\\equalsDate()"
