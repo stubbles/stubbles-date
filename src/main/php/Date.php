@@ -58,8 +58,7 @@ class Date
             }
 
             $this->dateTime = $date;
-            date_timezone_set(
-                $this->dateTime,
+            $this->dateTime->setTimezone(
                 (null === $timeZone) ? (new \DateTimeZone(date_default_timezone_get())) : ($timeZone->handle())
             );
         } elseif (is_string($dateTime)) {
