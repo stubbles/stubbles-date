@@ -523,24 +523,6 @@ class DateTest extends TestCase
     /**
      * @test
      */
-    public function failingConstructionThrowsIllegalArgumentException(): void
-    {
-        expect(function() { new Date(null); })
-                ->throws(\InvalidArgumentException::class);
-    }
-
-    /**
-     * @test
-     */
-    public function invalidTimestampThrowsIllegalArgumentException(): void
-    {
-        expect(function() { new Date(0.5); })
-                ->throws(\InvalidArgumentException::class);
-    }
-
-    /**
-     * @test
-     */
     public function invalidDateStringThrowsIllegalArgumentException(): void
     {
         expect(function() { new Date('invalid'); })

@@ -7,6 +7,11 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace stubbles\date;
+
+use DateTime;
+use DateTimeZone;
+use Exception;
+use InvalidArgumentException;
 /**
  * Class for date/time handling.
  *
@@ -45,31 +50,29 @@ class Date
      *   <li>If no timezone has been given as second parameter, the system's
      *       default timezone is used.</li>
      *
-     * @param   int|string|\DateTime    $dateTime  initial date
-     * @param   \stubbles\date\TimeZone  $timeZone  initial timezone
-     * @throws  \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
-    public function __construct($dateTime = null, TimeZone $timeZone = null)
+    public function __construct(int|string|DateTime $dateTime, TimeZone $timeZone = null)
     {
         if (is_numeric($dateTime)) {
             $date = date_create('@' . $dateTime, timezone_open('UTC'));
             if (false === $date) {
-                throw new \InvalidArgumentException('Can not create date from timestamp ' . (string) $dateTime);
+                throw new InvalidArgumentException('Can not create date from timestamp ' . (string) $dateTime);
             }
 
             $this->dateTime = $date;
             $this->dateTime->setTimezone(
-                (null === $timeZone) ? (new \DateTimeZone(date_default_timezone_get())) : ($timeZone->handle())
+                (null === $timeZone) ? (new DateTimeZone(date_default_timezone_get())) : ($timeZone->handle())
             );
         } elseif (is_string($dateTime)) {
             try {
                 if (null === $timeZone) {
-                    $this->dateTime = new \DateTime($dateTime);
+                    $this->dateTime = new DateTime($dateTime);
                 } else {
-                    $this->dateTime = new \DateTime($dateTime, $timeZone->handle());
+                    $this->dateTime = new DateTime($dateTime, $timeZone->handle());
                 }
-            } catch (\Exception $e) {
-                throw new \InvalidArgumentException(
+            } catch (Exception $e) {
+                throw new InvalidArgumentException(
                         'Given datetime string ' . $dateTime
                         . ' is not a valid date string: ' . $e->getMessage(),
                         $e->getCode(),
@@ -78,13 +81,6 @@ class Date
             }
         } else {
             $this->dateTime = $dateTime;
-        }
-
-        if (!($this->dateTime instanceof \DateTime)) {
-            throw new \InvalidArgumentException(
-                    'Datetime must be either unix timestamp, well-formed timestamp'
-                    . ' or instance of \DateTime, but was ' . gettype($dateTime)
-            );
         }
     }
 
