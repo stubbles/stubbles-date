@@ -7,8 +7,11 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace stubbles\date\assert;
+
 use bovigo\assert\predicate\Equals;
 use bovigo\assert\predicate\Predicate;
+use DateTime;
+use InvalidArgumentException;
 use SebastianBergmann\Exporter\Exporter;
 use stubbles\date\Date;
 
@@ -20,32 +23,20 @@ use function bovigo\assert\predicate\equals;
  */
 class DateEquals extends Predicate
 {
-    /**
-     * the expected value
-     *
-     * @var  string
-     */
-    private $expected;
-    /**
-     * @var  \DateTime
-     */
-    private $expectedDate;
-    /**
-     * @var  string|null
-     */
-    private $lastFailureDiff;
+    private string $expected;
+    private DateTime $expectedDate;
+    private ?string $lastFailureDiff = null;
 
     /**
-     * constructor
-     *
-     * @param  string   $expected  value to which test values must be equal
-     * @throws  \InvalidArgumentException  in case given date can not be parsed
+     * @throws InvalidArgumentException in case given date can not be parsed
      */
     public function __construct(string $expected)
     {
         $expectedDate = date_create($expected);
         if (false === $expectedDate) {
-            throw new \InvalidArgumentException('Given value for expected "' . $expected . '" is not a valid date.');
+            throw new InvalidArgumentException(
+                'Given value for expected "' . $expected . '" is not a valid date.'
+            );
         }
 
         $this->expectedDate = $expectedDate;
@@ -54,15 +45,12 @@ class DateEquals extends Predicate
 
     /**
      * evaluates predicate against given value
-     *
-     * @param   mixed  $value
-     * @return  bool
      */
-    public function test($value): bool
+    public function test(mixed $value): bool
     {
         if (!($value instanceof Date)) {
-            throw new \InvalidArgumentException(
-                    'Value to test is not an instance of ' . Date::class
+            throw new InvalidArgumentException(
+                'Value to test is not an instance of ' . Date::class
             );
         }
 
@@ -99,8 +87,6 @@ class DateEquals extends Predicate
 
     /**
      * checks if a diff is available for the last failure
-     *
-     * @return  bool
      */
     public function hasDiffForLastFailure(): bool
     {
@@ -109,20 +95,14 @@ class DateEquals extends Predicate
 
     /**
      * returns diff for last failure
-     *
-     * @return  string|null
      */
-    public function diffForLastFailure()
+    public function diffForLastFailure(): ?string
     {
         return $this->lastFailureDiff;
     }
 
     /**
      * returns a textual description of given value
-     *
-     * @param   \SebastianBergmann\Exporter\Exporter  $exporter
-     * @param   mixed                                 $value
-     * @return  string
      */
     public function describeValue(Exporter $exporter, $value): string
     {

@@ -7,6 +7,8 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace stubbles\date;
+
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use function bovigo\assert\{
     assertThat,
@@ -22,16 +24,8 @@ use function bovigo\assert\{
  */
 class TimeZoneTest extends TestCase
 {
-    /**
-     * instance to test
-     *
-     * @var  \stubbles\date\TimeZone
-     */
-    private $timeZone;
+    private TimeZone $timeZone;
 
-    /**
-     * set up test environment
-     */
     protected function setUp(): void
     {
         $this->timeZone = new TimeZone('Europe/Berlin');
@@ -108,8 +102,8 @@ class TimeZoneTest extends TestCase
     {
         $date = new Date('2007-01-01 00:00 Australia/Sydney');
         assertThat(
-                $this->timeZone->translate($date),
-                equals(new Date('2006-12-31 14:00:00 Europe/Berlin'))
+            $this->timeZone->translate($date),
+            equals(new Date('2006-12-31 14:00:00 Europe/Berlin'))
         );
     }
 
@@ -135,20 +129,10 @@ class TimeZoneTest extends TestCase
     /**
      * @test
      */
-    public function invalidTimeZoneValueThrowsIllegalArgumentExceptionOnConstruction(): void
-    {
-        expect(function() { new TimeZone(500); })
-                ->throws(\InvalidArgumentException::class);
-    }
-
-    /**
-     * @test
-     */
     public function nonExistingTimeZoneValueThrowsIllegalArgumentExceptionOnConstruction(): void
     {
-        expect(function() { new TimeZone('Europe/Karlsruhe'); })->throws(
-                defined('HHVM_VERSION') ? \Exception::class : \InvalidArgumentException::class
-        );
+        expect(fn() => new TimeZone('Europe/Karlsruhe'))
+            ->throws(InvalidArgumentException::class);
     }
 
     /**

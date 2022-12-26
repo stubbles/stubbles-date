@@ -7,32 +7,26 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace stubbles\date\span;
+
+use Countable;
+use Iterator;
 /**
  * Allows iteration over months of a datespan.
  *
- * @since  5.2.0
- * @implements  \Iterator<string,Month>
+ * @since 5.2.0
+ * @implements  Iterator<string,Month>
  */
-class Months implements \Iterator, \Countable
+class Months implements Iterator, Countable
 {
     /**
      * start date of the iteration
-     *
-     * @var  int
      */
-    private $year;
+    private int $year;
     /**
      * start date of the span
-     *
-     * @var  \stubbles\date\span\Month
      */
-    private $currentMonth;
+    private Month $currentMonth;
 
-    /**
-     * constructor
-     *
-     * @param  \stubbles\date\span\Year  $year
-     */
     public function __construct(Year $year)
     {
         $this->year         = $year->asInt();
@@ -42,8 +36,7 @@ class Months implements \Iterator, \Countable
     /**
      * returns amount of month (duh!)
      *
-     * @return  int
-     * @since   7.0.0
+     * @since 7.0.0
      */
     public function count(): int
     {
@@ -52,8 +45,6 @@ class Months implements \Iterator, \Countable
 
     /**
      * returns current day within iteration
-     *
-     * @return  \stubbles\date\span\Month
      */
     public function current(): Month
     {
@@ -62,8 +53,6 @@ class Months implements \Iterator, \Countable
 
     /**
      * returns key for current day, which is it's string representation
-     *
-     * @return  string
      */
     public function key(): string
     {
@@ -88,8 +77,6 @@ class Months implements \Iterator, \Countable
 
     /**
      * checks if current entry is valid
-     *
-     * @return  bool
      */
     public function valid(): bool
     {

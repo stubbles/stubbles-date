@@ -7,6 +7,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace stubbles\date;
+
+use Generator;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use stubbles\date\span\CustomDatespan;
 use stubbles\date\span\Day;
@@ -20,25 +23,22 @@ use function bovigo\assert\predicate\equals;
 /**
  * Tests for stubbles\date\*()
  *
- * @group  date
- * @since  5.2.0
+ * @group date
+ * @since 5.2.0
  */
 class FunctionsTest extends TestCase
 {
-    /**
-     * @return array<array<mixed>>
-     */
-    public function emptyValues(): array
+    public function emptyValues(): Generator
     {
-        return [[null], ['']];
+        yield [null];
+        yield [''];
     }
 
     /**
-     * @param  mixed  $emptyValue
      * @test
-     * @dataProvider  emptyValues
+     * @dataProvider emptyValues
      */
-    public function returnsNullForEmptyValues($emptyValue): void
+    public function returnsNullForEmptyValues(?string $emptyValue): void
     {
         assertNull(span\parse($emptyValue));
     }
@@ -51,19 +51,17 @@ class FunctionsTest extends TestCase
         assertThat(span\parse('2015'), equals(new Year(2015)));
     }
 
-    /**
-     * @return  array<array<string>>
-     */
-    public function dayValues(): array
+    public function dayValues(): Generator
     {
-        return [['today'], ['tomorrow'], ['yesterday'], ['2015-03-05']];
+        yield ['today'];
+        yield ['tomorrow'];
+        yield ['yesterday'];
+        yield ['2015-03-05'];
     }
 
     /**
-     *
-     * @param  string  $dayValue
      * @test
-     * @dataProvider  dayValues
+     * @dataProvider dayValues
      */
     public function parsesDay(string $dayValue): void
     {
@@ -75,46 +73,34 @@ class FunctionsTest extends TestCase
      */
     public function parseInvalidDayThrowsInvalidArgumentException(): void
     {
-        expect(function() { span\parse('foo'); })
-            ->throws(\InvalidArgumentException::class);
+        expect(fn() => span\parse('foo'))
+            ->throws(InvalidArgumentException::class);
     }
 
-    /**
-     * @return  array<array<string>>
-     */
-    public function monthValues(): array
+    public function monthValues(): Generator
     {
-        return [['2015-03']];
+        yield ['2015-03'];
     }
 
     /**
      *
-     * @param  string  $monthValue
      * @test
-     * @dataProvider  monthValues
+     * @dataProvider monthValues
      */
     public function parsesMonth(string $monthValue): void
     {
         assertThat(span\parse($monthValue), equals(Month::fromString($monthValue)));
     }
 
-    /**
-     * @return  array<array<mixed>>
-     */
-    public function customDatespanValues(): array
+    public function customDatespanValues(): Generator
     {
-        return [
-                [new CustomDatespan('yesterday', 'tomorrow'), 'yesterday,tomorrow'],
-                [new CustomDatespan('2015-01-01', '2015-12-31'), '2015-01-01,2015-12-31']
-        ];
+        yield [new CustomDatespan('yesterday', 'tomorrow'), 'yesterday,tomorrow'];
+        yield [new CustomDatespan('2015-01-01', '2015-12-31'), '2015-01-01,2015-12-31'];
     }
 
     /**
-     *
-     * @param  \stubbles\date\span\CustomDatespan  $expected
-     * @param  string                              $value
      * @test
-     * @dataProvider  customDatespanValues
+     * @dataProvider customDatespanValues
      */
     public function parsesCustomDatespan(CustomDatespan $expected, string $value): void
     {

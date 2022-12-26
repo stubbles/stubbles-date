@@ -7,6 +7,8 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace stubbles\date\span;
+
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use stubbles\date\Date;
 
@@ -23,23 +25,23 @@ use function bovigo\assert\{
 /**
  * Tests for stubbles\date\span\Month.
  *
- * @group  date
- * @group  span
+ * @group date
+ * @group span
  */
 class YearTest extends TestCase
 {
     /**
      * @test
-     * @since  7.0.0
+     * @since 7.0.0
      */
     public function constructWithInvalidValueThrowsInvalidArgumentException(): void
     {
-        expect(function() { new Year('nope'); } )
-                ->throws(\InvalidArgumentException::class)
-                ->withMessage(
-                        'Given year "nope" can not be treated as year, should'
-                        . ' be something that can be casted to int without data loss'
-                );
+        expect(fn() => new Year('nope'))
+            ->throws(InvalidArgumentException::class)
+            ->withMessage(
+                'Given year "nope" can not be treated as year, should'
+                . ' be something that can be casted to int without data loss'
+            );
     }
 
     /**
@@ -92,14 +94,15 @@ class YearTest extends TestCase
      */
     public function dayYear(): array
     {
-        return [[new Year(2007), 365],
-                [new Year(2008), 366]
+        return [
+            [new Year(2007), 365],
+            [new Year(2008), 366]
         ];
     }
 
     /**
      * @test
-     * @dataProvider  dayYear
+     * @dataProvider dayYear
      */
     public function daysReturnsAmountOfDaysWithinYear(Year $year, int $dayCount): void
     {
@@ -115,7 +118,7 @@ class YearTest extends TestCase
     }
 
     /**
-     * @return  array<array<mixed>>
+     * @return array<array<mixed>>
      */
     public function yearMonths(): array
     {
@@ -123,9 +126,9 @@ class YearTest extends TestCase
         $expectedMonth = 1;
         foreach ((new Year(2007))->months() as $monthString => $month) {
             $return[] = [
-                    $monthString,
-                    $month,
-                    '2007-' . str_pad((string) $expectedMonth++, 2, '0', STR_PAD_LEFT)
+                $monthString,
+                $month,
+                '2007-' . str_pad((string) $expectedMonth++, 2, '0', STR_PAD_LEFT)
             ];
         }
 
@@ -134,12 +137,12 @@ class YearTest extends TestCase
 
     /**
      * @test
-     * @dataProvider  yearMonths
+     * @dataProvider yearMonths
      */
     public function monthsReturnsAllMonth(
-            string $monthString,
-            Month $month,
-            string $expectedMonth
+        string $monthString,
+        Month $month,
+        string $expectedMonth
     ): void {
         assertThat($month->asString(), equals($monthString));
         assertThat($monthString, equals($expectedMonth));
@@ -147,7 +150,7 @@ class YearTest extends TestCase
 
     /**
      * @test
-     * @since  7.0.0
+     * @since 7.0.0
      */
     public function yearMonthIsValidOnStart(): void
     {
@@ -156,7 +159,7 @@ class YearTest extends TestCase
 
     /**
      * @test
-     * @since  7.0.0
+     * @since 7.0.0
      */
     public function yearMonthIsInvalidWhenFullyIterated(): void
     {
@@ -179,7 +182,7 @@ class YearTest extends TestCase
 
     /**
      * @test
-     * @since  7.0.0
+     * @since 7.0.0
      */
     public function yearMonthCurrentReturnsFirstMonthOfYearOnStart(): void
     {
@@ -188,7 +191,7 @@ class YearTest extends TestCase
 
     /**
      * @test
-     * @since  7.0.0
+     * @since 7.0.0
      */
     public function yearMonthKeyIsStringRepresentationOfMonth(): void
     {
@@ -197,7 +200,7 @@ class YearTest extends TestCase
 
     /**
      * @test
-     * @since  7.0.0
+     * @since 7.0.0
      */
     public function yearMonthCurrentReturnsFirstMonthOfYearAfterRewind(): void
     {
@@ -252,7 +255,7 @@ class YearTest extends TestCase
     }
 
     /**
-     * @return  array<array<mixed>>
+     * @return array<array<mixed>>
      */
     public function allDays(): array
     {
@@ -270,7 +273,7 @@ class YearTest extends TestCase
 
     /**
      * @test
-     * @dataProvider  allDays
+     * @dataProvider allDays
      */
     public function doesContainAllDatesForThisYear(Year $year, int $month, int $day): void
     {
@@ -333,7 +336,7 @@ class YearTest extends TestCase
 
     /**
      * @test
-     * @since  5.3.0
+     * @since 5.3.0
      */
     public function typeIsYear(): void
     {

@@ -7,6 +7,8 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace stubbles\date\span;
+
+use Iterator;
 /**
  * Datespan with a custom start and end date.
  *
@@ -17,17 +19,15 @@ class CustomDatespan extends AbstractDatespan
     /**
      * returns list of days within this datespan
      *
-     * @return  \Iterator<string,Day>
+     * @return Iterator<string,Day>
      */
-    public function days(): \Iterator
+    public function days(): Iterator
     {
         return new Days($this);
     }
 
     /**
      * returns a string representation of the datespan
-     *
-     * @return  string
      */
     public function asString(): string
     {
@@ -37,7 +37,6 @@ class CustomDatespan extends AbstractDatespan
     /**
      * returns a short type description of the datespan
      *
-     * @return  string
      * @since   5.3.0
      */
     public function type(): string

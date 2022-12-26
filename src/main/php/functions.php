@@ -10,9 +10,7 @@ namespace stubbles\date\assert {
     /**
      * returns predicate which tests for equality of dates
      *
-     * @param   string  $expected  expected date as string
-     * @return  \stubbles\date\assert\DateEquals
-     * @since   6.0.0
+     * @since 6.0.0
      */
     function equalsDate(string $expected): DateEquals
     {
@@ -20,16 +18,17 @@ namespace stubbles\date\assert {
     }
 }
 namespace stubbles\date\span {
+
+    use InvalidArgumentException;
+
     /**
      * parses given value to a datespan instance
      *
      * If input value is empty return value will be <null>.
      *
-     * @param   string|null  $value
-     * @return  \stubbles\date\span\Datespan|null
-     * @throws  \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
-    function parse($value)
+    function parse(?string $value): ?Datespan
     {
         if (empty($value)) {
             return null;
@@ -52,8 +51,10 @@ namespace stubbles\date\span {
 
         try {
             return new Day($value);
-        } catch (\InvalidArgumentException $ex) {
-            throw new \InvalidArgumentException('Given value ' . $value . ' can not be parsed as a datespan: ' . $ex->getMessage());
+        } catch (InvalidArgumentException $ex) {
+            throw new InvalidArgumentException(
+                'Given value ' . $value . ' can not be parsed as a datespan: ' . $ex->getMessage()
+            );
         }
     }
 }

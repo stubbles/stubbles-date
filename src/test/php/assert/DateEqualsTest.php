@@ -7,6 +7,8 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace stubbles\date\assert;
+
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use SebastianBergmann\Exporter\Exporter;
 use stubbles\date\Date;
@@ -18,23 +20,16 @@ use function bovigo\assert\{
     assertTrue,
     expect,
     predicate\equals,
-    predicate\isInstanceOf,
-    predicate\isLessThanOrEqualTo,
-    predicate\isNotSameAs,
-    predicate\isSameAs
 };
 /**
  * Tests for stubbles\date\assert\DateEquals.
  *
- * @group  assert
- * @since  7.0.0
+ * @group assert
+ * @since 7.0.0
  */
 class DateEqualsTest extends TestCase
 {
-    /**
-     * @var  DateEquals
-     */
-    private $equalsDate;
+    private DateEquals $equalsDate;
 
     protected function setUp(): void
     {
@@ -46,8 +41,8 @@ class DateEqualsTest extends TestCase
      */
     public function invalidExpectedDateThrowsInvalidArgumentException(): void
     {
-        expect(function() { equalsDate('this is not a valid date'); })
-            ->throws(\InvalidArgumentException::class)
+        expect(fn() => equalsDate('this is not a valid date'))
+            ->throws(InvalidArgumentException::class)
             ->withMessage('Given value for expected "this is not a valid date" is not a valid date.');
     }
 
@@ -73,8 +68,8 @@ class DateEqualsTest extends TestCase
     public function stringRepresentationContainsExpectedValue(): void
     {
       assertThat(
-                (string) $this->equalsDate,
-                equals('is equal to date 2007-08-23T12:35:47+00:00')
+            (string) $this->equalsDate,
+            equals('is equal to date 2007-08-23T12:35:47+00:00')
         );
     }
 
@@ -83,8 +78,8 @@ class DateEqualsTest extends TestCase
      */
     public function testAgainstNonDateThrowsInvalidArgumentException(): void
     {
-        expect(function() { $this->equalsDate->test(303); })
-                ->throws(\InvalidArgumentException::class);
+        expect(fn() => $this->equalsDate->test(303))
+            ->throws(InvalidArgumentException::class);
     }
 
     /**
@@ -120,8 +115,8 @@ class DateEqualsTest extends TestCase
     {
         $this->equalsDate->test(new Date('2007-08-23T12:35:47+00:00'));
         assertThat(
-                (string) $this->equalsDate,
-                equals('is equal to date 2007-08-23T12:35:47+00:00')
+            (string) $this->equalsDate,
+            equals('is equal to date 2007-08-23T12:35:47+00:00')
         );
     }
 
@@ -149,8 +144,8 @@ class DateEqualsTest extends TestCase
     {
         $this->equalsDate->test(new Date('2007-08-23T12:35:47+01:00'));
         assertThat(
-                $this->equalsDate->diffForLastFailure(),
-                equals("
+            $this->equalsDate->diffForLastFailure(),
+            equals("
 --- Expected
 +++ Actual
 @@ @@
@@ -167,8 +162,8 @@ class DateEqualsTest extends TestCase
     {
         $this->equalsDate->test(new Date('2007-08-23T12:35:47+01:00'));
         assertThat(
-                (string) $this->equalsDate,
-                equals("is equal to date 2007-08-23T12:35:47+00:00.
+            (string) $this->equalsDate,
+            equals("is equal to date 2007-08-23T12:35:47+00:00.
 --- Expected
 +++ Actual
 @@ @@
@@ -184,11 +179,11 @@ class DateEqualsTest extends TestCase
     public function describeValueForDateReturnsFormattedDateString(): void
     {
       assertThat(
-            $this->equalsDate->describeValue(
-                    new Exporter(),
-                    new Date('2007-08-23T12:35:47+01:00')
-            ),
-            equals('date 2007-08-23T12:35:47+01:00')
+        $this->equalsDate->describeValue(
+            new Exporter(),
+            new Date('2007-08-23T12:35:47+01:00')
+        ),
+        equals('date 2007-08-23T12:35:47+01:00')
         );
     }
 
@@ -197,7 +192,7 @@ class DateEqualsTest extends TestCase
      */
     public function describeValueForNonDateReturnsParentFormat(): void
     {
-      assertThat(
+        assertThat(
             $this->equalsDate->describeValue(new Exporter(), 'foo'),
             equals("'foo'")
         );

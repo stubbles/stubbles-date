@@ -7,6 +7,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace stubbles\date\span;
+
+use DateTime;
+use Iterator;
 use stubbles\date\Date;
 /**
  * Datespan that represents a single day.
@@ -17,17 +20,10 @@ class Day extends AbstractDatespan implements Datespan
 {
     /**
      * original date
-     *
-     * @var  \stubbles\date\Date
      */
-    private $date;
+    private Date $date;
 
-    /**
-     * constructor
-     *
-     * @param  int|string|\DateTime|\stubbles\date\Date  $day  day that the span covers
-     */
-    public function __construct($day = null)
+    public function __construct(int|string|DateTime|Date $day = null)
     {
         $this->date = ((null === $day) ? (Date::now()) : (Date::castFrom($day, 'day')));
         parent::__construct($this->date, $this->date);
@@ -36,8 +32,7 @@ class Day extends AbstractDatespan implements Datespan
     /**
      * create instance for tomorrow
      *
-     * @return  \stubbles\date\span\Day
-     * @since   3.5.1
+     * @since 3.5.1
      */
     public static function tomorrow(): self
     {
@@ -47,8 +42,7 @@ class Day extends AbstractDatespan implements Datespan
     /**
      * create instance for yesterday
      *
-     * @return  \stubbles\date\span\Day
-     * @since   3.5.1
+     * @since 3.5.1
      */
     public static function yesterday(): self
     {
@@ -58,8 +52,7 @@ class Day extends AbstractDatespan implements Datespan
     /**
      * returns next day
      *
-     * @return  \stubbles\date\span\Day
-     * @since   5.2.0
+     * @since 5.2.0
      */
     public function next(): self
     {
@@ -69,8 +62,7 @@ class Day extends AbstractDatespan implements Datespan
     /**
      * returns the day before
      *
-     * @return  \stubbles\date\span\Day
-     * @since   5.2.0
+     * @since 5.2.0
      */
     public function before(): self
     {
@@ -81,8 +73,6 @@ class Day extends AbstractDatespan implements Datespan
      * returns amount of days on this day
      *
      * Well, the amount of days on a day is obviously always one.
-     *
-     * @return  int
      */
     public function amountOfDays(): int
     {
@@ -92,17 +82,15 @@ class Day extends AbstractDatespan implements Datespan
     /**
      * returns list of days
      *
-     * @return  \Iterator<string,Day>
+     * @return Iterator<string,Day>
      */
-    public function days(): \Iterator
+    public function days(): Iterator
     {
         return new Days($this);
     }
 
     /**
      * checks if it represents the current day
-     *
-     * @return  bool
      */
     public function isToday(): bool
     {
@@ -111,8 +99,6 @@ class Day extends AbstractDatespan implements Datespan
 
     /**
      * returns a string representation of the day
-     *
-     * @return  string
      */
     public function asString(): string
     {
@@ -121,10 +107,8 @@ class Day extends AbstractDatespan implements Datespan
 
     /**
      * returns number of current day within month
-     *
-     * @return  int
      */
-    public function asInt()
+    public function asInt(): int
     {
         return (int) $this->date->format('d');
     }
@@ -136,9 +120,8 @@ class Day extends AbstractDatespan implements Datespan
      * on your format string.
      *
      * @param   string  $format  format, see http://php.net/date
-     * @return  string
      */
-    public function format($format)
+    public function format($format): string
     {
         return $this->date->format($format);
     }
@@ -146,10 +129,9 @@ class Day extends AbstractDatespan implements Datespan
     /**
      * returns a short type description of the datespan
      *
-     * @return  string
-     * @since   5.3.0
+     * @since 5.3.0
      */
-    public function type()
+    public function type(): string
     {
         return 'day';
     }

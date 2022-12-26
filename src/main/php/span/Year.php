@@ -7,6 +7,10 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace stubbles\date\span;
+
+use DateTime;
+use InvalidArgumentException;
+use Iterator;
 use stubbles\date\Date;
 /**
  * Datespan that represents a month.
@@ -15,36 +19,30 @@ use stubbles\date\Date;
  */
 class Year extends CustomDatespan
 {
-    /**
-     * the represented year
-     *
-     * @var  int
-     */
-    private $year;
+    private int $year;
 
     /**
      * constructor
      *
      * If no value for the year is supplied the current year will be used.
      *
-     * @param   int|string  $year   year of the span
-     * @throws  \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
-    public function __construct($year = null)
+    public function __construct(int|string $year = null)
     {
         if (null === $year) {
             $year = date('Y');
         } elseif (!ctype_digit($year)) {
-            throw new \InvalidArgumentException(
-                    'Given year "' . $year . '" can not be treated as year, should'
-                    . ' be something that can be casted to int without data loss'
+            throw new InvalidArgumentException(
+                'Given year "' . $year . '" can not be treated as year, should'
+                . ' be something that can be casted to int without data loss'
             );
         }
 
-        $start = new \DateTime();
+        $start = new DateTime();
         $start->setDate((int) $year, 1, 1);
         $start->setTime(0, 0, 0);
-        $end = new \DateTime();
+        $end = new DateTime();
         $end->setDate((int) $year, 12, (int) $start->format('t'));
         $end->setTime(23, 59, 59);
         parent::__construct(new Date($start), new Date($end));
@@ -53,8 +51,6 @@ class Year extends CustomDatespan
 
     /**
      * returns amount of days in this year
-     *
-     * @return  int
      */
     public function amountOfDays(): int
     {
@@ -67,18 +63,14 @@ class Year extends CustomDatespan
 
     /**
      * returns list of months for this year
-     *
-     * @return  \stubbles\date\span\Months
      */
-    public function months(): \Iterator
+    public function months(): Iterator
     {
         return new Months($this);
     }
 
     /**
-     * checks whether year is a leap year
-     *
-     * @return  bool
+     * checks whether year is a leap years
      */
     public function isLeapYear(): bool
     {
@@ -87,8 +79,6 @@ class Year extends CustomDatespan
 
     /**
      * checks if represented year is current year
-     *
-     * @return  bool
      */
     public function isCurrentYear(): bool
     {
@@ -98,8 +88,7 @@ class Year extends CustomDatespan
     /**
      * returns int representation of the year
      *
-     * @return  int
-     * @since   5.2.0
+     * @since 5.2.0
      */
     public function asInt(): int
     {
@@ -108,8 +97,6 @@ class Year extends CustomDatespan
 
     /**
      * returns a string representation of the year
-     *
-     * @return  string
      */
     public function asString(): string
     {
@@ -119,8 +106,7 @@ class Year extends CustomDatespan
     /**
      * returns a short type description of the datespan
      *
-     * @return  string
-     * @since   5.3.0
+     * @since 5.3.0
      */
     public function type(): string
     {

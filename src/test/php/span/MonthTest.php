@@ -7,6 +7,8 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace stubbles\date\span;
+
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use stubbles\date\Date;
 
@@ -22,8 +24,8 @@ use function bovigo\assert\{
 /**
  * Tests for stubbles\date\span\Month.
  *
- * @group  date
- * @group  span
+ * @group date
+ * @group span
  */
 class MonthTest extends TestCase
 {
@@ -100,18 +102,17 @@ class MonthTest extends TestCase
      */
     public function dayMonth(): array
     {
-        return [[new Month(2007, 4), 30],
-                [new Month(2007, 3), 31],
-                [new Month(2007, 2), 28],
-                [new Month(2008, 2), 29]
+        return [
+            [new Month(2007, 4), 30],
+            [new Month(2007, 3), 31],
+            [new Month(2007, 2), 28],
+            [new Month(2008, 2), 29]
         ];
     }
 
     /**
-     * @param  \stubbles\date\span\Month  $month     month to get days for
-     * @param  int                        $dayCount  amount of days in this month
      * @test
-     * @dataProvider  dayMonth
+     * @dataProvider dayMonth
      */
     public function amountOfDaysIsAlwaysCorrect(Month $month, int $dayCount): void
     {
@@ -128,10 +129,10 @@ class MonthTest extends TestCase
         $expectedDay = 1;
         foreach ((new Month(2007, 3))->days() as $dayString => $day) {
             $return[] = [
-                    $dayString,
-                    '2007-03-' . str_pad((string) $expectedDay, 2, '0', STR_PAD_LEFT),
-                    $day,
-                    $expectedDay++
+                $dayString,
+                '2007-03-' . str_pad((string) $expectedDay, 2, '0', STR_PAD_LEFT),
+                $day,
+                $expectedDay++
             ];
         }
 
@@ -140,13 +141,13 @@ class MonthTest extends TestCase
 
     /**
      * @test
-     * @dataProvider  monthDays
+     * @dataProvider monthDays
      */
     public function daysReturnsAllDaysInMonth(
-            string $dayString,
-            string $expectedString,
-            Day $day,
-            int $expectedDay
+        string $dayString,
+        string $expectedString,
+        Day $day,
+        int $expectedDay
     ): void {
         assertThat($dayString, equals($expectedString));
         assertThat($day->asInt(), equals($expectedDay));
@@ -195,11 +196,8 @@ class MonthTest extends TestCase
     {
         $month = new Month(2007, 4);
         assertThat(
-                range(1, 30),
-                each(function($day) use($month)
-                {
-                    return $month->containsDate(new Date('2007-04-' . $day));
-                })
+            range(1, 30),
+            each(fn($day) => $month->containsDate(new Date('2007-04-' . $day)))
         );
     }
 
@@ -241,7 +239,7 @@ class MonthTest extends TestCase
 
     /**
      * @test
-     * @since  3.5.1
+     * @since 3.5.1
      */
     public function lastCreatesInstanceWhichIsNotCurrentMonth(): void
     {
@@ -250,19 +248,19 @@ class MonthTest extends TestCase
 
     /**
      * @test
-     * @since  3.5.1
+     * @since 3.5.1
      */
     public function lastCreatesInstanceForPreviousMonth(): void
     {
         assertThat(
-                Month::last()->asString(),
-                equals(date('Y') . '-'. date('m', strtotime('first day of previous month')))
+            Month::last()->asString(),
+            equals(date('Y') . '-'. date('m', strtotime('first day of previous month')))
         );
     }
 
     /**
      * @test
-     * @since  3.5.2
+     * @since 3.5.2
      */
     public function createFromStringParsesStringToCreateInstance(): void
     {
@@ -275,11 +273,11 @@ class MonthTest extends TestCase
     public function invalidMonthStrings(): array
     {
         return [
-                ['invalid', 'Can not parse month from string "invalid", format should be "YYYY-MM"'],
-                ['in-10', 'Detected value in for year is not a valid year.'],
-                ['2016-in', 'Detected value in for month is not a valid month.'],
-                ['2016-0', 'Detected value 0 for month is not a valid month.'],
-                ['2016-13', 'Detected value 13 for month is not a valid month.']
+            ['invalid', 'Can not parse month from string "invalid", format should be "YYYY-MM"'],
+            ['in-10', 'Detected value in for year is not a valid year.'],
+            ['2016-in', 'Detected value in for month is not a valid month.'],
+            ['2016-0', 'Detected value 0 for month is not a valid month.'],
+            ['2016-13', 'Detected value 13 for month is not a valid month.']
         ];
     }
 
@@ -289,17 +287,17 @@ class MonthTest extends TestCase
      * @since  3.5.3
      */
     public function createFromInvalidStringThrowsInvalidArgumentException(
-            string $invalid,
-            string $expectedExceptionMessage
+        string $invalid,
+        string $expectedExceptionMessage
     ): void {
-         expect(function() use ($invalid) { Month::fromString($invalid); })
-                ->throws(\InvalidArgumentException::class)
-                ->withMessage($expectedExceptionMessage);
+         expect(fn() => Month::fromString($invalid))
+            ->throws(InvalidArgumentException::class)
+            ->withMessage($expectedExceptionMessage);
     }
 
     /**
      * @test
-     * @since  5.2.0
+     * @since 5.2.0
      */
     public function nextMonthRaisesYearForDecember(): void
     {
@@ -309,7 +307,7 @@ class MonthTest extends TestCase
 
     /**
      * @test
-     * @since  5.2.0
+     * @since 5.2.0
      */
     public function beforeMonthLowersYearForJanuary(): void
     {
@@ -319,7 +317,7 @@ class MonthTest extends TestCase
 
     /**
      * @test
-     * @since  5.3.0
+     * @since 5.3.0
      */
     public function typeIsMonth(): void
     {
@@ -328,7 +326,7 @@ class MonthTest extends TestCase
 
     /**
      * @test
-     * @since  5.5.0
+     * @since 5.5.0
      */
     public function currentOrLastReturnsCurrentWhenTodayIsNotFirstOfMonth(): void
     {
@@ -338,7 +336,7 @@ class MonthTest extends TestCase
 
     /**
      * @test
-     * @since  7.0.0
+     * @since 7.0.0
      */
     public function currentOrLastReturnsLastWhenTodayIsFirstOfMonth(): void
     {

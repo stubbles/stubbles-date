@@ -7,6 +7,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace stubbles\date\span;
+
+use DateTime;
+use InvalidArgumentException;
 use stubbles\date\Date;
 /**
  * Datespan that represents a week.
@@ -15,12 +18,7 @@ use stubbles\date\Date;
  */
 class Week extends CustomDatespan
 {
-    /**
-     * constructor
-     *
-     * @param  int|string|\DateTime|\stubbles\date\Date  $startOfWeek  first day of the week
-     */
-    public function __construct($startOfWeek)
+    public function __construct(int|string|DateTime|Date $startOfWeek)
     {
         $date = Date::castFrom($startOfWeek);
         parent::__construct($date, $date->change()->to('+ 6 days'));
@@ -29,17 +27,17 @@ class Week extends CustomDatespan
     /**
      * create instance from given string, i.e. Week::fromString('2014-W05')
      *
-     * @param   string  $input
-     * @return  \stubbles\date\span\Week
-     * @throws  \InvalidArgumentException
-     * @since   5.3.0
+     * @throws InvalidArgumentException
+     * @since  5.3.0
      */
     public static function fromString(string $input): self
     {
         $data = explode('-', $input);
         $week = strtotime($input);
         if (!isset($data[0]) || !isset($data[1]) || false === $week) {
-            throw new \InvalidArgumentException('Can not parse week from string "' . $input . '", format should be "YYYY-Www"');
+            throw new InvalidArgumentException(
+                'Can not parse week from string "' . $input . '", format should be "YYYY-Www"'
+            );
         }
 
         $self = new self($week);
@@ -48,8 +46,6 @@ class Week extends CustomDatespan
 
     /**
      * returns number of the week
-     *
-     * @return  int
      */
     public function number(): int
     {
@@ -58,8 +54,6 @@ class Week extends CustomDatespan
 
     /**
      * returns amount of days in this datespan
-     *
-     * @return  int
      */
     public function amountOfDays(): int
     {
@@ -68,8 +62,6 @@ class Week extends CustomDatespan
 
     /**
      * returns a string representation for the week
-     *
-     * @return  string
      */
     public function asString(): string
     {
@@ -79,8 +71,7 @@ class Week extends CustomDatespan
     /**
      * returns a short type description of the datespan
      *
-     * @return  string
-     * @since   5.3.0
+     * @since 5.3.0
      */
     public function type(): string
     {

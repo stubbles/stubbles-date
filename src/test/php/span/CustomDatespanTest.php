@@ -21,8 +21,8 @@ use function bovigo\assert\{
 /**
  * Tests for stubbles\date\span\CustomDatespan.
  *
- * @group  date
- * @group  span
+ * @group date
+ * @group span
  */
 class CustomDatespanTest extends TestCase
 {
@@ -35,8 +35,8 @@ class CustomDatespanTest extends TestCase
         $startDate      = $customDatespan->start();
         assertThat($startDate, isInstanceOf(Date::class));
         assertThat(
-                $startDate->asString(),
-                equals('2006-04-04 00:00:00' . $startDate->offset())
+            $startDate->asString(),
+            equals('2006-04-04 00:00:00' . $startDate->offset())
         );
     }
 
@@ -49,8 +49,8 @@ class CustomDatespanTest extends TestCase
         $endDate        = $customDatespan->end();
         assertThat($endDate, isInstanceOf(Date::class));
         assertThat(
-                $endDate->asString(),
-                equals('2006-04-20 23:59:59' . $endDate->offset())
+            $endDate->asString(),
+            equals('2006-04-20 23:59:59' . $endDate->offset())
         );
     }
 
@@ -60,13 +60,13 @@ class CustomDatespanTest extends TestCase
     public function startDateIsSetToMidnight(): void
     {
         $customDatespan = new CustomDatespan(
-                new Date('2006-04-04'),
-                new Date('2006-04-20')
+            new Date('2006-04-04'),
+            new Date('2006-04-20')
         );
         $startDate = $customDatespan->start();
         assertThat(
-                $startDate->asString(),
-                equals('2006-04-04 00:00:00' . $startDate->offset())
+            $startDate->asString(),
+            equals('2006-04-04 00:00:00' . $startDate->offset())
         );
     }
 
@@ -76,13 +76,13 @@ class CustomDatespanTest extends TestCase
     public function endDateIsSetToMidnight(): void
     {
         $customDatespan = new CustomDatespan(
-                new Date('2006-04-04'),
-                new Date('2006-04-20')
+            new Date('2006-04-04'),
+            new Date('2006-04-20')
         );
         $endDate = $customDatespan->end();
         assertThat(
-                $endDate->asString(),
-                equals('2006-04-20 23:59:59' . $endDate->offset())
+            $endDate->asString(),
+            equals('2006-04-20 23:59:59' . $endDate->offset())
         );
     }
 
@@ -162,11 +162,8 @@ class CustomDatespanTest extends TestCase
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
         assertThat(
-                range(4, 20),
-                each(function($day) use($customDatespan)
-                {
-                    return $customDatespan->containsDate(new Date('2006-04-' . $day));
-                })
+            range(4, 20),
+            each(fn($day) => $customDatespan->containsDate(new Date('2006-04-' . $day)))
         );
     }
 
@@ -221,7 +218,7 @@ class CustomDatespanTest extends TestCase
 
     /**
      * @test
-     * @since  3.5.0
+     * @since 3.5.0
      */
     public function startsBeforeChecksStartDate(): void
     {
@@ -231,7 +228,7 @@ class CustomDatespanTest extends TestCase
 
     /**
      * @test
-     * @since  3.5.0
+     * @since 3.5.0
      */
     public function startsAfterChecksStartDate(): void
     {
@@ -241,7 +238,7 @@ class CustomDatespanTest extends TestCase
 
     /**
      * @test
-     * @since  3.5.0
+     * @since 3.5.0
      */
     public function endsBeforeChecksStartDate(): void
     {
@@ -251,7 +248,7 @@ class CustomDatespanTest extends TestCase
 
     /**
      * @test
-     * @since  3.5.0
+     * @since 3.5.0
      */
     public function endsAfterChecksStartDate(): void
     {
@@ -261,7 +258,7 @@ class CustomDatespanTest extends TestCase
 
     /**
      * @test
-     * @since  3.5.0
+     * @since 3.5.0
      */
     public function formatStartReturnsFormattedStartDate(): void
     {
@@ -271,7 +268,7 @@ class CustomDatespanTest extends TestCase
 
     /**
      * @test
-     * @since  3.5.0
+     * @since 3.5.0
      */
     public function formatEndReturnsFormattedStartDate(): void
     {
@@ -281,7 +278,7 @@ class CustomDatespanTest extends TestCase
 
     /**
      * @test
-     * @since  7.0.0
+     * @since 7.0.0
      */
     public function typeIsCustom(): void
     {

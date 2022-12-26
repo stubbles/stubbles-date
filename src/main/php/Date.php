@@ -23,12 +23,7 @@ use InvalidArgumentException;
  */
 class Date
 {
-    /**
-     * internal date/time handle
-     *
-     * @var  \DateTime
-     */
-    protected $dateTime;
+    protected DateTime $dateTime;
 
     /**
      * constructor
@@ -86,9 +81,6 @@ class Date
 
     /**
      * returns current date/time
-     *
-     * @param   \stubbles\date\TimeZone  $timeZone  initial timezone
-     * @return  \stubbles\date\Date
      */
     public static function now(TimeZone $timeZone = null): self
     {
@@ -98,36 +90,24 @@ class Date
     /**
      * casts given value to an instance of Date
      *
-     * @param   int|string|\DateTime|Date  $value
-     * @param   string                     $name
-     * @return  \stubbles\date\Date
-     * @throws  \InvalidArgumentException
-     * @since   3.4.4
+     * @throws InvalidArgumentException
+     * @since  3.4.4
      */
-    public static function castFrom($value, string $name = 'Date'): self
+    public static function castFrom(int|string|DateTime|self $value): self
     {
-        if (is_int($value) || is_string($value) || $value instanceof \DateTime) {
-            return new self($value);
+        if ($value instanceof self) {
+            return $value;
         }
 
-        if (!($value instanceof Date)) {
-            throw new \InvalidArgumentException(
-                    $name . ' must be a timestamp, a string containing time info'
-                    . ' or an instance of \DateTime or ' . __CLASS__
-                    . ', but was ' . gettype($value)
-            );
-        }
-
-        return $value;
+        return new self($value);
     }
 
     /**
      * returns internal date/time handle
      *
-     * @return  \DateTime
      * @XmlIgnore
      */
-    public function handle(): \DateTime
+    public function handle(): DateTime
     {
         return clone $this->dateTime;
     }
@@ -135,7 +115,6 @@ class Date
     /**
      * returns way to change the date to another
      *
-     * @return  \stubbles\date\DateModifier
      * @XmlIgnore
      */
     public function change(): DateModifier
@@ -146,7 +125,6 @@ class Date
     /**
      * returns timestamp for this date/time
      *
-     * @return  int
      * @XmlIgnore
      */
     public function timestamp(): int
@@ -157,7 +135,6 @@ class Date
     /**
      * returns seconds of current date/time
      *
-     * @return  int
      * @XmlIgnore
      */
     public function seconds(): int
@@ -168,7 +145,6 @@ class Date
     /**
      * returns minutes of current date/time
      *
-     * @return  int
      * @XmlIgnore
      */
     public function minutes(): int
@@ -179,7 +155,6 @@ class Date
     /**
      * returns hours of current date/time
      *
-     * @return  int
      * @XmlIgnore
      */
     public function hours(): int
@@ -190,7 +165,6 @@ class Date
     /**
      * returns day of current date/time
      *
-     * @return  int
      * @XmlIgnore
      */
     public function day(): int
@@ -201,7 +175,6 @@ class Date
     /**
      * returns month of current date/time
      *
-     * @return  int
      * @XmlIgnore
      */
     public function month(): int
@@ -212,7 +185,6 @@ class Date
     /**
      * returns year of current date/time
      *
-     * @return  int
      * @XmlIgnore
      */
     public function year(): int
@@ -223,7 +195,6 @@ class Date
     /**
      * returns offset to UTC in "+MMSS" notation
      *
-     * @return  string
      * @XmlIgnore
      */
     public function offset(): string
@@ -234,7 +205,6 @@ class Date
     /**
      * returns offset to UTC in seconds
      *
-     * @return  int
      * @XmlIgnore
      */
     public function offsetInSeconds(): int
@@ -244,22 +214,16 @@ class Date
 
     /**
      * checks whether this date is before a given date
-     *
-     * @param   int|string|\DateTime|\stubbles\date\Date  $date
-     * @return  bool
      */
-    public function isBefore($date): bool
+    public function isBefore(int|string|DateTime|self $date): bool
     {
         return $this->timestamp() < self::castFrom($date, 'date')->timestamp();
     }
 
     /**
      * checks whether this date is after a given date
-     *
-     * @param   int|string|\DateTime|\stubbles\date\Date  $date
-     * @return  bool
      */
-    public function isAfter($date): bool
+    public function isAfter(int|string|DateTime|self $date): bool
     {
         return $this->timestamp() > self::castFrom($date, 'date')->timestamp();
     }
@@ -267,7 +231,6 @@ class Date
     /**
      * returns time zone of this date
      *
-     * @return  \stubbles\date\TimeZone
      * @XmlIgnore
      */
     public function timeZone(): TimeZone
@@ -278,7 +241,6 @@ class Date
     /**
      * returns date as string
      *
-     * @return  string
      * @XmlAttribute(attributeName='value')
      */
     public function asString(): string
@@ -289,9 +251,7 @@ class Date
     /**
      * returns formatted date/time string
      *
-     * @param   string                   $format    format, see http://php.net/date
-     * @param   \stubbles\date\TimeZone  $timeZone  target time zone of formatted string
-     * @return  string
+     * @see http://php.net/date for format strings
      */
     public function format(string $format, TimeZone $timeZone = null): string
     {
@@ -304,11 +264,8 @@ class Date
 
     /**
      * checks whether a value is equal to the class
-     *
-     * @param   mixed  $compare
-     * @return  bool
      */
-    public function equals($compare): bool
+    public function equals(mixed $compare): bool
     {
         if ($compare instanceof self) {
             return ($this->timestamp() === $compare->timestamp());
@@ -319,8 +276,6 @@ class Date
 
     /**
      * returns a string representation of the class
-     *
-     * @return  string
      */
     public function __toString(): string
     {

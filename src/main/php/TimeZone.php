@@ -7,6 +7,10 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace stubbles\date;
+
+use DateTime;
+use DateTimeZone;
+use InvalidArgumentException;
 /**
  * Class for time zone handling.
  *
@@ -19,51 +23,35 @@ class TimeZone
 {
     /**
      * internal time zone handle
-     *
-     * @var  \DateTimeZone
      */
-    protected $timeZone;
+    protected DateTimeZone $timeZone;
 
-    /**
-     * constructor
-     *
-     * Time zone can be a string like 'Europe/Berlin', a DateTimeZone instance
-     * or null.
-     *
-     * @param   string|\DateTimeZone  $timeZone  initial timezone handle
-     * @throws  \InvalidArgumentException
-     */
-    public function __construct($timeZone = null)
+    public function __construct(string|DateTimeZone $timeZone = null)
     {
         if (is_string($timeZone)) {
-            $this->timeZone = @timezone_open($timeZone);
+            $timeZone = @timezone_open($timeZone);
+            if (!($timeZone instanceof DateTimeZone)) {
+                throw new InvalidArgumentException(
+                    'Invalid time zone identifier ' . var_export($timeZone, true)
+                );
+            }
         } elseif (null === $timeZone) {
-            $this->timeZone = timezone_open(date_default_timezone_get());
-        } else {
-            $this->timeZone = $timeZone;
+            $timeZone = timezone_open(date_default_timezone_get());
         }
 
-        if (!($this->timeZone instanceof \DateTimeZone)) {
-            throw new \InvalidArgumentException(
-                    'Invalid time zone identifier ' . var_export($timeZone, true)
-            );
-        }
+        $this->timeZone = $timeZone;
     }
 
     /**
      * returns internal time zone handle
-     *
-     * @return  \DateTimeZone
      */
-    public function handle(): \DateTimeZone
+    public function handle(): DateTimeZone
     {
         return clone $this->timeZone;
     }
 
     /**
      * returns name of time zone
-     *
-     * @return  string
      */
     public function name(): string
     {
@@ -73,10 +61,9 @@ class TimeZone
     /**
      * returns offset of the time zone
      *
-     * @param   int|string|\DateTime|\stubbles\date\Date  $date  defaults to current date
-     * @return  string
+     * If no date is passed 'now' will be used.
      */
-    public function offset($date = null): string
+    public function offset(int|string|DateTime|Date $date = null): string
     {
         $offset  = $this->offsetInSeconds($date);
         $hours   = intval(abs($offset) / 3600);
@@ -87,17 +74,16 @@ class TimeZone
     /**
      * returns offset to given date in seconds
      *
+     * If no date is passed 'now' will be used.
+     *
      * Because a timezone may have different offsets when its in DST or non-DST
      * mode, a date object must be given which is used to determine whether DST
      * or non-DST offset should be returned.
-     *
-     * @param   int|string|\DateTime|\stubbles\date\Date  $date  defaults to current date
-     * @return  int
      */
-    public function offsetInSeconds($date = null): int
+    public function offsetInSeconds(int|string|DateTime|Date $date = null): int
     {
         if (null === $date) {
-            return $this->timeZone->getOffset(new \DateTime('now'));
+            return $this->timeZone->getOffset(new DateTime('now'));
         }
 
         return $this->timeZone->getOffset(Date::castFrom($date)->handle());
@@ -105,8 +91,6 @@ class TimeZone
 
     /**
      * checks whether time zone as dst mode or not
-     *
-     * @return  bool
      */
     public function hasDst(): bool
     {
@@ -118,11 +102,8 @@ class TimeZone
      * translates a date from one timezone to a date of this timezone
      *
      * A new date instance will be returned while the given date is not changed.
-     *
-     * @param   int|string|\DateTime|\stubbles\date\Date  $date
-     * @return  \stubbles\date\Date
      */
-    public function translate($date): Date
+    public function translate(int|string|DateTime|Date $date): Date
     {
         $handle = Date::castFrom($date)->handle();
         $handle->setTimezone($this->timeZone);
@@ -131,11 +112,8 @@ class TimeZone
 
     /**
      * checks whether a value is equal to the class
-     *
-     * @param   mixed  $compare
-     * @return  bool
      */
-    public function equals($compare): bool
+    public function equals(mixed $compare): bool
     {
         if ($compare instanceof self) {
             return ($this->name() === $compare->name());
@@ -146,8 +124,6 @@ class TimeZone
 
     /**
      * returns a string representation of the class
-     *
-     * @return  string
      */
     public function __toString(): string
     {

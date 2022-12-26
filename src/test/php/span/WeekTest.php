@@ -7,6 +7,8 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace stubbles\date\span;
+
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use stubbles\date\Date;
 
@@ -22,8 +24,8 @@ use function bovigo\assert\{
 /**
  * Tests for stubbles\date\span\Week.
  *
- * @group  date
- * @group  span
+ * @group date
+ * @group span
  */
 class WeekTest extends TestCase
 {
@@ -46,10 +48,10 @@ class WeekTest extends TestCase
         $expectedDay = 14;
         foreach ((new Week('2007-05-14'))->days() as $dayString => $day) {
             $return[] = [
-                    $dayString,
-                    '2007-05-' . $expectedDay,
-                    $day,
-                    $expectedDay++
+                $dayString,
+                '2007-05-' . $expectedDay,
+                $day,
+                $expectedDay++
             ];
         }
 
@@ -58,13 +60,13 @@ class WeekTest extends TestCase
 
     /**
      * @test
-     * @dataProvider  weekDays
+     * @dataProvider weekDays
      */
     public function daysReturnsAllSevenDays(
-            string $dayString,
-            string $expectedString,
-            Day $day,
-            int $expectedDay
+        string $dayString,
+        string $expectedString,
+        Day $day,
+        int $expectedDay
     ): void {
         assertThat($dayString, equals($expectedString));
         assertThat($day->asInt(), equals($expectedDay));
@@ -113,11 +115,8 @@ class WeekTest extends TestCase
     {
         $week = new Week('2009-01-05');
         assertThat(
-                range(5, 11),
-                each(function($day) use($week)
-                {
-                    return $week->containsDate(new Date('2009-01-' . $day));
-                })
+            range(5, 11),
+            each(fn($day) => $week->containsDate(new Date('2009-01-' . $day)))
         );
     }
 
@@ -150,7 +149,7 @@ class WeekTest extends TestCase
 
     /**
      * @test
-     * @since  5.3.0
+     * @since 5.3.0
      */
     public function numberReturnsNumberOfWeek(): void
     {
@@ -160,7 +159,7 @@ class WeekTest extends TestCase
 
     /**
      * @test
-     * @since  5.3.0
+     * @since 5.3.0
      */
     public function createFromStringParsesStringToCreateInstance(): void
     {
@@ -169,7 +168,7 @@ class WeekTest extends TestCase
 
     /**
      * @test
-     * @since  5.3.0
+     * @since 5.3.0
      */
     public function createFromInvalidStringThrowsInvalidArgumentException(): void
     {
@@ -179,17 +178,17 @@ class WeekTest extends TestCase
 
     /**
      * @test
-     * @since  5.3.0
+     * @since 5.3.0
      */
     public function createFromInvalidWeekNumberThrowsInvalidArgumentException(): void
     {
-         expect(function() { Week::fromString('2014-W63'); })
-                ->throws(\InvalidArgumentException::class);
+         expect(fn() => Week::fromString('2014-W63'))
+            ->throws(InvalidArgumentException::class);
     }
 
     /**
      * @test
-     * @since  5.3.0
+     * @since 5.3.0
      */
     public function typeIsWeek(): void
     {

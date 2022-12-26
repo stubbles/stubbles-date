@@ -8,6 +8,8 @@ declare(strict_types=1);
 
  */
 namespace stubbles\date\span;
+
+use DateTime;
 use stubbles\date\Date;
 use stubbles\date\TimeZone;
 /**
@@ -17,35 +19,19 @@ use stubbles\date\TimeZone;
  */
 abstract class AbstractDatespan implements Datespan
 {
-    /**
-     * start date of the span
-     *
-     * @var  \stubbles\date\Date
-     */
-    private $start;
-    /**
-     * end date of the span
-     *
-     * @var  \stubbles\date\Date
-     */
-    private $end;
+    private Date $start;
+    private Date $end;
 
-    /**
-     * constructor
-     *
-     * @param  int|string|\DateTime|\stubbles\date\Date  $start  start date of the span
-     * @param  int|string|\DateTime|\stubbles\date\Date  $end    end date of the span
-     */
-    public function __construct($start, $end)
-    {
+    public function __construct(
+        int|string|DateTime|Date $start,
+        int|string|DateTime|Date $end
+    ) {
         $this->start = Date::castFrom($start, 'start')->change()->timeTo('00:00:00');
         $this->end   = Date::castFrom($end, 'end')->change()->timeTo('23:59:59');
     }
 
     /**
      * returns the start date
-     *
-     * @return  \stubbles\date\Date
      */
     public function start(): Date
     {
@@ -55,11 +41,9 @@ abstract class AbstractDatespan implements Datespan
     /**
      * checks whether datespan starts before a given date
      *
-     * @param   int|string|\DateTime|\stubbles\date\Date  $date
-     * @return  bool
-     * @since   3.5.0
+     * @since 3.5.0
      */
-    public function startsBefore($date): bool
+    public function startsBefore(int|string|DateTime|Date $date): bool
     {
         return $this->start->isBefore($date);
     }
@@ -67,19 +51,15 @@ abstract class AbstractDatespan implements Datespan
     /**
      * checks whether datespan starts after a given date
      *
-     * @param   int|string|\DateTime|\stubbles\date\Date  $date
-     * @return  bool
-     * @since   3.5.0
+     * @since 3.5.0
      */
-    public function startsAfter($date): bool
+    public function startsAfter(int|string|DateTime|Date $date): bool
     {
         return $this->start->isAfter($date);
     }
 
     /**
      * returns the end date
-     *
-     * @return  \stubbles\date\Date
      */
     public function end(): Date
     {
@@ -89,11 +69,9 @@ abstract class AbstractDatespan implements Datespan
     /**
      * checks whether datespan ends before a given date
      *
-     * @param   int|string|\DateTime|\stubbles\date\Date  $date
-     * @return  bool
-     * @since   3.5.0
+     * @since 3.5.0
      */
-    public function endsBefore($date): bool
+    public function endsBefore(int|string|DateTime|Date $date): bool
     {
         return $this->end->isBefore($date);
     }
@@ -101,11 +79,9 @@ abstract class AbstractDatespan implements Datespan
     /**
      * checks whether datespan ends after a given date
      *
-     * @param   int|string|\DateTime|\stubbles\date\Date  $date
-     * @return  bool
-     * @since   3.5.0
+     * @since 3.5.0
      */
-    public function endsAfter($date): bool
+    public function endsAfter(int|string|DateTime|Date $date): bool
     {
         return $this->end->isAfter($date);
     }
@@ -114,9 +90,7 @@ abstract class AbstractDatespan implements Datespan
      * returns formatted date/time string for start date
      *
      * @param   string                   $format    format, see http://php.net/date
-     * @param   \stubbles\date\TimeZone  $timeZone  target time zone of formatted string
-     * @return  string
-     * @since   3.5.0
+     * @since 3.5.0
      */
     public function formatStart(string $format, TimeZone $timeZone = null): string
     {
@@ -127,9 +101,7 @@ abstract class AbstractDatespan implements Datespan
      * returns formatted date/time string for end date
      *
      * @param   string                   $format    format, see http://php.net/date
-     * @param   \stubbles\date\TimeZone  $timeZone  target time zone of formatted string
-     * @return  string
-     * @since   3.5.0
+     * @since 3.5.0
      */
     public function formatEnd(string $format, TimeZone $timeZone = null): string
     {
@@ -138,8 +110,6 @@ abstract class AbstractDatespan implements Datespan
 
     /**
      * returns amount of days in this datespan
-     *
-     * @return  int
      */
     public function amountOfDays(): int
     {
@@ -151,8 +121,6 @@ abstract class AbstractDatespan implements Datespan
 
     /**
      * checks whether the DateSpan is in the future compared to current date
-     *
-     * @return  bool
      */
     public function isInFuture(): bool
     {
@@ -166,11 +134,8 @@ abstract class AbstractDatespan implements Datespan
 
     /**
      * checks whether the span contains the given date
-     *
-     * @param   int|string|\DateTime|\stubbles\date\Date  $date
-     * @return  bool
      */
-    public function containsDate($date): bool
+    public function containsDate(int|string|DateTime|Date $date): bool
     {
         $date = Date::castFrom($date);
         if (!$this->start->isBefore($date) && !$this->start->equals($date)) {
@@ -186,8 +151,6 @@ abstract class AbstractDatespan implements Datespan
 
     /**
      * returns string representation of datespan
-     *
-     * @return  string
      */
     public function __toString(): string
     {

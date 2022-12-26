@@ -23,8 +23,8 @@ use function bovigo\assert\{
 /**
  * Tests for stubbles\date\span\Day.
  *
- * @group  date
- * @group  span
+ * @group date
+ * @group span
  */
 class DayTest extends TestCase
 {
@@ -35,8 +35,8 @@ class DayTest extends TestCase
     {
         $day = new Day('2007-04-04');
         assertThat(
-                $day->start()->asString(),
-                equals('2007-04-04 00:00:00' . $day->start()->offset())
+            $day->start()->asString(),
+            equals('2007-04-04 00:00:00' . $day->start()->offset())
         );
     }
 
@@ -47,8 +47,8 @@ class DayTest extends TestCase
     {
         $day = new Day('2007-04-04');
         assertThat(
-                $day->end()->asString(),
-                equals('2007-04-04 23:59:59' . $day->end()->offset())
+            $day->end()->asString(),
+            equals('2007-04-04 23:59:59' . $day->end()->offset())
         );
     }
 
@@ -68,8 +68,8 @@ class DayTest extends TestCase
     {
         $day = new Day('2007-05-14');
         assertThat(
-                $day->days(),
-                isOfSize(1)->and(each(isSameAs($day)))
+            $day->days(),
+            isOfSize(1)->and(each(isSameAs($day)))
         );
     }
 
@@ -194,31 +194,31 @@ class DayTest extends TestCase
 
     /**
      * @test
-     * @since  3.5.1
+     * @since 3.5.1
      */
     public function tomorrowCreatesInstanceForTomorrow(): void
     {
         assertThat(
-                Day::tomorrow()->asString(),
-                equals(date('Y-m-d', strtotime('tomorrow')))
+            Day::tomorrow()->asString(),
+            equals(date('Y-m-d', strtotime('tomorrow')))
         );
     }
 
     /**
      * @test
-     * @since  3.5.1
+     * @since 3.5.1
      */
     public function yesterdayCreatesInstanceForYesterday(): void
     {
         assertThat(
-                Day::yesterday()->asString(),
-                equals(date('Y-m-d', strtotime('yesterday')))
+            Day::yesterday()->asString(),
+            equals(date('Y-m-d', strtotime('yesterday')))
         );
     }
 
     /**
      * @test
-     * @since  5.2.0
+     * @since 5.2.0
      */
     public function nextDayRaisesYearForDecember31st(): void
     {
@@ -228,7 +228,7 @@ class DayTest extends TestCase
 
     /**
      * @test
-     * @since  5.2.0
+     * @since 5.2.0
      */
     public function beforeDayLowersYearForJanuary1st(): void
     {
@@ -238,7 +238,7 @@ class DayTest extends TestCase
 
     /**
      * @test
-     * @since  5.3.0
+     * @since 5.3.0
      */
     public function typeIsDay(): void
     {

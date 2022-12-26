@@ -7,43 +7,31 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace stubbles\date\span;
+
+use Countable;
+use Iterator;
 /**
  * Allows iteration over days of a datespan.
  *
  * @since  5.2.0
- * @implements  \Iterator<string,Day>
+ * @implements  Iterator<string,Day>
  */
-class Days implements \Iterator, \Countable
+class Days implements Iterator, Countable
 {
     /**
-     * start date of the iteration
-     *
-     * @var  \stubbles\date\span\Datespan
-     */
-    private $datespan;
-    /**
      * start date of the span
-     *
-     * @var  \stubbles\date\span\Day
      */
-    private $current;
+    private Day $current;
 
-    /**
-     * constructor
-     *
-     * @param  \stubbles\date\span\Datespan  $datespan
-     */
-    public function __construct(Datespan $datespan)
+    public function __construct(private Datespan $datespan)
     {
-        $this->datespan = $datespan;
         $this->rewind();
     }
 
     /**
      * returns amount of days
      *
-     * @return  int
-     * @since   7.0.0
+     * @since 7.0.0
      */
     public function count(): int
     {
@@ -52,8 +40,6 @@ class Days implements \Iterator, \Countable
 
     /**
      * returns current day within iteration
-     *
-     * @return  \stubbles\date\span\Day
      */
     public function current(): Day
     {
@@ -62,8 +48,6 @@ class Days implements \Iterator, \Countable
 
     /**
      * returns key for current day, which is it's string representation
-     *
-     * @return  string
      */
     public function key(): string
     {
@@ -92,8 +76,6 @@ class Days implements \Iterator, \Countable
 
     /**
      * checks if current entry is valid
-     *
-     * @return  bool
      */
     public function valid(): bool
     {

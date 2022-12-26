@@ -7,6 +7,8 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace stubbles\date\span;
+
+use InvalidArgumentException;
 use stubbles\date\Date;
 /**
  * Datespan that represents a month.
@@ -17,34 +19,23 @@ class Month extends CustomDatespan
 {
     /**
      * year where month is within
-     *
-     * @var  int
      */
-    private $year;
+    private int $year;
     /**
      * actual month
-     *
-     * @var  int
      */
-    private $month;
+    private int $month;
     /**
      * amount of days in this month
-     *
-     * @var  int
      */
-    private $amountOfDays;
+    private int $amountOfDays;
 
     /**
-     * constructor
-     *
      * If no value for the year is supplied the current year will be used.
      *
      * If no value for the month is supplied the current month will be used.
-     *
-     * @param  int|string|\stubbles\date\Date  $year   year of the span
-     * @param  int|string                      $month  month of the span
      */
-    public function __construct($year = null, $month = null)
+    public function __construct(int|string|Date $year = null, int|string $month = null)
     {
         $start = null;
         if ($year instanceof Date) {
@@ -70,39 +61,37 @@ class Month extends CustomDatespan
         $this->year         = (int) $year;
         $this->month        = (int) $month;
         parent::__construct(
-                $start,
-                new Date($year . '-' . $month . '-' . $this->amountOfDays . ' 23:59:59')
+            $start,
+            new Date($year . '-' . $month . '-' . $this->amountOfDays . ' 23:59:59')
         );
     }
 
     /**
      * create instance from given string, i.e. Month::fromString('2014-05')
      *
-     * @param   string  $input
-     * @return  \stubbles\date\span\Month
-     * @throws  \InvalidArgumentException
+     * @throws InvalidArgumentException
      * @since   3.5.2
      */
     public static function fromString(string $input): self
     {
         $data = explode('-', $input);
         if (!isset($data[0]) || !isset($data[1])) {
-            throw new \InvalidArgumentException(
-                    'Can not parse month from string "' . $input
-                    . '", format should be "YYYY-MM"'
+            throw new InvalidArgumentException(
+                'Can not parse month from string "' . $input
+                . '", format should be "YYYY-MM"'
             );
         }
 
         list($year, $month) = $data;
         if (!ctype_digit($year)) {
-            throw new \InvalidArgumentException(
-                    'Detected value ' . $year . ' for year is not a valid year.'
+            throw new InvalidArgumentException(
+                'Detected value ' . $year . ' for year is not a valid year.'
             );
         }
 
         if (!ctype_digit($month) || 1 > $month || 12 < $month) {
-            throw new \InvalidArgumentException(
-                    'Detected value ' . $month . ' for month is not a valid month.'
+            throw new InvalidArgumentException(
+                'Detected value ' . $month . ' for month is not a valid month.'
             );
         }
 
@@ -112,8 +101,7 @@ class Month extends CustomDatespan
     /**
      * creates instance for last month regardless of today's date
      *
-     * @return  \stubbles\date\span\Month
-     * @since   3.5.1
+     * @since 3.5.1
      */
     public static function last(): self
     {
@@ -124,8 +112,7 @@ class Month extends CustomDatespan
     /**
      * creates instance for current month except when today is the first day of the month
      *
-     * @return  \stubbles\date\span\Month
-     * @since   5.5.0
+     * @since 5.5.0
      */
     public static function currentOrLastWhenFirstDay(): self
     {
@@ -140,8 +127,7 @@ class Month extends CustomDatespan
     /**
      * returns next month
      *
-     * @return  \stubbles\date\span\Month
-     * @since   5.2.0
+     * @since 5.2.0
      */
     public function next(): self
     {
@@ -151,8 +137,7 @@ class Month extends CustomDatespan
     /**
      * returns the month before
      *
-     * @return  \stubbles\date\span\Month
-     * @since   5.2.0
+     * @since 5.2.0
      */
     public function before(): self
     {
@@ -161,8 +146,6 @@ class Month extends CustomDatespan
 
     /**
      * returns year month belongs to
-     *
-     * @return  int
      */
     public function year(): int
     {
@@ -171,8 +154,6 @@ class Month extends CustomDatespan
 
     /**
      * returns amount of days in this month
-     *
-     * @return  int
      */
     public function amountOfDays(): int
     {
@@ -181,8 +162,6 @@ class Month extends CustomDatespan
 
     /**
      * checks if it represents the current month
-     *
-     * @return  bool
      */
     public function isCurrentMonth(): bool
     {
@@ -191,8 +170,6 @@ class Month extends CustomDatespan
 
     /**
      * returns a string representation of the date object
-     *
-     * @return  string
      */
     public function asString(): string
     {
@@ -202,8 +179,7 @@ class Month extends CustomDatespan
     /**
      * returns a short type description of the datespan
      *
-     * @return  string
-     * @since   5.3.0
+     * @since 5.3.0
      */
     public function type(): string
     {
