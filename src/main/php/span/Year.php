@@ -32,7 +32,7 @@ class Year extends CustomDatespan
     {
         if (null === $year) {
             $year = date('Y');
-        } elseif (!ctype_digit($year)) {
+        } elseif (is_string($year) && !ctype_digit($year)) {
             throw new InvalidArgumentException(
                 'Given year "' . $year . '" can not be treated as year, should'
                 . ' be something that can be casted to int without data loss'
