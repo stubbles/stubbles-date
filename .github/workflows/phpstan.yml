@@ -20,6 +20,7 @@ jobs:
         php-version: '8.1'
         ini-values: memory_limit=-1
         extensions: mbstring
+        coverage: none
         tools: cs2pr
 
     - name: Validate composer.json and composer.lock
