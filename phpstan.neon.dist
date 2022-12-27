@@ -2,23 +2,6 @@ includes:
   - vendor/bovigo/assert/src/main/resources/phpstan/bovigo-assert.neon
 parameters:
   inferPrivatePropertyTypeFromConstructor: true
-  level: 7
+  level: 9
   paths:
-    - ./src
-  ignoreErrors:
-    # Tests are explicit tests that this will fail and throw an exception
-    -
-        message: '#method stubbles\\date\\Date::castFrom\(\) expects DateTime\|int\|string\|stubbles\\date\\Date, stdClass given.#'
-        path: src/test/php/DateTest.php
-    -
-        message: '#class stubbles\\date\\TimeZone constructor expects DateTimeZone\|string\|null, int given#'
-        path: src/test/php/TimeZoneTest.php
-    -
-        message: '#method stubbles\\date\\Date::isBefore\(\) expects DateTime\|int\|string\|stubbles\\date\\Date, stdClass given#'
-        path: src/test/php/DateTest.php
-    -
-        message: '#method stubbles\\date\\Date::isAfter\(\) expects DateTime\|int\|string\|stubbles\\date\\Date, stdClass given#'
-        path: src/test/php/DateTest.php
-    -
-        message: '#dateTime of class stubbles\\date\\Date constructor expects DateTime\|int\|string\|null, float given#'
-        path: src/test/php/DateTest.php
+    - ./src/main/php
