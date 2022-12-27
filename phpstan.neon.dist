@@ -5,3 +5,5 @@ parameters:
   level: 9
   paths:
     - ./src/main/php
+  excludePaths:
+      - src/main/php/assert
