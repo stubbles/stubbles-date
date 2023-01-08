@@ -252,9 +252,15 @@ class MonthTest extends TestCase
      */
     public function lastCreatesInstanceForPreviousMonth(): void
     {
+        if (date('m') === '01') {
+            $yearOfLastMonth = date('Y') - 1;
+        } else {
+            $yearOfLastMonth = date('Y');
+        }
+
         assertThat(
             Month::last()->asString(),
-            equals(date('Y') . '-'. date('m', strtotime('first day of previous month')))
+            equals($yearOfLastMonth . '-'. date('m', strtotime('first day of previous month')))
         );
     }
 
