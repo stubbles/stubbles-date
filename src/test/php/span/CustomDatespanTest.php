@@ -7,6 +7,10 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 namespace stubbles\date\span;
+
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use stubbles\date\Date;
 
@@ -20,15 +24,12 @@ use function bovigo\assert\{
 };
 /**
  * Tests for stubbles\date\span\CustomDatespan.
- *
- * @group date
- * @group span
  */
+#[Group('date')]
+#[Group('span')]
 class CustomDatespanTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function startDateCreatedFromStringInput(): void
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
@@ -40,9 +41,7 @@ class CustomDatespanTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function endDateCreatedFromStringInput(): void
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
@@ -54,9 +53,7 @@ class CustomDatespanTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function startDateIsSetToMidnight(): void
     {
         $customDatespan = new CustomDatespan(
@@ -70,9 +67,7 @@ class CustomDatespanTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function endDateIsSetToMidnight(): void
     {
         $customDatespan = new CustomDatespan(
@@ -86,9 +81,7 @@ class CustomDatespanTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsAmountOfDaysInDatespan(): void
     {
         $customDatespan = new CustomDatespan('2007-05-14', '2007-05-27');
@@ -109,55 +102,43 @@ class CustomDatespanTest extends TestCase
         return $return;
     }
 
-    /**
-     * @test
-     * @dataProvider  datespanDays
-     */
+    #[Test]
+    #[DataProvider('datespanDays')]
     public function daysReturnsListOfAllDays(string $dayString, Day $day, int $expectedDay): void
     {
         assertThat($dayString, equals('2007-05-' . $expectedDay));
         assertThat($day->asInt(), equals($expectedDay));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function isInFutureIfCurrentDateBeforeStartDate(): void
     {
         $customDatespan = new CustomDatespan('tomorrow', '+3 days');
         assertTrue($customDatespan->isInFuture());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function isNotInFutureIfCurrentDateWithinSpan(): void
     {
         $customDatespan = new CustomDatespan('yesterday', '+3 days');
         assertFalse($customDatespan->isInFuture());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function isNotInFutureIfCurrentDateAfterEndDate(): void
     {
         $customDatespan = new CustomDatespan('-3 days', 'yesterday');
         assertFalse($customDatespan->isInFuture());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function doesNotContainDateBeforeStartDate(): void
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
         assertFalse($customDatespan->containsDate(new Date('2006-04-03')));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function containsAllDatesInSpan(): void
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
@@ -167,18 +148,14 @@ class CustomDatespanTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function doesNotContainDateAfterEndDate(): void
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
         assertFalse($customDatespan->containsDate(new Date('2006-04-21')));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function serializeAndUnserializeDoesNotDestroyStartDate(): void
     {
         $customDatespan = new CustomDatespan('2007-05-14', '2007-05-27');
@@ -187,9 +164,7 @@ class CustomDatespanTest extends TestCase
         assertTrue($customDatespan->start()->equals($unserialized->start()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function serializeAndUnserializeDoesNotDestroyEndDate(): void
     {
         $customDatespan = new CustomDatespan('2007-05-14', '2007-05-27');
@@ -198,18 +173,14 @@ class CustomDatespanTest extends TestCase
         assertTrue($customDatespan->end()->equals($unserialized->end()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function stringRepresentationOfDayContainsStartAndEndDate(): void
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
         assertThat($customDatespan->asString(), equals('2006-04-04,2006-04-20'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function properStringConversion(): void
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
@@ -217,9 +188,9 @@ class CustomDatespanTest extends TestCase
     }
 
     /**
-     * @test
      * @since 3.5.0
      */
+    #[Test]
     public function startsBeforeChecksStartDate(): void
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
@@ -227,9 +198,9 @@ class CustomDatespanTest extends TestCase
     }
 
     /**
-     * @test
      * @since 3.5.0
      */
+    #[Test]
     public function startsAfterChecksStartDate(): void
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
@@ -237,9 +208,9 @@ class CustomDatespanTest extends TestCase
     }
 
     /**
-     * @test
      * @since 3.5.0
      */
+    #[Test]
     public function endsBeforeChecksStartDate(): void
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
@@ -247,9 +218,9 @@ class CustomDatespanTest extends TestCase
     }
 
     /**
-     * @test
      * @since 3.5.0
      */
+    #[Test]
     public function endsAfterChecksStartDate(): void
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
@@ -257,9 +228,9 @@ class CustomDatespanTest extends TestCase
     }
 
     /**
-     * @test
      * @since 3.5.0
      */
+    #[Test]
     public function formatStartReturnsFormattedStartDate(): void
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
@@ -267,9 +238,9 @@ class CustomDatespanTest extends TestCase
     }
 
     /**
-     * @test
      * @since 3.5.0
      */
+    #[Test]
     public function formatEndReturnsFormattedStartDate(): void
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');
@@ -277,9 +248,9 @@ class CustomDatespanTest extends TestCase
     }
 
     /**
-     * @test
-     * @since 7.0.0
+     * @since 3.5.0
      */
+    #[Test]
     public function typeIsCustom(): void
     {
         $customDatespan = new CustomDatespan('2006-04-04', '2006-04-20');

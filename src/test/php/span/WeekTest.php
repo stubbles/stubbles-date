@@ -9,6 +9,9 @@ declare(strict_types=1);
 namespace stubbles\date\span;
 
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use stubbles\date\Date;
 
@@ -23,15 +26,12 @@ use function bovigo\assert\{
 };
 /**
  * Tests for stubbles\date\span\Week.
- *
- * @group date
- * @group span
  */
+#[Group('date')]
+#[Group('span')]
 class WeekTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function amountOfDaysIsAlwaysSeven(): void
     {
         $week = new Week('2007-05-14');
@@ -58,10 +58,8 @@ class WeekTest extends TestCase
         return $return;
     }
 
-    /**
-     * @test
-     * @dataProvider weekDays
-     */
+    #[Test]
+    #[DataProvider('weekDays')]
     public function daysReturnsAllSevenDays(
         string $dayString,
         string $expectedString,
@@ -72,45 +70,35 @@ class WeekTest extends TestCase
         assertThat($day->asInt(), equals($expectedDay));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function weekWhichStartsAfterTodayIsInFuture(): void
     {
         $week = new Week('tomorrow');
         assertTrue($week->isInFuture());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function weekWhichStartsBeforeTodayIsNotInFuture(): void
     {
         $week = new Week('yesterday');
         assertFalse($week->isInFuture());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function weekWhichStartsTodayIsNotInFuture(): void
     {
         $week = new Week('now');
         assertFalse($week->isInFuture());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function doesNotContainDatesBeforeBeginnOfWeek(): void
     {
         $week = new Week('2009-01-05');
         assertFalse($week->containsDate(new Date('2009-01-04')));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function containsAllDaysOfThisWeek(): void
     {
         $week = new Week('2009-01-05');
@@ -120,27 +108,21 @@ class WeekTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function doesNotContainDatesAfterEndOfWeek(): void
     {
         $week = new Week('2009-01-05');
         assertFalse($week->containsDate(new Date('2009-01-12')));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function stringRepresentationOfWeekContainsNumberOfWeek(): void
     {
         $week = new Week('2007-04-02');
         assertThat($week->asString(), equals('2007-W14'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function properStringConversion(): void
     {
         $week = new Week('2007-04-02');
@@ -148,9 +130,9 @@ class WeekTest extends TestCase
     }
 
     /**
-     * @test
      * @since 5.3.0
      */
+    #[Test]
     public function numberReturnsNumberOfWeek(): void
     {
         $week = new Week('2007-04-02');
@@ -158,18 +140,18 @@ class WeekTest extends TestCase
     }
 
     /**
-     * @test
      * @since 5.3.0
      */
+    #[Test]
     public function createFromStringParsesStringToCreateInstance(): void
     {
         assertThat(Week::fromString('2014-W05')->asString(), equals('2014-W05'));
     }
 
     /**
-     * @test
      * @since 5.3.0
      */
+    #[Test]
     public function createFromInvalidStringThrowsInvalidArgumentException(): void
     {
          expect(function() { Week::fromString('invalid'); })
@@ -177,9 +159,9 @@ class WeekTest extends TestCase
     }
 
     /**
-     * @test
      * @since 5.3.0
      */
+    #[Test]
     public function createFromInvalidWeekNumberThrowsInvalidArgumentException(): void
     {
          expect(fn() => Week::fromString('2014-W63'))
@@ -187,9 +169,9 @@ class WeekTest extends TestCase
     }
 
     /**
-     * @test
      * @since 5.3.0
      */
+    #[Test]
     public function typeIsWeek(): void
     {
         assertThat(Week::fromString('2014-W05')->type(), equals('week'));

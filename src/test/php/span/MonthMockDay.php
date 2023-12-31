@@ -9,8 +9,5 @@ declare(strict_types=1);
 namespace stubbles\date\span;
 class MonthMockDay
 {
-    /**
-     * @var  string|null
-     */
-    public static $result;
+    public static ?string $result = null;
 }

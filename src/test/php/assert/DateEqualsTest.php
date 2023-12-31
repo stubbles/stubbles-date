@@ -9,6 +9,8 @@ declare(strict_types=1);
 namespace stubbles\date\assert;
 
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use SebastianBergmann\Exporter\Exporter;
 use stubbles\date\Date;
@@ -24,9 +26,9 @@ use function bovigo\assert\{
 /**
  * Tests for stubbles\date\assert\DateEquals.
  *
- * @group assert
  * @since 7.0.0
  */
+#[Group('assert')]
 class DateEqualsTest extends TestCase
 {
     private DateEquals $equalsDate;
@@ -36,9 +38,7 @@ class DateEqualsTest extends TestCase
         $this->equalsDate = equalsDate('2007-08-23T12:35:47+00:00');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function invalidExpectedDateThrowsInvalidArgumentException(): void
     {
         expect(fn() => equalsDate('this is not a valid date'))
@@ -46,25 +46,19 @@ class DateEqualsTest extends TestCase
             ->withMessage('Given value for expected "this is not a valid date" is not a valid date.');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function hasNoDiffByDefault(): void
     {
         assertFalse($this->equalsDate->hasDiffForLastFailure());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function lastFailureDiffIsNullByDefault(): void
     {
         assertNull($this->equalsDate->diffForLastFailure());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function stringRepresentationContainsExpectedValue(): void
     {
       assertThat(
@@ -73,44 +67,34 @@ class DateEqualsTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function testAgainstNonDateThrowsInvalidArgumentException(): void
     {
         expect(fn() => $this->equalsDate->test(303))
             ->throws(InvalidArgumentException::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function testAgainstEqualDateReturnsTrue(): void
     {
         assertTrue($this->equalsDate->test(new Date('2007-08-23T12:35:47+00:00')));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function hasNoDiffWhenTestWasSuccessful(): void
     {
         $this->equalsDate->test(new Date('2007-08-23T12:35:47+00:00'));
         assertFalse($this->equalsDate->hasDiffForLastFailure());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function lastFailureDiffIsNullWhenTestWasSuccessful(): void
     {
         $this->equalsDate->test(new Date('2007-08-23T12:35:47+00:00'));
         assertNull($this->equalsDate->diffForLastFailure());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function stringRepresentationContainsExpectedValueOnlyAfterSuccessfulTest(): void
     {
         $this->equalsDate->test(new Date('2007-08-23T12:35:47+00:00'));
@@ -120,26 +104,20 @@ class DateEqualsTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function testAgainstUnequalDateReturnsFalse(): void
     {
         assertFalse($this->equalsDate->test(new Date('2007-08-23T12:35:47+01:00')));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function hasDiffWhenTestFailed(): void
     {
         $this->equalsDate->test(new Date('2007-08-23T12:35:47+01:00'));
         assertTrue($this->equalsDate->hasDiffForLastFailure());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function lastFailureDiffContainsDiffBetweenExpectedAndTestedWhenTestFailed(): void
     {
         $this->equalsDate->test(new Date('2007-08-23T12:35:47+01:00'));
@@ -155,9 +133,7 @@ class DateEqualsTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function stringRepresentationContainsDiffWhenTestFailed(): void
     {
         $this->equalsDate->test(new Date('2007-08-23T12:35:47+01:00'));
@@ -173,9 +149,7 @@ class DateEqualsTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function describeValueForDateReturnsFormattedDateString(): void
     {
       assertThat(
@@ -187,9 +161,7 @@ class DateEqualsTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function describeValueForNonDateReturnsParentFormat(): void
     {
         assertThat(

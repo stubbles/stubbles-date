@@ -10,6 +10,10 @@ namespace stubbles\date;
 
 use Generator;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;
 use stubbles\date\span\CustomDatespan;
 use stubbles\date\span\Day;
@@ -23,70 +27,44 @@ use function bovigo\assert\predicate\equals;
 /**
  * Tests for stubbles\date\*()
  *
- * @group date
  * @since 5.2.0
  */
+#[Group('date')]
 class FunctionsTest extends TestCase
 {
-    public static function emptyValues(): Generator
-    {
-        yield [null];
-        yield [''];
-    }
-
-    /**
-     * @test
-     * @dataProvider emptyValues
-     */
+    #[Test]
+    #[TestWith([null])]
+    #[TestWith([''])]
     public function returnsNullForEmptyValues(?string $emptyValue): void
     {
         assertNull(span\parse($emptyValue));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function parsesYear(): void
     {
         assertThat(span\parse('2015'), equals(new Year(2015)));
     }
 
-    public static function dayValues(): Generator
-    {
-        yield ['today'];
-        yield ['tomorrow'];
-        yield ['yesterday'];
-        yield ['2015-03-05'];
-    }
-
-    /**
-     * @test
-     * @dataProvider dayValues
-     */
+    #[Test]
+    #[TestWith(['today'])]
+    #[TestWith(['tomorrow'])]
+    #[TestWith(['yesterday'])]
+    #[TestWith(['2015-03-05'])]
     public function parsesDay(string $dayValue): void
     {
         assertThat(span\parse($dayValue), equals(new Day($dayValue)));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function parseInvalidDayThrowsInvalidArgumentException(): void
     {
         expect(fn() => span\parse('foo'))
             ->throws(InvalidArgumentException::class);
     }
 
-    public static function monthValues(): Generator
-    {
-        yield ['2015-03'];
-    }
-
-    /**
-     *
-     * @test
-     * @dataProvider monthValues
-     */
+    #[Test]
+    #[TestWith(['2015-03'])]
     public function parsesMonth(string $monthValue): void
     {
         assertThat(span\parse($monthValue), equals(Month::fromString($monthValue)));
@@ -98,10 +76,8 @@ class FunctionsTest extends TestCase
         yield [new CustomDatespan('2015-01-01', '2015-12-31'), '2015-01-01,2015-12-31'];
     }
 
-    /**
-     * @test
-     * @dataProvider customDatespanValues
-     */
+    #[Test]
+    #[DataProvider('customDatespanValues')]
     public function parsesCustomDatespan(CustomDatespan $expected, string $value): void
     {
         assertThat(span\parse($value), equals($expected));

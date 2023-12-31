@@ -9,6 +9,9 @@ declare(strict_types=1);
 namespace stubbles\date;
 
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use function bovigo\assert\{
     assertThat,
@@ -21,9 +24,9 @@ use function stubbles\date\assert\equalsDate;
  * Tests for stubbles\date\DateModifier.
  *
  * @since 1.7.0
- * @group date
- * @group bug268
  */
+#[Group('date')]
+#[Group('bug268')]
 class DateModifierTest extends TestCase
 {
     /**
@@ -42,9 +45,7 @@ class DateModifierTest extends TestCase
         date_default_timezone_set($this->originTimeZone);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function changeDateReturnsNewDateInstance(): void
     {
         $date        = Date::now();
@@ -74,10 +75,8 @@ class DateModifierTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider invalidArgumentsForTime
-     */
+    #[Test]
+    #[DataProvider('invalidArgumentsForTime')]
     public function changeTimeWithInvalidArgumentThrowsIllegalArgumentException(
         string $invalid,
         string $exceptionMessage
@@ -88,9 +87,7 @@ class DateModifierTest extends TestCase
             ->withMessage($exceptionMessage);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function changeTimeReturnsNewInstance(): void
     {
         $date = new Date('2011-03-31 01:00:00');
@@ -98,10 +95,10 @@ class DateModifierTest extends TestCase
     }
 
     /**
-     * @test
      * @since 5.1.0
-     * @group issue_2
      */
+    #[Test]
+    #[Group('issue_2')]
     public function changeTimeToStartOfDayReturnsNewInstance(): void
     {
         $date = new Date('2011-03-31 01:00:00');
@@ -109,10 +106,10 @@ class DateModifierTest extends TestCase
     }
 
     /**
-     * @test
      * @since 5.1.0
-     * @group issue_2
      */
+    #[Test]
+    #[Group('issue_2')]
     public function changeTimeToStartOfDaySetsTime(): void
     {
         $date = new Date('2011-03-31 01:00:00');
@@ -123,10 +120,10 @@ class DateModifierTest extends TestCase
     }
 
     /**
-     * @test
      * @since 5.1.0
-     * @group issue_2
      */
+    #[Test]
+    #[Group('issue_2')]
     public function changeTimeToEndOfDayReturnsNewInstance(): void
     {
         $date = new Date('2011-03-31 01:00:00');
@@ -134,10 +131,10 @@ class DateModifierTest extends TestCase
     }
 
     /**
-     * @test
      * @since 5.1.0
-     * @group issue_2
      */
+    #[Test]
+    #[Group('issue_2')]
     public function changeTimeToEndOfDaySetsTime(): void
     {
         $date = new Date('2011-03-31 01:00:00');
@@ -147,9 +144,7 @@ class DateModifierTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function changeTimeChangesTimeOnlyButKeepsDate(): void
     {
         $date = new Date('2011-03-31 01:00:00');
@@ -159,9 +154,7 @@ class DateModifierTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function changeHourToOnlyChangesHour(): void
     {
         $date = new Date('2011-03-31 01:00:00');
@@ -171,9 +164,7 @@ class DateModifierTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function changeByHoursAddsGivenAmountOfHours(): void
     {
         $date = new Date('2011-03-31 01:01:01');
@@ -183,9 +174,7 @@ class DateModifierTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function changeByHoursChangesDateWhenGivenValueExceedsStandardHours(): void
     {
         $date = new Date('2011-03-31 01:01:01');
@@ -195,9 +184,7 @@ class DateModifierTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function changeByHoursSubtractsNegativeAmountOfHours(): void
     {
         $date = new Date('2011-03-31 01:01:01');
@@ -207,9 +194,7 @@ class DateModifierTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function changeMinuteToOnlyChangesMinutes(): void
     {
         $date = new Date('2011-03-31 01:00:00');
@@ -219,9 +204,7 @@ class DateModifierTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function changeByMinutesAddsGivenAmountOfMinutes(): void
     {
         $date = new Date('2011-03-31 01:01:01');
@@ -231,9 +214,7 @@ class DateModifierTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function changeByMinutesChangesHoursWhenGivenValueExceedsStandardMinutes(): void
     {
         $date = new Date('2011-03-31 01:01:01');
@@ -243,9 +224,7 @@ class DateModifierTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function changeByMinutesSubtractsNegativeAmountOfMinutes(): void
     {
         $date = new Date('2011-03-31 01:01:01');
@@ -255,9 +234,7 @@ class DateModifierTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function changeSecondToOnlyChangesSeconds(): void
     {
         $date = new Date('2011-03-31 01:00:00');
@@ -267,9 +244,7 @@ class DateModifierTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function changeBySecondsAddsGivenAmountOfSeconds(): void
     {
         $date = new Date('2011-03-31 01:01:01');
@@ -279,9 +254,7 @@ class DateModifierTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function changeBySecondsChangesMinutesWhenGivenValueExceedsStandardSeconds(): void
     {
         $date = new Date('2011-03-31 01:01:01');
@@ -291,9 +264,7 @@ class DateModifierTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function changeBySecondsSubtractsNegativeAmountOfSeconds(): void
     {
         $date = new Date('2011-03-31 01:01:01');
@@ -321,10 +292,8 @@ class DateModifierTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider invalidDates
-     */
+    #[Test]
+    #[DataProvider('invalidDates')]
     public function changeDateWithInvalidArgumentThrowsIllegalArgumentException(
         string $invalid,
         string $expectedExceptionMessage
@@ -335,18 +304,14 @@ class DateModifierTest extends TestCase
             ->withMessage($expectedExceptionMessage);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function changeDateToReturnsNewInstance(): void
     {
         $date = new Date('2011-03-31 01:00:00');
         assertThat($date->change()->dateTo('2012-7-15'), isNotSameAs($date));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function changeDateToChangesDateOnlyButKeepsTime(): void
     {
         $date = new Date('2011-03-31 01:00:00');
@@ -356,9 +321,7 @@ class DateModifierTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function changeYearToOnlyChangesYear(): void
     {
         $date = new Date('2011-03-31 01:00:00');
@@ -368,9 +331,7 @@ class DateModifierTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function changeByYearsAddsGivenAmountOfYears(): void
     {
         $date = new Date('2011-03-31 01:01:01');
@@ -392,9 +353,7 @@ class DateModifierTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function changeMonthToOnlyChangesMonth(): void
     {
         $date = new Date('2011-03-31 01:00:00');
@@ -404,9 +363,7 @@ class DateModifierTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function changeByMonthsAddsGivenAmountOfMonths(): void
     {
         $date = new Date('2011-03-31 01:01:01');
@@ -416,9 +373,7 @@ class DateModifierTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function changeByMonthsChangesYearWhenGivenValueExceedsStandardMonths(): void
     {
         $date = new Date('2011-03-31 01:01:01');
@@ -428,9 +383,7 @@ class DateModifierTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function changeByMonthsSubtractsNegativeAmountOfMonths(): void
     {
         $date = new Date('2011-03-31 01:01:01');
@@ -440,9 +393,7 @@ class DateModifierTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function changeDayToOnlyChangesDay(): void
     {
         $date = new Date('2011-03-31 01:00:00');
@@ -452,9 +403,7 @@ class DateModifierTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function changeByDaysAddsGivenAmountOfDays(): void
     {
         $date = new Date('2011-03-31 01:01:01');
@@ -464,9 +413,7 @@ class DateModifierTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function changeByDaysChangesMonthWhenGivenValueExceedsStandardDays(): void
     {
         $date = new Date('2011-03-31 01:01:01');
@@ -476,9 +423,7 @@ class DateModifierTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function changeByDaysSubtractsNegativeAmountOfDays(): void
     {
         $date = new Date('2011-03-31 01:01:01');

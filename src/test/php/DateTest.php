@@ -9,6 +9,10 @@ declare(strict_types=1);
 namespace stubbles\date;
 
 use DateTime;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;
 use ReflectionObject;
 use function bovigo\assert\{
@@ -26,9 +30,8 @@ use function stubbles\date\assert\equalsDate;
 use function stubbles\reflect\annotationsOf;
 /**
  * Tests for stubbles\date\Date.
- *
- * @group  date
  */
+#[Group('date')]
 class DateTest extends TestCase
 {
     /**
@@ -57,9 +60,7 @@ class DateTest extends TestCase
         date_default_timezone_set($this->originTimeZone);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function constructorParseWithoutTz(): void
     {
         assertThat(
@@ -68,9 +69,7 @@ class DateTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function constructorUnixtimestampWithoutTz(): void
     {
         assertThat(
@@ -79,9 +78,7 @@ class DateTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function constructorUnixtimestampWithTz(): void
     {
         assertThat(
@@ -117,10 +114,8 @@ class DateTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider constructorTimezones
-     */
+    #[Test]
+    #[DataProvider('constructorTimezones')]
     public function constructorParseTz(
         string $expectedTimestamp,
         string $expectedTimeZone,
@@ -135,9 +130,8 @@ class DateTest extends TestCase
     /**
      * a timezone should not be reported erroneously if it actually could not be
      * parsed out of a string.
-     *
-     * @test
      */
+    #[Test]
     public function noDiscreteTimeZone(): void
     {
         $date = new Date('2007-11-04 14:32:00+1000');
@@ -147,9 +141,8 @@ class DateTest extends TestCase
 
     /**
      * correct time zone should be recognized
-     *
-     * @test
      */
+    #[Test]
     public function constructorParseNoTz(): void
     {
         $date= new Date('2007-01-01 01:00:00', new TimeZone('Europe/Athens'));
@@ -161,9 +154,8 @@ class DateTest extends TestCase
 
     /**
      * date handling should work as expected
-     *
-     * @test
      */
+    #[Test]
     public function dateHandling(): void
     {
         assertThat($this->date->timestamp(), equals($this->timestamp));
@@ -173,18 +165,16 @@ class DateTest extends TestCase
     }
 
     /**
-     * @test
      * @since 3.5.0
      */
+    #[Test]
     public function dateComparisonWithoutDateInstances(): void
     {
         assertTrue($this->date->isAfter('yesterday'));
         assertTrue($this->date->isBefore('tomorrow'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function preUnixEpoch(): void
     {
         assertThat(
@@ -204,9 +194,9 @@ class DateTest extends TestCase
      * was followed by the first day of the Gregorian calendar, Friday October
      * 15, 1582 (the cycle of weekdays was not affected).
      *
-     * @test
      * @see  http://en.wikipedia.org/wiki/Gregorian_calendar
      */
+    #[Test]
     public function pre1582(): void
     {
         //assertThat(new Date('01.01.1500 00:00 GMT'), equalsDate('1499-12-21T00:00:00+00:00'));
@@ -230,9 +220,9 @@ class DateTest extends TestCase
      * September 2, 1752 being followed by  Thursday, September 14, 1752) to
      * account for February 29, 1700 (Julian).
      *
-     * @test
      * @see  http://en.wikipedia.org/wiki/Gregorian_calendar
      */
+    #[Test]
     public function calendarAct1750(): void
     {
         //assertThat(new Date('01.01.1753 00:00 GMT'), equalsDate('1753-01-01T00:00:00+00:00'));
@@ -259,17 +249,6 @@ class DateTest extends TestCase
             ['May 28 1980 12:00PM', 12, '12:00PM != 12h']
         ];
     }
-    /**
-     * setting of correct hours when date was given troughthe AM/PM format
-     *
-     * @test
-     * @dataProvider anteAndPostMeridiemTestValues
-     */
-    public function anteAndPostMeridiem(string $date, int $expected, string $description): void
-    {
-        $date = new Date($date);
-        assertThat($date->hours(), equals($expected), $description);
-    }
 
     /**
      * @return  array<array<mixed>>
@@ -286,24 +265,20 @@ class DateTest extends TestCase
 
     /**
      * setting of correct hours when date was given troughthe AM/PM format
-     *
-     * @test
-     * @dataProvider anteAndPostMeridiemInMidageTestValues
      */
-    public function anteAndPostMeridiemInMidage(
-        string $date,
-        int $expected,
-        string $description
-    ): void {
+    #[Test]
+    #[DataProvider('anteAndPostMeridiemTestValues')]
+    #[DataProvider('anteAndPostMeridiemInMidageTestValues')]
+    public function anteAndPostMeridiem(string $date, int $expected, string $description): void
+    {
         $date = new Date($date);
         assertThat($date->hours(), equals($expected), $description);
     }
 
     /**
      * date parsing in different formats in pre 1970 epoch.
-     *
-     * @test
      */
+    #[Test]
     public function pre1970(): void
     {
         assertThat(new Date('01.02.1969'), equalsDate('1969-02-01T00:00:00+00:00'));
@@ -311,9 +286,7 @@ class DateTest extends TestCase
         assertThat(new Date('1969-02-01 12:00AM'), equalsDate('1969-02-01T00:00:00+00:00'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function serializationPreservesAllData(): void
     {
         $original = new Date('2007-07-18T09:42:08 Europe/Athens');
@@ -321,9 +294,7 @@ class DateTest extends TestCase
         assertThat($copy, equalsDate($original->format('c')));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function timeZoneShouldBePreservedDuringSerialization(): void
     {
         date_default_timezone_set('Europe/Athens');
@@ -335,9 +306,7 @@ class DateTest extends TestCase
         assertThat($copy->offset(), equals('+0100'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function handlingOfTimezone(): void
     {
         $date = new Date('2007-07-18T09:42:08 Europe/Athens');
@@ -347,9 +316,8 @@ class DateTest extends TestCase
 
     /**
      * representation of string is working deterministicly
-     *
-     * @test
      */
+    #[Test]
     public function testTimestamp(): void
     {
         date_default_timezone_set('Europe/Berlin');
@@ -362,9 +330,8 @@ class DateTest extends TestCase
 
     /**
      * dates created with a timestamp are in correct timezone when a timezone has been passed
-     *
-     * @test
      */
+    #[Test]
     public function timestampWithTZ(): void
     {
         $date = new Date(328336200, new TimeZone('Australia/Sydney'));
@@ -373,9 +340,8 @@ class DateTest extends TestCase
 
     /**
      * string formatting preserves same timezone after serialization
-     *
-     * @test
      */
+    #[Test]
     public function stringOutputPreserved(): void
     {
         $date = unserialize(serialize(new Date('2007-11-10 20:15 Europe/Berlin')));
@@ -386,9 +352,7 @@ class DateTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function nowConstructsCurrentDate(): void
     {
         $date = Date::now();
@@ -398,20 +362,20 @@ class DateTest extends TestCase
     }
 
     /**
-     * @test
      * @since 3.5.0
-     * @group bug267
      */
+    #[Test]
+    #[Group('bug267')]
     public function nowConstructsCurrentDateInGmtTimeZone(): void
     {
         assertThat(Date::now()->timeZone()->name(), equals('GMT'));
     }
 
     /**
-     * @test
      * @since 1.7.0
-     * @group bug267
      */
+    #[Test]
+    #[Group('bug267')]
     public function nowConstructsCurrentDateWithTimeZone(): void
     {
         assertThat(
@@ -422,9 +386,8 @@ class DateTest extends TestCase
 
     /**
      * single date and time parts should be returned
-     *
-     * @test
      */
+    #[Test]
     public function partsReturned(): void
     {
         // 2007-08-23T12:35:47+00:00
@@ -437,9 +400,7 @@ class DateTest extends TestCase
         assertThat($date->year(), equals(2007));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function sameDatesShouldBeEqual(): void
     {
         $date = new Date('31.12.1969 00:00 GMT');
@@ -448,9 +409,7 @@ class DateTest extends TestCase
         assertFalse($date->equals(new Date('1969-12-01T00:00:00+00:00')));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function cloneClonesHandleAsWell(): void
     {
         $date       = new Date('31.12.1969 00:00 GMT');
@@ -464,99 +423,78 @@ class DateTest extends TestCase
     private function retrieveHandle(Date $date): DateTime
     {
         $property = (new ReflectionObject($date))->getProperty('dateTime');
-        $property->setAccessible(true);
         return $property->getValue($date);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function invalidDateStringThrowsIllegalArgumentException(): void
     {
         expect(fn() => new Date('invalid'))
             ->throws(\InvalidArgumentException::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function toStringConvertsDateTimePropertyIntoReadableDateRepresentation(): void
     {
         $date = new Date('31.12.1969 00:00 GMT');
         assertThat((string) $date, equals('1969-12-31 00:00:00+0000'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function asStringReturnsStringValue(): void
     {
         $date = new Date('2012-01-21 21:00:00');
         assertThat($date->asString(), equals('2012-01-21 21:00:00' . $date->offset()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function classIsAnnotatedWithXmlTag(): void
     {
-        assertTrue(annotationsOf('stubbles\date\Date')->contain('XmlTag'));
+        assertTrue(annotationsOf(Date::class)->contain('XmlTag'));
     }
 
-    /**
-     * @return array<array<string>>
-     */
-    public static function methodsWithXmlIgnore(): array
-    {
-        return [['handle'],
-            ['change'],
-            ['timestamp'],
-            ['seconds'],
-            ['minutes'],
-            ['hours'],
-            ['day'],
-            ['month'],
-            ['year'],
-            ['offset'],
-            ['offsetInSeconds'],
-            ['timeZone']
-        ];
-    }
-    /**
-     * @test
-     * @dataProvider methodsWithXmlIgnore
-     */
+    #[Test]
+    #[TestWith(['handle'])]
+    #[TestWith(['change'])]
+    #[TestWith(['timestamp'])]
+    #[TestWith(['seconds'])]
+    #[TestWith(['minutes'])]
+    #[TestWith(['hours'])]
+    #[TestWith(['day'])]
+    #[TestWith(['month'])]
+    #[TestWith(['year'])]
+    #[TestWith(['offset'])]
+    #[TestWith(['offsetInSeconds'])]
+    #[TestWith(['timeZone'])]
     public function methodIsAnnotatedWithXmlIgnore(string $method): void
     {
         assertTrue(
-            annotationsOf('stubbles\date\Date', $method)->contain('XmlIgnore')
+            annotationsOf(Date::class, $method)->contain('XmlIgnore')
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function asStringIsAnnotatedWithXmlAttribute(): void
     {
         assertTrue(
-            annotationsOf('stubbles\date\Date', 'asString')
+            annotationsOf(Date::class, 'asString')
                 ->contain('XmlAttribute')
         );
     }
 
     /**
-     * @test
      * @since 3.4.4
      */
+    #[Test]
     public function castFromIntCreatesDateInstance(): void
     {
         assertThat(Date::castFrom(1187872547), equals(new Date(1187872547)));
     }
 
     /**
-     * @test
      * @since 3.4.4
      */
+    #[Test]
     public function castFromStringCreatesDateInstance(): void
     {
         assertThat(
@@ -566,9 +504,9 @@ class DateTest extends TestCase
     }
 
     /**
-     * @test
      * @since 3.4.4
      */
+    #[Test]
     public function castFromDateTimeCreatesDateInstance(): void
     {
         assertThat(
@@ -578,9 +516,9 @@ class DateTest extends TestCase
     }
 
     /**
-     * @test
      * @since 3.4.4
      */
+    #[Test]
     public function castFromDateReturnsSameInstance(): void
     {
         $date = new Date('2007-11-04 14:32:00+1000');

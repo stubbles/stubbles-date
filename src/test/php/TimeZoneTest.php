@@ -9,6 +9,8 @@ declare(strict_types=1);
 namespace stubbles\date;
 
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use function bovigo\assert\{
     assertThat,
@@ -19,9 +21,8 @@ use function bovigo\assert\{
 };
 /**
  * Tests for stubbles\date\TimeZone.
- *
- * @group  date
  */
+#[Group('date')]
 class TimeZoneTest extends TestCase
 {
     private TimeZone $timeZone;
@@ -31,17 +32,13 @@ class TimeZoneTest extends TestCase
         $this->timeZone = new TimeZone('Europe/Berlin');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function nameReturnsTimezoneName(): void
     {
         assertThat($this->timeZone->name(), equals('Europe/Berlin'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function offsetDstIsTwoHours(): void
     {
         $date = new Date('2007-08-21');
@@ -49,9 +46,7 @@ class TimeZoneTest extends TestCase
         assertThat($this->timeZone->offsetInSeconds($date), equals(7200));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function offsetNoDstIsOneHour(): void
     {
         $date = new Date('2007-01-21');
@@ -62,9 +57,8 @@ class TimeZoneTest extends TestCase
     /**
      * offset in seconds for current date is 3600 seconds or 7200 seconds, depending
      * whether we are in dst or not
-     *
-     * @test
      */
+    #[Test]
     public function offsetForCurrentDateIs3600SecondsOr7200SecondsDependingWhetherInDstOrNot(): void
     {
         $offset = $this->timeZone->offsetInSeconds();
@@ -73,9 +67,8 @@ class TimeZoneTest extends TestCase
 
     /**
      * offset for some time zones is just an half hour more
-     *
-     * @test
      */
+    #[Test]
     public function offsetWithHalfHourDST(): void
     {
         $timeZone = new TimeZone('Australia/Adelaide');
@@ -84,9 +77,8 @@ class TimeZoneTest extends TestCase
 
     /**
      * offset for some time zones is just an half hour more
-     *
-     * @test
      */
+    #[Test]
     public function offsetWithHalfHourNoDST(): void
     {
         $timeZone = new TimeZone('Australia/Adelaide');
@@ -95,9 +87,8 @@ class TimeZoneTest extends TestCase
 
     /**
      * a date should be translatable into a date of our current time zone
-     *
-     * @test
      */
+    #[Test]
     public function translate(): void
     {
         $date = new Date('2007-01-01 00:00 Australia/Sydney');
@@ -107,17 +98,13 @@ class TimeZoneTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function timeZonesHavingDstShouldBeMarkedAsSuch(): void
     {
         assertTrue($this->timeZone->hasDst());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function timeZonesAreEqualsIfTheyRepresentTheSameTimeZoneString(): void
     {
         assertTrue($this->timeZone->equals($this->timeZone));
@@ -126,18 +113,14 @@ class TimeZoneTest extends TestCase
         assertFalse($this->timeZone->equals(new \stdClass()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function nonExistingTimeZoneValueThrowsIllegalArgumentExceptionOnConstruction(): void
     {
         expect(fn() => new TimeZone('Europe/Karlsruhe'))
             ->throws(InvalidArgumentException::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function toStringConversionCreatesReadableRepresentation(): void
     {
         assertThat((string) $this->timeZone, equals('Europe/Berlin'));
