@@ -42,7 +42,7 @@ class WeekTest extends TestCase
     /**
      * @return  array<array<mixed>>
      */
-    public function weekDays(): array
+    public static function weekDays(): array
     {
         $return      = [];
         $expectedDay = 14;

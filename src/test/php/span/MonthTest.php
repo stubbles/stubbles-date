@@ -100,7 +100,7 @@ class MonthTest extends TestCase
     /**
      * @return  array<array<mixed>>
      */
-    public function dayMonth(): array
+    public static function dayMonth(): array
     {
         return [
             [new Month(2007, 4), 30],
@@ -123,7 +123,7 @@ class MonthTest extends TestCase
     /**
      * @return  array<array<mixed>>
      */
-    public function monthDays(): array
+    public static function monthDays(): array
     {
         $return      = [];
         $expectedDay = 1;
@@ -276,7 +276,7 @@ class MonthTest extends TestCase
     /**
      * @return  array<string[]>
      */
-    public function invalidMonthStrings(): array
+    public static function invalidMonthStrings(): array
     {
         return [
             ['invalid', 'Can not parse month from string "invalid", format should be "YYYY-MM"'],

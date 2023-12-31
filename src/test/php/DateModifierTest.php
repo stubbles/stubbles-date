@@ -58,7 +58,7 @@ class DateModifierTest extends TestCase
      * @since  7.0.0
      * @return array<string[]>
      */
-    public function invalidArgumentsForTime(): array
+    public static function invalidArgumentsForTime(): array
     {
         return [
             ['invalid', 'Given time "invalid" does not follow required format HH:MM:SS'],
@@ -307,7 +307,7 @@ class DateModifierTest extends TestCase
      * since   7.0.0
      * @return array<string[]>
      */
-    public function invalidDates(): array
+    public static function invalidDates(): array
     {
         return [
             ['invalid', 'Given date "invalid" does not follow required format YYYY-MM-DD'],

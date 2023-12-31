@@ -92,7 +92,7 @@ class YearTest extends TestCase
     /**
      * @return  array<array<mixed>>
      */
-    public function dayYear(): array
+    public static function dayYear(): array
     {
         return [
             [new Year(2007), 365],
@@ -120,7 +120,7 @@ class YearTest extends TestCase
     /**
      * @return array<array<mixed>>
      */
-    public function yearMonths(): array
+    public static function yearMonths(): array
     {
         $return        = [];
         $expectedMonth = 1;
@@ -257,7 +257,7 @@ class YearTest extends TestCase
     /**
      * @return array<array<mixed>>
      */
-    public function allDays(): array
+    public static function allDays(): array
     {
         $return = [];
         $year = new Year(2007);

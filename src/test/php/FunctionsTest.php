@@ -28,7 +28,7 @@ use function bovigo\assert\predicate\equals;
  */
 class FunctionsTest extends TestCase
 {
-    public function emptyValues(): Generator
+    public static function emptyValues(): Generator
     {
         yield [null];
         yield [''];
@@ -51,7 +51,7 @@ class FunctionsTest extends TestCase
         assertThat(span\parse('2015'), equals(new Year(2015)));
     }
 
-    public function dayValues(): Generator
+    public static function dayValues(): Generator
     {
         yield ['today'];
         yield ['tomorrow'];
@@ -77,7 +77,7 @@ class FunctionsTest extends TestCase
             ->throws(InvalidArgumentException::class);
     }
 
-    public function monthValues(): Generator
+    public static function monthValues(): Generator
     {
         yield ['2015-03'];
     }
@@ -92,7 +92,7 @@ class FunctionsTest extends TestCase
         assertThat(span\parse($monthValue), equals(Month::fromString($monthValue)));
     }
 
-    public function customDatespanValues(): Generator
+    public static function customDatespanValues(): Generator
     {
         yield [new CustomDatespan('yesterday', 'tomorrow'), 'yesterday,tomorrow'];
         yield [new CustomDatespan('2015-01-01', '2015-12-31'), '2015-01-01,2015-12-31'];

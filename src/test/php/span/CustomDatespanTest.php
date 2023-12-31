@@ -98,7 +98,7 @@ class CustomDatespanTest extends TestCase
     /**
      * @return  array<array<mixed>>
      */
-    public function datespanDays(): array
+    public static function datespanDays(): array
     {
         $return      = [];
         $expectedDay = 14;

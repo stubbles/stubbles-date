@@ -93,7 +93,7 @@ class DateTest extends TestCase
     /**
      * @return  array<array<mixed>>
      */
-    public function constructorTimezones(): array
+    public static function constructorTimezones(): array
     {
         return [
             [
@@ -250,7 +250,7 @@ class DateTest extends TestCase
     /**
      * @return  array<array<mixed>>
      */
-    public function anteAndPostMeridiemTestValues(): array
+    public static function anteAndPostMeridiemTestValues(): array
     {
         return [
             ['May 28 1980 1:00AM', 1, '1:00AM != 1h'],
@@ -274,7 +274,7 @@ class DateTest extends TestCase
     /**
      * @return  array<array<mixed>>
      */
-    public function anteAndPostMeridiemInMidageTestValues(): array
+    public static function anteAndPostMeridiemInMidageTestValues(): array
     {
         return [
             ['May 28 1580 1:00AM', 1, '1:00AM != 1h'],
@@ -506,7 +506,7 @@ class DateTest extends TestCase
     /**
      * @return array<array<string>>
      */
-    public function methodsWithXmlIgnore(): array
+    public static function methodsWithXmlIgnore(): array
     {
         return [['handle'],
             ['change'],
