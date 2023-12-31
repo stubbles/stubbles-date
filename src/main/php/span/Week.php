@@ -40,8 +40,7 @@ class Week extends CustomDatespan
             );
         }
 
-        $self = new self($week);
-        return $self;
+        return new self($week);
     }
 
     /**

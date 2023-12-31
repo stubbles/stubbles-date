@@ -95,7 +95,7 @@ class TimeZone
     public function hasDst(): bool
     {
         // if there is at least one transition the time zone has a dst mode
-        return (count($this->timeZone->getTransitions()) > 0);
+        return count($this->timeZone->getTransitions()) > 0;
     }
 
     /**
@@ -116,7 +116,7 @@ class TimeZone
     public function equals(mixed $compare): bool
     {
         if ($compare instanceof self) {
-            return ($this->name() === $compare->name());
+            return $this->name() === $compare->name();
         }
 
         return false;

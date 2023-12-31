@@ -23,14 +23,13 @@ use function bovigo\assert\predicate\equals;
  */
 class DateEquals extends Predicate
 {
-    private string $expected;
     private DateTime $expectedDate;
     private ?string $lastFailureDiff = null;
 
     /**
      * @throws InvalidArgumentException in case given date can not be parsed
      */
-    public function __construct(string $expected)
+    public function __construct(private string $expected)
     {
         $expectedDate = date_create($expected);
         if (false === $expectedDate) {
@@ -40,7 +39,6 @@ class DateEquals extends Predicate
         }
 
         $this->expectedDate = $expectedDate;
-        $this->expected     = $expected;
     }
 
     /**
@@ -72,8 +70,6 @@ class DateEquals extends Predicate
 
     /**
      * returns string representation of predicate
-     *
-     * @return  string
      */
     public function __toString(): string
     {

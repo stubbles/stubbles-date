@@ -89,7 +89,7 @@ abstract class AbstractDatespan implements Datespan
     /**
      * returns formatted date/time string for start date
      *
-     * @param   string                   $format    format, see http://php.net/date
+     * @param   string  $format  format, see http://php.net/date
      * @since 3.5.0
      */
     public function formatStart(string $format, TimeZone $timeZone = null): string
@@ -100,7 +100,7 @@ abstract class AbstractDatespan implements Datespan
     /**
      * returns formatted date/time string for end date
      *
-     * @param   string                   $format    format, see http://php.net/date
+     * @param   string  $format  format, see http://php.net/date
      * @since 3.5.0
      */
     public function formatEnd(string $format, TimeZone $timeZone = null): string
