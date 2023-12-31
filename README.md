@@ -7,7 +7,7 @@ Handling dates and date spans in a immutable way, using a beautiful API.
 Build status
 ------------
 
-![Tests](https://github.com/stubbles/stubbles-date/workflows/Tests/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/stubbles/stubbles-date/badge.svg?branch=master)](https://coveralls.io/github/stubbles/stubbles-date?branch=master)
+![Tests](https://github.com/stubbles/stubbles-date/workflows/Tests/badge.svg)
 
 [![Latest Stable Version](https://poser.pugx.org/stubbles/date/version.png)](https://packagist.org/packages/stubbles/date) [![Latest Unstable Version](https://poser.pugx.org/stubbles/date/v/unstable.png)](//packagist.org/packages/stubbles/date)
 
@@ -19,13 +19,13 @@ _stubbles/date_ is distributed as [Composer](https://getcomposer.org/)
 package. To install it as a dependency of your package use the following
 command:
 
-    composer require "stubbles/date": "^8.0"
+    composer require "stubbles/date": "^9.0"
 
 
 Requirements
 ------------
 
-_stubbles/date_ requires at least PHP 7.3.
+_stubbles/date_ requires at least PHP 8.2.
 
 
 
