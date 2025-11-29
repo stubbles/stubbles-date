@@ -47,7 +47,7 @@ class Date
      *
      * @throws InvalidArgumentException
      */
-    public function __construct(int|string|DateTime $dateTime, TimeZone $timeZone = null)
+    public function __construct(int|string|DateTime $dateTime, ?TimeZone $timeZone = null)
     {
         if (is_numeric($dateTime)) {
             $date = date_create('@' . $dateTime, timezone_open('UTC'));
@@ -82,7 +82,7 @@ class Date
     /**
      * returns current date/time
      */
-    public static function now(TimeZone $timeZone = null): self
+    public static function now(?TimeZone $timeZone = null): self
     {
         return new self(time(), $timeZone);
     }
@@ -253,7 +253,7 @@ class Date
      *
      * @see http://php.net/date for format strings
      */
-    public function format(string $format, TimeZone $timeZone = null): string
+    public function format(string $format, ?TimeZone $timeZone = null): string
     {
         if (null !== $timeZone) {
             return $timeZone->translate($this)->format($format);

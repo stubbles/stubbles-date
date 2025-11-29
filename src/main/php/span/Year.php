@@ -28,7 +28,7 @@ class Year extends CustomDatespan
      *
      * @throws InvalidArgumentException
      */
-    public function __construct(int|string $year = null)
+    public function __construct(int|string|null $year = null)
     {
         if (null === $year) {
             $year = date('Y');

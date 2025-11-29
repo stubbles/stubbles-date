@@ -35,7 +35,7 @@ class Month extends CustomDatespan
      *
      * If no value for the month is supplied the current month will be used.
      */
-    public function __construct(int|string|Date $year = null, int|string $month = null)
+    public function __construct(int|string|Date|null $year = null, int|string|null $month = null)
     {
         $start = null;
         if ($year instanceof Date) {

@@ -23,7 +23,7 @@ class Day extends AbstractDatespan implements Datespan
      */
     private Date $date;
 
-    public function __construct(int|string|DateTime|Date $day = null)
+    public function __construct(int|string|DateTime|Date|null $day = null)
     {
         $this->date = ((null === $day) ? (Date::now()) : (Date::castFrom($day, 'day')));
         parent::__construct($this->date, $this->date);

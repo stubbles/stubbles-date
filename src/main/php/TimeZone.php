@@ -26,7 +26,7 @@ class TimeZone
      */
     protected DateTimeZone $timeZone;
 
-    public function __construct(string|DateTimeZone $timeZone = null)
+    public function __construct(string|DateTimeZone|null $timeZone = null)
     {
         if (is_string($timeZone)) {
             $timeZone = @timezone_open($timeZone);
@@ -63,7 +63,7 @@ class TimeZone
      *
      * If no date is passed 'now' will be used.
      */
-    public function offset(int|string|DateTime|Date $date = null): string
+    public function offset(int|string|DateTime|Date|null $date = null): string
     {
         $offset  = $this->offsetInSeconds($date);
         $hours   = intval(abs($offset) / 3600);
@@ -80,7 +80,7 @@ class TimeZone
      * mode, a date object must be given which is used to determine whether DST
      * or non-DST offset should be returned.
      */
-    public function offsetInSeconds(int|string|DateTime|Date $date = null): int
+    public function offsetInSeconds(int|string|DateTime|Date|null $date = null): int
     {
         if (null === $date) {
             return $this->timeZone->getOffset(new DateTime('now'));
