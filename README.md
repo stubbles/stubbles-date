@@ -1,7 +1,7 @@
 stubbles/date
 =============
 
-Handling dates and date spans in a immutable way, using a beautiful API.
+Handling dates and date spans in a immutable way, using a nice API.
 
 
 Build status
@@ -19,13 +19,13 @@ _stubbles/date_ is distributed as [Composer](https://getcomposer.org/)
 package. To install it as a dependency of your package use the following
 command:
 
-    composer require "stubbles/date": "^9.0"
+    composer require "stubbles/date": "^10.0"
 
 
 Requirements
 ------------
 
-_stubbles/date_ requires at least PHP 8.2.
+_stubbles/date_ requires at least PHP 8.3.
 
 
 
@@ -81,12 +81,7 @@ choose to be liberal in what you accept. Instead of type hinting against the
 concrete type your method can cast the provided value into an instance:
 
 ```php
-/**
- * does something cool
- *
- * @param  int|string|stubbles\date\Date  $date
- */
-function doSomething($date)
+function doSomething(int|string|\stubbles\date\Date $date)
 {
     $date = Date::castFrom($date);
     // now do something with $date, which is an instance of stubbles\date\Date
