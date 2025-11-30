@@ -1,9 +1,0 @@
-includes:
-  - vendor/bovigo/assert/src/main/resources/phpstan/bovigo-assert.neon
-parameters:
-  inferPrivatePropertyTypeFromConstructor: true
-  level: 9
-  paths:
-    - ./src/main/php
-  excludePaths:
-      - src/main/php/assert
