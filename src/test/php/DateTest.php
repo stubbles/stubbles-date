@@ -120,7 +120,7 @@ class DateTest extends TestCase
         string $expectedTimestamp,
         string $expectedTimeZone,
         string $constructorTimestamp,
-        TimeZone $constructorTimeZone = null
+        ?TimeZone $constructorTimeZone = null
     ): void {
         $date = new Date($constructorTimestamp, $constructorTimeZone);
         assertThat($date->timeZone()->name(), equals($expectedTimeZone));
