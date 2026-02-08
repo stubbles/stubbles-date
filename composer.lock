@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1d643309377e8c229d7891144a9e7a9b",
+    "content-hash": "48c4bc2f51713790b3d77169a6ccfd27",
     "packages": [],
     "packages-dev": [
         {
@@ -1682,16 +1682,16 @@
         },
         {
             "name": "stubbles/reflect",
-            "version": "v11.0.0",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stubbles/stubbles-reflect.git",
-                "reference": "0b82297310d864e1ac09f00066fb21e206fb9721"
+                "reference": "7d7c9c456230f353d48aea1e61770bc00ddc032c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stubbles/stubbles-reflect/zipball/0b82297310d864e1ac09f00066fb21e206fb9721",
-                "reference": "0b82297310d864e1ac09f00066fb21e206fb9721",
+                "url": "https://api.github.com/repos/stubbles/stubbles-reflect/zipball/7d7c9c456230f353d48aea1e61770bc00ddc032c",
+                "reference": "7d7c9c456230f353d48aea1e61770bc00ddc032c",
                 "shasum": ""
             },
             "require": {
@@ -1704,10 +1704,11 @@
                 "mikey179/vfsstream": "^1.6.12",
                 "phpunit/phpunit": "^12.4"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "11.0.x-dev"
+                    "dev-main": "11.1.x-dev"
                 }
             },
             "autoload": {
@@ -1725,9 +1726,9 @@
             "description": "Reflection helper functions and annotations.",
             "support": {
                 "issues": "https://github.com/stubbles/stubbles-reflect/issues",
-                "source": "https://github.com/stubbles/stubbles-reflect/tree/v11.0.0"
+                "source": "https://github.com/stubbles/stubbles-reflect/tree/main"
             },
-            "time": "2025-11-29T21:40:09+00:00"
+            "time": "2026-01-21T13:40:32+00:00"
         },
         {
             "name": "stubbles/sequence",
@@ -1829,6 +1830,46 @@
             "time": "2025-11-29T18:50:38+00:00"
         },
         {
+            "name": "stubbles/xml-attributes",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/stubbles/stubbles-xml-attributes.git",
+                "reference": "07da453156f86ba8c869ad61bd1b5021bfae710b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/stubbles/stubbles-xml-attributes/zipball/07da453156f86ba8c869ad61bd1b5021bfae710b",
+                "reference": "07da453156f86ba8c869ad61bd1b5021bfae710b",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.3"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "10.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "stubbles\\xml\\": "src/main/php"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Attributes for XML serialization with stubbles/xml.",
+            "support": {
+                "issues": "https://github.com/stubbles/stubbles-xml-attributes/issues",
+                "source": "https://github.com/stubbles/stubbles-xml-attributes/tree/main"
+            },
+            "time": "2026-02-03T15:04:20+00:00"
+        },
+        {
             "name": "theseer/tokenizer",
             "version": "2.0.1",
             "source": {
@@ -1889,5 +1930,5 @@
         "ext-ctype": "*"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }

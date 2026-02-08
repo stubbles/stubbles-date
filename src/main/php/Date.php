@@ -12,6 +12,10 @@ use DateTime;
 use DateTimeZone;
 use Exception;
 use InvalidArgumentException;
+use stubbles\xml\serializer\attributes\XmlAttribute;
+use stubbles\xml\serializer\attributes\XmlIgnore;
+use stubbles\xml\serializer\attributes\XmlTag;
+
 /**
  * Class for date/time handling.
  *
@@ -21,6 +25,7 @@ use InvalidArgumentException;
  * @api
  * @XmlTag(tagName='date')
  */
+#[XmlTag('date')]
 class Date
 {
     protected DateTime $dateTime;
@@ -107,6 +112,7 @@ class Date
      *
      * @XmlIgnore
      */
+    #[XmlIgnore]
     public function handle(): DateTime
     {
         return clone $this->dateTime;
@@ -117,6 +123,7 @@ class Date
      *
      * @XmlIgnore
      */
+    #[XmlIgnore]
     public function change(): DateModifier
     {
         return new DateModifier($this);
@@ -127,6 +134,7 @@ class Date
      *
      * @XmlIgnore
      */
+    #[XmlIgnore]
     public function timestamp(): int
     {
         return (int) $this->dateTime->format('U');
@@ -137,6 +145,7 @@ class Date
      *
      * @XmlIgnore
      */
+    #[XmlIgnore]
     public function seconds(): int
     {
         return (int) $this->dateTime->format('s');
@@ -147,6 +156,7 @@ class Date
      *
      * @XmlIgnore
      */
+    #[XmlIgnore]
     public function minutes(): int
     {
         return (int) $this->dateTime->format('i');
@@ -157,6 +167,7 @@ class Date
      *
      * @XmlIgnore
      */
+    #[XmlIgnore]
     public function hours(): int
     {
         return (int) $this->dateTime->format('G');
@@ -167,6 +178,7 @@ class Date
      *
      * @XmlIgnore
      */
+    #[XmlIgnore]
     public function day(): int
     {
         return (int) $this->dateTime->format('d');
@@ -177,6 +189,7 @@ class Date
      *
      * @XmlIgnore
      */
+    #[XmlIgnore]
     public function month(): int
     {
         return (int) $this->dateTime->format('m');
@@ -187,6 +200,7 @@ class Date
      *
      * @XmlIgnore
      */
+    #[XmlIgnore]
     public function year(): int
     {
         return (int) $this->dateTime->format('Y');
@@ -197,6 +211,7 @@ class Date
      *
      * @XmlIgnore
      */
+    #[XmlIgnore]
     public function offset(): string
     {
         return $this->dateTime->format('O');
@@ -207,6 +222,7 @@ class Date
      *
      * @XmlIgnore
      */
+    #[XmlIgnore]
     public function offsetInSeconds(): int
     {
         return (int) $this->dateTime->format('Z');
@@ -233,6 +249,7 @@ class Date
      *
      * @XmlIgnore
      */
+    #[XmlIgnore]
     public function timeZone(): TimeZone
     {
         return new TimeZone($this->dateTime->getTimezone());
@@ -243,6 +260,7 @@ class Date
      *
      * @XmlAttribute(attributeName='value')
      */
+    #[XmlAttribute('value')]
     public function asString(): string
     {
         return $this->format('Y-m-d H:i:sO');

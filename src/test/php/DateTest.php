@@ -15,6 +15,10 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;
 use ReflectionObject;
+use stubbles\xml\serializer\attributes\XmlAttribute;
+use stubbles\xml\serializer\attributes\XmlIgnore;
+use stubbles\xml\serializer\attributes\XmlTag;
+
 use function bovigo\assert\{
     assertThat,
     assertFalse,
@@ -28,6 +32,8 @@ use function bovigo\assert\{
 };
 use function stubbles\date\assert\equalsDate;
 use function stubbles\reflect\annotationsOf;
+use function stubbles\reflect\attributesOf;
+
 /**
  * Tests for stubbles\date\Date.
  */
@@ -447,12 +453,18 @@ class DateTest extends TestCase
         assertThat($date->asString(), equals('2012-01-21 21:00:00' . $date->offset()));
     }
 
+    /**
+     * @deprecated will be removed with 10.0.0
+     */
     #[Test]
     public function classIsAnnotatedWithXmlTag(): void
     {
         assertTrue(annotationsOf(Date::class)->contain('XmlTag'));
     }
 
+    /**
+     * @deprecated will be removed with 10.0.0
+     */
     #[Test]
     #[TestWith(['handle'])]
     #[TestWith(['change'])]
@@ -473,12 +485,50 @@ class DateTest extends TestCase
         );
     }
 
+    /**
+     * @deprecated will be removed with 10.0.0
+     */
     #[Test]
     public function asStringIsAnnotatedWithXmlAttribute(): void
     {
         assertTrue(
             annotationsOf(Date::class, 'asString')
                 ->contain('XmlAttribute')
+        );
+    }
+
+    #[Test]
+    public function classIsAttributedWithXmlTag(): void
+    {
+        assertTrue(attributesOf(Date::class)->contain(XmlTag::class));
+    }
+
+    #[Test]
+    #[TestWith(['handle'])]
+    #[TestWith(['change'])]
+    #[TestWith(['timestamp'])]
+    #[TestWith(['seconds'])]
+    #[TestWith(['minutes'])]
+    #[TestWith(['hours'])]
+    #[TestWith(['day'])]
+    #[TestWith(['month'])]
+    #[TestWith(['year'])]
+    #[TestWith(['offset'])]
+    #[TestWith(['offsetInSeconds'])]
+    #[TestWith(['timeZone'])]
+    public function methodIsAttributesWithXmlIgnore(string $method): void
+    {
+        assertTrue(
+            attributesOf(Date::class, $method)->contain(XmlIgnore::class)
+        );
+    }
+
+    #[Test]
+    public function asStringIsAttributesWithXmlAttribute(): void
+    {
+        assertTrue(
+            attributesOf(Date::class, 'asString')
+                ->contain(XmlAttribute::class)
         );
     }
 
