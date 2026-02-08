@@ -11,7 +11,7 @@
     "require-dev": {
         "phpunit/phpunit": "^12.4",
         "stubbles/reflect": "^11.1",
-        "stubbles/xml-attributes": "^10.1",
+        "stubbles/xml-attributes": "^1.0",
         "bovigo/assert": "^8.1"
     },
     "suggest": {
